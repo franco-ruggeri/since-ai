@@ -29,11 +29,15 @@
         "christian-kohler.path-intellisense",
         "christian-kohler.npm-intellisense",
         "github.copilot-chat"
+<<<<<<< HEAD
       ],
       "settings": {
         "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
         "python.terminal.activateEnvironment": true
       }
+=======
+      ]
+>>>>>>> 3a272ce (Add devcontainer and requirements.txt)
     }
   }
 }
