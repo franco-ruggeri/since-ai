@@ -1,0 +1,35 @@
+{
+  "name": "Python 3 with Node.js",
+  "image": "mcr.microsoft.com/devcontainers/python:2-3.12-bullseye",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts"
+    }
+  },
+  "postCreateCommand": "pip3 install --upgrade pip && pip3 install -r requirements.txt",
+  "hostRequirements": {
+    "gpu": true
+  },
+  "runArgs": [
+    "--gpus=all"
+  ],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "esbenp.prettier-vscode",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "github.copilot",
+        "eamodio.gitlens",
+        "ms-python.debugpy",
+        "ms-toolsai.jupyter",
+        "formulahendry.auto-complete-tag",
+        "ecmel.vscode-html-css",
+        "ms-vscode.vscode-typescript-next",
+        "christian-kohler.path-intellisense",
+        "christian-kohler.npm-intellisense",
+        "github.copilot-chat"
+      ]
+    }
+  }
+}
