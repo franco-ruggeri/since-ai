@@ -8,8 +8,11 @@ from chart_factory import make_chart
 
 
 def main():
-
-    with open("styles.css") as f:
+    # Handle file paths for both local and deployed environments
+    frontend_dir = os.path.dirname(os.path.abspath(__file__))
+    styles_path = os.path.join(frontend_dir, "styles.css")
+    
+    with open(styles_path) as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
     # st.session_state.filters = {}
