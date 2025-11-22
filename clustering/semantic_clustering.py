@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 from sentence_transformers import SentenceTransformer
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
@@ -23,23 +24,32 @@ class SemanticClusterer:
             convert_to_numpy=True,
         )
 
-    def _cluster(self, embeddings, n_clusters=None, max_clusters=10):
-        if n_clusters is None:
-            print("Finding optimal number of clusters...")
-            best_k = 2
-            best_score = -1
+    def _cluster(self, embeddings, max_clusters=50):
+        print("Finding optimal number of clusters...")
+        silhouette_scores = []
+        elbow_scores = []
+        best_k = 2
+        best_score = -1
 
-            for k in range(2, min(max_clusters + 1, len(embeddings))):
-                kmeans = KMeans(n_clusters=k, random_state=42, n_init=10)
-                labels = kmeans.fit_predict(embeddings)
-                score = silhouette_score(embeddings, labels)
+        for k in range(2, min(max_clusters + 1, len(embeddings))):
+            kmeans = KMeans(n_clusters=k, random_state=42, n_init=10)
+            labels = kmeans.fit_predict(embeddings)
+            score = silhouette_score(embeddings, labels)
+            silhouette_scores.append(score)
+            elbow_scores.append(kmeans.inertia_)
 
-                if score > best_score:
-                    best_score = score
-                    best_k = k
+            if score > best_score:
+                best_score = score
+                best_k = k
 
-            n_clusters = best_k
-            print(f"Optimal K: {n_clusters} (silhouette score: {best_score:.3f})")
+        plt.figure()
+        plt.plot(range(2, max_clusters), silhouette_scores)
+        plt.figure()
+        plt.plot(range(2, max_clusters), elbow_scores)
+        plt.show()
+
+        n_clusters = best_k
+        print(f"Optimal K: {n_clusters} (silhouette score: {best_score:.3f})")
 
         print(f"Running K-Means with {n_clusters} clusters...")
         kmeans = KMeans(n_clusters=n_clusters, random_state=42, n_init=10)

@@ -4,18 +4,17 @@ from semantic_clustering import SemanticClusterer
 
 
 def load_data():
-    with open("data/data_english.json", "r") as f:
+    with open("data/data.json", "r") as f:
         obj = json.load(f)
-    section = obj["Stairways"]
-    prompt = section["prompt"]
-    df = pd.DataFrame(section["data"])
-    return prompt, df
+    return pd.DataFrame(obj["Rappuset"]["Data"])
 
 
 def main():
-    _, df = load_data()
+    df = load_data()
+    df.info()
+
     clusterer = SemanticClusterer()
-    df["text"] = df["Title"] + ". " + df["Observation"]
+    df["text"] = df["Heading"] + ". " + df["Observation"]
     df["category"] = clusterer.fit_predict(df["text"])
 
     print(df.head())
