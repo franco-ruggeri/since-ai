@@ -4,6 +4,7 @@ import streamlit as st
 import pandas as pd
 from dotenv import load_dotenv
 from backend_requests import get_visualization
+from chart_factory import make_chart
 
 
 def main():
@@ -52,11 +53,15 @@ def main():
     )
     
     st.subheader("📊 Generated Visualization")
-    st.line_chart(chart_data)
+    line_chart = make_chart(chart_data, {
+        "chart_type": "line",
+        "channels": {
+            "x": "Series A",
+            "y": "Series B",
+        }
+    }).get_chart()
     
-    # Alternative dummy charts:
-    st.bar_chart(chart_data)
-    st.area_chart(chart_data)
+    st.altair_chart(line_chart)
 
 
 if __name__ == "__main__":
