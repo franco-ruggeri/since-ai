@@ -6,7 +6,7 @@
       "version": "lts"
     }
   },
-  "postCreateCommand": "pip3 install --upgrade pip && pip3 install -r requirements.txt",
+  "postCreateCommand": "pip install uv && uv sync",
   "hostRequirements": {
     "gpu": true
   },
@@ -29,7 +29,11 @@
         "christian-kohler.path-intellisense",
         "christian-kohler.npm-intellisense",
         "github.copilot-chat"
-      ]
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+        "python.terminal.activateEnvironment": true
+      }
     }
   }
 }
