@@ -1,12 +1,24 @@
-import altair as alt
+import plotly.graph_objects as go
 from .base_chart import Chart
 
 class HistogramChart(Chart, chart_type="histogram"):
     def get_chart(self, df):
-        return alt.Chart(df).mark_bar().encode(
-            x=alt.X(self.spec["channels"]["x"], bin=True),
-            y="count()",
-            **{k: v for k, v in self.encoded.items() if k not in ["x", "y"]}
-        ).properties(
-            title=self.spec.get("title")
+        x_col = self.channels.get("x")
+        
+        if not x_col:
+            raise ValueError("Histogram chart requires 'x' channel")
+        
+        fig = go.Figure(data=[go.Histogram(
+            x=df[x_col["column"]],
+            nbinsx=30,
+            name=x_col["column"]
+        )])
+        
+        fig.update_layout(
+            title=self.spec.get("title", "Histogram"),
+            xaxis_title=x_col["column"],
+            yaxis_title="Count",
+            hovermode='x unified'
         )
+        
+        return fig

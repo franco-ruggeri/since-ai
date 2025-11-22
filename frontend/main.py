@@ -54,14 +54,14 @@ def main():
     
     st.subheader("📊 Generated Visualization")
     line_chart = make_chart(chart_data, {
-        "chart_type": "line",
+        "chart_type": "histogram",
         "channels": {
-            "x": "Series A",
-            "y": "Series B",
+            "x": "Series B",
+            "y": "Series A",
         }
-    }).get_chart()
+    })
     
-    st.altair_chart(line_chart)
+    st.plotly_chart(line_chart)
 
 
 if __name__ == "__main__":

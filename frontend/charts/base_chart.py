@@ -1,4 +1,3 @@
-import altair as alt
 import pandas as pd
 from .chart_registry import ChartRegistry
 
@@ -10,10 +9,10 @@ class Chart:
 
     def __init__(self, spec):
         self.spec = spec
-        self.encoded = None
+        self.channels = None
 
     # -------------------------------
-    # Infer Vega type from Pandas dtype
+    # Infer data type from Pandas dtype
     # -------------------------------
     def _infer_type(self, series: pd.Series):
         if pd.api.types.is_datetime64_any_dtype(series):
@@ -23,32 +22,28 @@ class Chart:
         return "nominal"
 
     # -------------------------------
-    # Build encoding dictionary
+    # Build channels dictionary
     # -------------------------------
-    def _build_encodings(self, df):
+    def _build_channels(self, df):
         channels = self.spec.get("channels", {})
-        encoding = {}
+        result = {}
 
         for channel, col in channels.items():
-            vega_type = self._infer_type(df[col])
+            col_type = self._infer_type(df[col])
+            result[channel] = {
+                "column": col,
+                "type": col_type,
+                "data": df[col]
+            }
 
-            if channel == "x":
-                encoding["x"] = alt.X(col, type=vega_type)
-            elif channel == "y":
-                encoding["y"] = alt.Y(col, type=vega_type)
-            elif channel == "color":
-                encoding["color"] = alt.Color(col, type=vega_type)
-            else:
-                encoding[channel] = alt.Value(col)
-
-        return encoding
+        return result
 
     # -------------------------------
     # FINAL TEMPLATE METHOD
     # -------------------------------
     def build(self, df):
-        # compute encoding once
-        self.encoded = self._build_encodings(df)
+        # compute channels once
+        self.channels = self._build_channels(df)
         # subclass-specific drawing
         return self.get_chart(df)
 
