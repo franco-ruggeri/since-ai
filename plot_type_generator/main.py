@@ -57,6 +57,7 @@ def main() -> None:
         "suggestion_k": 3,
         "plot_recommendations": None,
         "plot_recommendations_path": "./plot_recommendations.json",
+        "processed_data": None,
     }
 
     try:
@@ -84,6 +85,11 @@ def main() -> None:
 
         print("\n--- Plot Recommendations ---")
         print(state.get("plot_recommendations"))
+
+        # Show processed data if generated
+        if state.get("processed_data"):
+            print("\n--- Processed Data Generated ---")
+            print(json.dumps(state.get("processed_data"), indent=2))
 
         # Run feedback agents sequentially
         all_feedback_passed = True

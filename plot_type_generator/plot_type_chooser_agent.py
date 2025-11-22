@@ -8,6 +8,7 @@ from plot_type_generator.plot_gen_state import PlotGenState
 from plot_type_generator.utils import (
     _load_prompt,
     _get_api_key,
+    extract_json_content,
 )
 
 logger = logging.getLogger(__name__)
@@ -88,5 +89,14 @@ def plot_type_chooser_agent(state: PlotGenState, k: int = 3) -> PlotGenState:
 
     plot_recommendations_str = text if isinstance(text, str) else str(text)
     state["plot_recommendations"] = plot_recommendations_str
+
+    # Extract processed_data if present in the response
+    try:
+        recommendations_json = extract_json_content(plot_recommendations_str)
+        if "processed_data" in recommendations_json:
+            state["processed_data"] = recommendations_json["processed_data"]
+            logger.info("Extracted processed_data from plot recommendations")
+    except Exception as e:
+        logger.warning(f"Could not extract processed_data: {e}")
 
     return state

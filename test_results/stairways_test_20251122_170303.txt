@@ -1,0 +1,24 @@
+================================================================================
+STAIRWAYS TEST CASE
+================================================================================
+Test Case: Stairways
+Prompt: Review the observations from 2024. How many safety observations occurred in stairways? Also classify the most common safety observations occurring in stairways.
+
+Raw data: 346 observations
+Columns: ['Title', 'Observation', 'observation_date', 'observation_handled_date']
+
+Sample observations:
+1. Title: Water puddle in hallway
+   Observation: There was a small water puddle on the packaging department floor, which caused a...
+2. Title: Wobbly railing in stairway
+   Observation: The railing in the metal stairs between production facilities was dangerously lo...
+3. Title: Inadequate protective equipment
+   Observation: An employee was handling powdery material without a respirator in the clean room...
+
+================================================================================
+STEP 1: Query Planning
+================================================================================
+
+✓ Execution plan generated (11285 chars)
+
+--- Execution Plan ---
