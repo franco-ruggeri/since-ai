@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 2
 requires-python = ">=3.12"
 
 [[package]]
@@ -135,8 +135,6 @@ wheels = [
 ]
 
 [[package]]
-<<<<<<< HEAD
-=======
 name = "click"
 version = "8.3.1"
 source = { registry = "https://pypi.org/simple" }
@@ -149,7 +147,6 @@ wheels = [
 ]
 
 [[package]]
->>>>>>> main
 name = "colorama"
 version = "0.4.6"
 source = { registry = "https://pypi.org/simple" }
@@ -168,16 +165,6 @@ wheels = [
 ]
 
 [[package]]
-<<<<<<< HEAD
-name = "dotenv"
-version = "0.9.9"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "python-dotenv" },
-]
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/b2/b7/545d2c10c1fc15e48653c91efde329a790f2eecfbbf2bd16003b5db2bab0/dotenv-0.9.9-py2.py3-none-any.whl", hash = "sha256:29cf74a087b31dafdb5a446b6d7e11cbce8ed2741540e2339c69fbef92c94ce9", size = 1892, upload-time = "2025-02-19T22:15:01.647Z" },
-=======
 name = "gitdb"
 version = "4.0.12"
 source = { registry = "https://pypi.org/simple" }
@@ -238,7 +225,6 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/23/6e/74407aed965a4ab6ddd93a7ded3180b730d281c77b765788419484cdfeef/greenlet-3.2.4-cp314-cp314-musllinux_1_2_aarch64.whl", hash = "sha256:2917bdf657f5859fbf3386b12d68ede4cf1f04c90c3a6bc1f013dd68a22e2269", size = 1612508, upload-time = "2025-11-04T12:42:23.427Z" },
     { url = "https://files.pythonhosted.org/packages/0d/da/343cd760ab2f92bac1845ca07ee3faea9fe52bee65f7bcb19f16ad7de08b/greenlet-3.2.4-cp314-cp314-musllinux_1_2_x86_64.whl", hash = "sha256:015d48959d4add5d6c9f6c5210ee3803a830dce46356e3bc326d6776bde54681", size = 1680760, upload-time = "2025-11-04T12:42:25.341Z" },
     { url = "https://files.pythonhosted.org/packages/e3/a5/6ddab2b4c112be95601c13428db1d8b6608a8b6039816f2ba09c346c08fc/greenlet-3.2.4-cp314-cp314-win_amd64.whl", hash = "sha256:e37ab26028f12dbb0ff65f29a8d3d44a765c61e729647bf2ddfbbed621726f01", size = 303425, upload-time = "2025-08-07T13:32:27.59Z" },
->>>>>>> main
 ]
 
 [[package]]
@@ -288,8 +274,6 @@ wheels = [
 ]
 
 [[package]]
-<<<<<<< HEAD
-=======
 name = "jinja2"
 version = "3.1.6"
 source = { registry = "https://pypi.org/simple" }
@@ -302,7 +286,6 @@ wheels = [
 ]
 
 [[package]]
->>>>>>> main
 name = "jiter"
 version = "0.12.0"
 source = { registry = "https://pypi.org/simple" }
@@ -392,8 +375,6 @@ wheels = [
 ]
 
 [[package]]
-<<<<<<< HEAD
-=======
 name = "jsonschema"
 version = "4.25.1"
 source = { registry = "https://pypi.org/simple" }
@@ -439,7 +420,6 @@ wheels = [
 ]
 
 [[package]]
->>>>>>> main
 name = "langchain-core"
 version = "0.3.80"
 source = { registry = "https://pypi.org/simple" }
@@ -485,8 +465,6 @@ wheels = [
 ]
 
 [[package]]
-<<<<<<< HEAD
-=======
 name = "langchain-text-splitters"
 version = "0.3.11"
 source = { registry = "https://pypi.org/simple" }
@@ -555,7 +533,6 @@ wheels = [
 ]
 
 [[package]]
->>>>>>> main
 name = "langsmith"
 version = "0.4.46"
 source = { registry = "https://pypi.org/simple" }
@@ -574,8 +551,6 @@ wheels = [
 ]
 
 [[package]]
-<<<<<<< HEAD
-=======
 name = "markupsafe"
 version = "3.0.3"
 source = { registry = "https://pypi.org/simple" }
@@ -711,7 +686,6 @@ wheels = [
 ]
 
 [[package]]
->>>>>>> main
 name = "openai"
 version = "2.8.1"
 source = { registry = "https://pypi.org/simple" }
@@ -784,8 +758,6 @@ wheels = [
 ]
 
 [[package]]
-<<<<<<< HEAD
-=======
 name = "ormsgpack"
 version = "1.12.0"
 source = { registry = "https://pypi.org/simple" }
@@ -824,7 +796,6 @@ wheels = [
 ]
 
 [[package]]
->>>>>>> main
 name = "packaging"
 version = "25.0"
 source = { registry = "https://pypi.org/simple" }
@@ -834,8 +805,6 @@ wheels = [
 ]
 
 [[package]]
-<<<<<<< HEAD
-=======
 name = "pandas"
 version = "2.3.3"
 source = { registry = "https://pypi.org/simple" }
@@ -996,7 +965,6 @@ wheels = [
 ]
 
 [[package]]
->>>>>>> main
 name = "pydantic"
 version = "2.12.4"
 source = { registry = "https://pypi.org/simple" }
@@ -1083,8 +1051,6 @@ wheels = [
 ]
 
 [[package]]
-<<<<<<< HEAD
-=======
 name = "pydeck"
 version = "0.9.1"
 source = { registry = "https://pypi.org/simple" }
@@ -1110,7 +1076,6 @@ wheels = [
 ]
 
 [[package]]
->>>>>>> main
 name = "python-dotenv"
 version = "1.2.1"
 source = { registry = "https://pypi.org/simple" }
@@ -1120,8 +1085,6 @@ wheels = [
 ]
 
 [[package]]
-<<<<<<< HEAD
-=======
 name = "pytz"
 version = "2025.2"
 source = { registry = "https://pypi.org/simple" }
@@ -1131,7 +1094,6 @@ wheels = [
 ]
 
 [[package]]
->>>>>>> main
 name = "pyyaml"
 version = "6.0.3"
 source = { registry = "https://pypi.org/simple" }
@@ -1178,8 +1140,6 @@ wheels = [
 ]
 
 [[package]]
-<<<<<<< HEAD
-=======
 name = "referencing"
 version = "0.37.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1194,7 +1154,6 @@ wheels = [
 ]
 
 [[package]]
->>>>>>> main
 name = "regex"
 version = "2025.11.3"
 source = { registry = "https://pypi.org/simple" }
@@ -1300,8 +1259,6 @@ wheels = [
 ]
 
 [[package]]
-<<<<<<< HEAD
-=======
 name = "rpds-py"
 version = "0.29.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1383,15 +1340,10 @@ wheels = [
 ]
 
 [[package]]
->>>>>>> main
 name = "since-ai"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
-<<<<<<< HEAD
-    { name = "dotenv" },
-    { name = "langchain-featherless-ai" },
-=======
     { name = "langchain" },
     { name = "langchain-core" },
     { name = "langchain-featherless-ai" },
@@ -1399,15 +1351,10 @@ dependencies = [
     { name = "pillow" },
     { name = "python-dotenv" },
     { name = "streamlit" },
->>>>>>> main
 ]
 
 [package.metadata]
 requires-dist = [
-<<<<<<< HEAD
-    { name = "dotenv", specifier = ">=0.9.9" },
-    { name = "langchain-featherless-ai", specifier = ">=0.1.2" },
-=======
     { name = "langchain", specifier = ">=0.3.27" },
     { name = "langchain-core", specifier = ">=0.3.80" },
     { name = "langchain-featherless-ai", specifier = ">=0.1.2" },
@@ -1433,7 +1380,6 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/44/cd/a040c4b3119bbe532e5b0732286f805445375489fceaec1f48306068ee3b/smmap-5.0.2.tar.gz", hash = "sha256:26ea65a03958fa0c8a1c7e8c7a58fdc77221b8910f6be2131affade476898ad5", size = 22329, upload-time = "2025-01-02T07:14:40.909Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/04/be/d09147ad1ec7934636ad912901c5fd7667e1c858e19d355237db0d0cd5e4/smmap-5.0.2-py3-none-any.whl", hash = "sha256:b30115f0def7d7531d22a0fb6502488d879e75b260a9db4d0819cfb25403af5e", size = 24303, upload-time = "2025-01-02T07:14:38.724Z" },
->>>>>>> main
 ]
 
 [[package]]
@@ -1446,8 +1392,6 @@ wheels = [
 ]
 
 [[package]]
-<<<<<<< HEAD
-=======
 name = "sqlalchemy"
 version = "2.0.44"
 source = { registry = "https://pypi.org/simple" }
@@ -1506,7 +1450,6 @@ wheels = [
 ]
 
 [[package]]
->>>>>>> main
 name = "tenacity"
 version = "9.1.2"
 source = { registry = "https://pypi.org/simple" }
@@ -1563,8 +1506,6 @@ wheels = [
 ]
 
 [[package]]
-<<<<<<< HEAD
-=======
 name = "toml"
 version = "0.10.2"
 source = { registry = "https://pypi.org/simple" }
@@ -1593,7 +1534,6 @@ wheels = [
 ]
 
 [[package]]
->>>>>>> main
 name = "tqdm"
 version = "4.67.1"
 source = { registry = "https://pypi.org/simple" }
@@ -1627,8 +1567,6 @@ wheels = [
 ]
 
 [[package]]
-<<<<<<< HEAD
-=======
 name = "tzdata"
 version = "2025.2"
 source = { registry = "https://pypi.org/simple" }
@@ -1638,7 +1576,6 @@ wheels = [
 ]
 
 [[package]]
->>>>>>> main
 name = "urllib3"
 version = "2.5.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1648,8 +1585,6 @@ wheels = [
 ]
 
 [[package]]
-<<<<<<< HEAD
-=======
 name = "watchdog"
 version = "6.0.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1751,7 +1686,6 @@ wheels = [
 ]
 
 [[package]]
->>>>>>> main
 name = "zstandard"
 version = "0.25.0"
 source = { registry = "https://pypi.org/simple" }
