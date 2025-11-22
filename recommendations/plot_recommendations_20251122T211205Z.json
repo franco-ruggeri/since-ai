@@ -1,0 +1,121 @@
+{
+  "chart_type": "line",
+  "channels": {
+    "x": "month",
+    "y": "observation_count",
+    "color": "year"
+  },
+  "preprocessing_steps": [
+    "Filter observations to include only those with observation_date between 2024-01-01 and 2025-12-31",
+    "For each observation, check if it contains electrical safety keywords (e.g., 'electrical', 'cable', 'socket', 'water', 'damage', 'leak', 'residual current device')",
+    "Extract the month from the observation_date in the format 'January 2024', 'February 2024', etc.",
+    "Count observations per month",
+    "Sort months chronologically",
+    "Aggregate the data to create a time-series of electrical safety observations"
+  ],
+  "aggregation": "count_by_month",
+  "processed_data": {
+    "columns": [
+      "month",
+      "year",
+      "observation_count"
+    ],
+    "data": [
+      [
+        "January 2024",
+        2024,
+        1
+      ],
+      [
+        "February 2024",
+        2024,
+        2
+      ],
+      [
+        "March 2024",
+        2024,
+        1
+      ],
+      [
+        "April 2024",
+        2024,
+        0
+      ],
+      [
+        "May 2024",
+        2024,
+        0
+      ],
+      [
+        "June 2024",
+        2024,
+        0
+      ],
+      [
+        "July 2024",
+        2024,
+        5
+      ],
+      [
+        "August 2024",
+        2024,
+        5
+      ],
+      [
+        "September 2024",
+        2024,
+        8
+      ],
+      [
+        "October 2024",
+        2024,
+        10
+      ],
+      [
+        "November 2024",
+        2024,
+        8
+      ],
+      [
+        "December 2024",
+        2024,
+        7
+      ],
+      [
+        "January 2025",
+        2025,
+        7
+      ],
+      [
+        "February 2025",
+        2025,
+        3
+      ]
+    ]
+  },
+  "rationale": "A line chart is ideal for showing trends over time. It visually represents the number of electrical safety observations per month from 2024 to 2025, allowing for clear identification of upward or downward trends.",
+  "suggestions": {
+    "alternatives": [
+      {
+        "chart_type": "area",
+        "channels": {
+          "x": "month",
+          "y": "observation_count",
+          "color": "year"
+        },
+        "rationale": "An area chart can also be used to show the trend over time, with the added benefit of showing the cumulative count of observations.",
+        "complexity": "medium"
+      },
+      {
+        "chart_type": "bar",
+        "channels": {
+          "x": "month",
+          "y": "observation_count",
+          "color": "year"
+        },
+        "rationale": "A bar chart is straightforward and easy to interpret, showing the exact count of observations per month.",
+        "complexity": "low"
+      }
+    ]
+  }
+}

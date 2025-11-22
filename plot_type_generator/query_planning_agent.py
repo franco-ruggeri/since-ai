@@ -8,10 +8,8 @@ from plot_type_generator.plot_gen_state import PlotGenState
 from plot_type_generator.utils import _load_prompt, _get_api_key
 
 logger = logging.getLogger(__name__)
-load_dotenv()  # reads .env in cwd or parent dirs
+load_dotenv()
 
-
-# Provider-native Featherless client
 try:
     from langchain_featherless_ai import ChatFeatherlessAi
 except Exception:
@@ -37,7 +35,7 @@ def query_planning_agent(state: PlotGenState) -> PlotGenState:
     - Places the returned text into `state['execution_plan']`.
     """
     try:
-        refiner_prompt = _load_prompt("query_refiner.txt")
+        refiner_prompt = _load_prompt("query_refiner_text_ext2.txt")
     except FileNotFoundError:
         logger.exception("Prompt file not found")
         raise

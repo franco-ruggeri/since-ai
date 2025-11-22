@@ -250,8 +250,8 @@ def main():
     with open(data_path, "r") as f:
         data = json.load(f)
 
-    # Get specifically the 'Rappuset' test case
-    test_case = data["Rappuset"]
+    # Get specifically the 'Käsittelyaika' test case
+    test_case = data["Sähköturvallisuus"]
     raw_data = test_case["Data"]
     user_query = test_case["prompt"]
 

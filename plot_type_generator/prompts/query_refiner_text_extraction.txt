@@ -26,7 +26,7 @@ Generate a detailed extraction and visualization plan that specifies:
 **Query**: "What information is contained in the text observations?"
 
 Analyze the observation and prompts to identify:
-- **Topics/Categories** mentioned (e.g., "stairway", "electrical", "chemical hazard")
+- **Topics/Categories** mentioned (e.g., "stair", "structural", "hazard")
 - **Entities** present (locations, equipment, personnel, dates)
 - **Patterns** visible (common words, recurring themes)
 - **Quantifiable aspects** (counts, frequencies, time-based patterns)
