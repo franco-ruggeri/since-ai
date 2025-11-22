@@ -1,4 +1,4 @@
-import plotly.graph_objects as go
+import plotly.express as px
 from .base_chart import Chart
 
 class BarChart(Chart, chart_type="bar"):
@@ -10,27 +10,15 @@ class BarChart(Chart, chart_type="bar"):
         if not x_col or not y_col:
             raise ValueError("Bar chart requires 'x' and 'y' channels")
         
-        fig = go.Figure()
-        
-        if color_col:
-            fig.add_trace(go.Bar(
-                x=df[x_col["column"]],
-                y=df[y_col["column"]],
-                marker=dict(color=df[color_col["column"]]),
-                name=y_col["column"]
-            ))
-        else:
-            fig.add_trace(go.Bar(
-                x=df[x_col["column"]],
-                y=df[y_col["column"]],
-                name=y_col["column"]
-            ))
-        
-        fig.update_layout(
+        fig = px.bar(
+            df,
+            x=x_col["column"],
+            y=y_col["column"],
+            color=color_col["column"] if color_col else None,
             title=self.spec.get("title", "Bar Chart"),
-            xaxis_title=x_col["column"],
-            yaxis_title=y_col["column"],
-            hovermode='x unified'
+            labels={x_col["column"]: x_col["column"], y_col["column"]: y_col["column"]}
         )
+        
+        fig.update_layout(hovermode='x unified')
         
         return fig

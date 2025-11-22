@@ -1,4 +1,4 @@
-import plotly.graph_objects as go
+import plotly.express as px
 from .base_chart import Chart
 
 class PieChart(Chart, chart_type="pie"):
@@ -6,13 +6,10 @@ class PieChart(Chart, chart_type="pie"):
         category = self.spec["channels"]["category"]
         value = self.spec["channels"]["value"]
         
-        fig = go.Figure(data=[go.Pie(
-            labels=df[category],
-            values=df[value],
-            name=value
-        )])
-        
-        fig.update_layout(
+        fig = px.pie(
+            df,
+            names=category,
+            values=value,
             title=self.spec.get("title", "Pie Chart")
         )
         
