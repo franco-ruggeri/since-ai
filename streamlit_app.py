@@ -1,22 +1,68 @@
-"""
-Entry point for Streamlit Cloud deployment.
-This file allows running the app from the repository root.
-"""
-import sys
 import os
+import numpy as np
+import streamlit as st
+import pandas as pd
+from dotenv import load_dotenv
+from backend_requests import get_response
+from chart_factory import make_chart
 
-# Set up paths
-repo_root = os.path.dirname(os.path.abspath(__file__))
-frontend_dir = os.path.join(repo_root, 'frontend')
 
-# Add frontend directory to path so imports work
-sys.path.insert(0, frontend_dir)
+def main():
+    with open("styles.css") as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
-# Change to frontend directory for relative file operations
-os.chdir(frontend_dir)
+    # st.session_state.filters = {}
+    # st.session_state.hard_limit = 300
 
-# Import and run the main app
-from main import main
+    st.title("🤖 HSE Bot - Visualization Agent")
+    st.markdown("I am the Visualization Agent for the HSE Bot. Give me the user prompt and the data, and I will visualize it for you.")
+    st.markdown(
+        """
+        Voit kysyä myös suomeksi!
+        <img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Flag_of_Finland.svg" alt="Finnish Flag" width="20"/>
+        """,
+        unsafe_allow_html=True)
+
+    user_input = st.text_area("Enter the user prompt", key="user_input")
+    user_input_file = st.file_uploader("Upload the dataframe file", type=[
+                                       "csv", "xlsx"], key="user_file_upload")
+
+    if st.button("Get Visualization"):
+        if user_input.strip() and user_input_file:
+            try:
+                if user_input_file.name.endswith('.csv'):
+                    df = pd.read_csv(user_input_file)
+                else:
+                    df = pd.read_excel(user_input_file)
+            except Exception as e:
+                st.error(f"Error reading file: {e}")
+                return   
+            try:
+                get_response(user_input, df) 
+            except Exception as e:
+                st.error(f"Error getting visualization: {e}")
+        else:
+            st.warning("Please enter valid user prompt and the queried data.")
+            
+        
+     
+    chart_data = pd.DataFrame(
+        np.random.randn(20, 3),
+        columns=['Series A', 'Series B', 'Series C']
+    )
+    
+    st.subheader("📊 Generated Visualization")
+    line_chart = make_chart(chart_data, {
+        "chart_type": "histogram",
+        "channels": {
+            "x": "Series B",
+            "y": "Series A",
+        }
+    })
+    
+    st.plotly_chart(line_chart)
+
 
 if __name__ == "__main__":
+    load_dotenv()
     main()
