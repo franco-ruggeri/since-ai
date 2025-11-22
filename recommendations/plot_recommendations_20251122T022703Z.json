@@ -1,0 +1,46 @@
+{
+  "plot type": "line",
+  "features to be selected": [
+    {
+      "x": "date",
+      "y": "sales_amount",
+      "group": "product",
+      "filter": "date >= '2024-01-01' and date < '2025-01-01'"
+    }
+  ],
+  "suggestions": {
+    "pca_suggestion": false,
+    "PCA reason": "None since number of numeric features is low.",
+    "plot_types": [
+      {
+        "plot_type": "area",
+        "primary_features": [
+          {
+            "x": "date",
+            "y": "sales_amount",
+            "group": "product",
+            "filter": "date >='2024-01-01' and date < '2025-01-01'"
+          }
+        ],
+        "why": " montrer la tendance du temps  accumulée sur les mois. ",
+        "complexity": "low",
+        "pca_suggestion": false,
+        "pca_reason": "None since number of numeric features is low."
+      },
+      {
+        "plot_type": "faceted bar",
+        "primary_features": [
+          "date",
+          "product",
+          "sales_amount",
+          "region"
+        ],
+        "why": "This might assist in determining the trend when examined by region. ",
+        "complexity": "lower medium",
+        "pca_suggestion": true,
+        "pca_reason": "Since number of dims is medium and this dimensionality reduction allows us to better compare differences among the groups in horizontal range.",
+        "num_components": 2
+      }
+    ]
+  }
+}
