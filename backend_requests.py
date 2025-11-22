@@ -3,7 +3,7 @@ import json
 import pandas as pd
 
 
-def get_visualization(user_prompt: str, dataframe: pd.DataFrame) -> dict:
+def get_response(user_prompt: str, dataframe: pd.DataFrame) -> dict:
     """
     Converts a dataframe to JSON and sends it to the backend API along with user prompt.
     
