@@ -1,7 +1,7 @@
 import plotly.express as px
 from .base_chart import Chart
 
-class BoxPlotChart(Chart, chart_type="boxplot"):
+class BoxPlotChart(Chart, chart_type="box"):
     def get_chart(self, df):
         x_col = self.channels.get("x")
         y_col = self.channels.get("y")

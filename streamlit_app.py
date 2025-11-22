@@ -3,7 +3,7 @@ import numpy as np
 import streamlit as st
 import pandas as pd
 from dotenv import load_dotenv
-from backend_requests import get_response
+from agent_caller import get_response, get_test_response
 from chart_factory import make_chart
 
 
@@ -15,7 +15,8 @@ def main():
     # st.session_state.hard_limit = 300
 
     st.title("🤖 HSE Bot - Visualization Agent")
-    st.markdown("I am the Visualization Agent for the HSE Bot. Give me the user prompt and the data, and I will visualize it for you.")
+    st.markdown(
+        "I am the Visualization Agent for the HSE Bot. Give me the user prompt and the data, and I will visualize it for you.")
     st.markdown(
         """
         Voit kysyä myös suomeksi!
@@ -36,31 +37,43 @@ def main():
                     df = pd.read_excel(user_input_file)
             except Exception as e:
                 st.error(f"Error reading file: {e}")
-                return   
+                return
             try:
-                get_response(user_input, df) 
+                with st.spinner('Agents are working...', show_time=True):
+                    df, chart_spec = get_response(user_input, df)
+                
+                st.subheader("📊 Generated Visualization")
+                
+                line_chart = make_chart(df, chart_spec)
+                st.plotly_chart(line_chart)
+                
             except Exception as e:
                 st.error(f"Error getting visualization: {e}")
         else:
             st.warning("Please enter valid user prompt and the queried data.")
             
         
+    # df, chart_spec = get_test_response()
+    # st.subheader("📊 Generated Visualization")
+    # line_chart = make_chart(df, chart_spec)
+
+    # st.plotly_chart(line_chart)
      
-    chart_data = pd.DataFrame(
-        np.random.randn(20, 3),
-        columns=['Series A', 'Series B', 'Series C']
-    )
+    # chart_data = pd.DataFrame(
+    #     np.random.randn(20, 3),
+    #     columns=['Series A', 'Series B', 'Series C']
+    # )
     
-    st.subheader("📊 Generated Visualization")
-    line_chart = make_chart(chart_data, {
-        "chart_type": "histogram",
-        "channels": {
-            "x": "Series B",
-            "y": "Series A",
-        }
-    })
+    # st.subheader("📊 Generated Visualization")
+    # line_chart = make_chart(chart_data, {
+    #     "chart_type": "histogram",
+    #     "channels": {
+    #         "x": "Series B",
+    #         "y": "Series A",
+    #     }
+    # })
     
-    st.plotly_chart(line_chart)
+    # st.plotly_chart(line_chart)
 
 
 if __name__ == "__main__":
