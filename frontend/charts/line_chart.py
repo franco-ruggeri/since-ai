@@ -1,4 +1,4 @@
-import plotly.graph_objects as go
+import plotly.express as px
 from .base_chart import Chart
 
 class LineChart(Chart, chart_type="line"):
@@ -9,20 +9,14 @@ class LineChart(Chart, chart_type="line"):
         if not x_col or not y_col:
             raise ValueError("Line chart requires 'x' and 'y' channels")
         
-        fig = go.Figure()
-        
-        fig.add_trace(go.Scatter(
-            x=df[x_col["column"]],
-            y=df[y_col["column"]],
-            mode='lines',
-            name=y_col["column"]
-        ))
-        
-        fig.update_layout(
+        fig = px.line(
+            df,
+            x=x_col["column"],
+            y=y_col["column"],
             title=self.spec.get("title", "Line Chart"),
-            xaxis_title=x_col["column"],
-            yaxis_title=y_col["column"],
-            hovermode='x unified'
+            labels={x_col["column"]: x_col["column"], y_col["column"]: y_col["column"]}
         )
+        
+        fig.update_layout(hovermode='x unified')
         
         return fig

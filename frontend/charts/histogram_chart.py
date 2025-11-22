@@ -1,4 +1,4 @@
-import plotly.graph_objects as go
+import plotly.express as px
 from .base_chart import Chart
 
 class HistogramChart(Chart, chart_type="histogram"):
@@ -8,17 +8,14 @@ class HistogramChart(Chart, chart_type="histogram"):
         if not x_col:
             raise ValueError("Histogram chart requires 'x' channel")
         
-        fig = go.Figure(data=[go.Histogram(
-            x=df[x_col["column"]],
-            nbinsx=30,
-            name=x_col["column"]
-        )])
-        
-        fig.update_layout(
+        fig = px.histogram(
+            df,
+            x=x_col["column"],
+            nbins=30,
             title=self.spec.get("title", "Histogram"),
-            xaxis_title=x_col["column"],
-            yaxis_title="Count",
-            hovermode='x unified'
+            labels={x_col["column"]: x_col["column"]}
         )
+        
+        fig.update_layout(hovermode='x unified')
         
         return fig

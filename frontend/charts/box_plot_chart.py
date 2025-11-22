@@ -1,4 +1,4 @@
-import plotly.graph_objects as go
+import plotly.express as px
 from .base_chart import Chart
 
 class BoxPlotChart(Chart, chart_type="boxplot"):
@@ -9,28 +9,16 @@ class BoxPlotChart(Chart, chart_type="boxplot"):
         if not y_col:
             raise ValueError("Box plot chart requires 'y' channel")
         
-        if x_col:
-            # Box plot with categories
-            fig = go.Figure()
-            for category in df[x_col["column"]].unique():
-                fig.add_trace(go.Box(
-                    y=df[df[x_col["column"]] == category][y_col["column"]],
-                    name=str(category)
-                ))
-        else:
-            # Simple box plot
-            fig = go.Figure(data=[go.Box(
-                y=df[y_col["column"]],
-                name=y_col["column"]
-            )])
-        
-        fig.update_layout(
+        fig = px.box(
+            df,
+            x=x_col["column"] if x_col else None,
+            y=y_col["column"],
             title=self.spec.get("title", "Box Plot"),
-            yaxis_title=y_col["column"],
-            hovermode='y unified'
+            labels={y_col["column"]: y_col["column"]}
         )
         
-        if x_col:
-            fig.update_layout(xaxis_title=x_col["column"])
+        fig.update_layout(hovermode='y unified')
+        
+        return fig
         
         return fig
