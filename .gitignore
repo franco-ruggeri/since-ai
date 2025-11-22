@@ -1,1 +1,88 @@
-/.env
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.pip-wheel-metadata/
+.eggs/
+
+# Virtual environments
+.env
+.env.*
+venv/
+ENV/
+env/
+.venv/
+.python-version
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage
+htmlcov/
+.coverage
+.coverage.*
+.cache
+.nosetests.xml
+coverage.xml
+*.cover
+.pytest_cache/
+
+# PyCharm / IntelliJ
+.idea/
+
+# VS Code
+.vscode/
+
+# Sublime
+*.sublime-project
+*.sublime-workspace
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Mypy / ruff
+.mypy_cache/
+.ruff_cache/
+
+# Logs
+*.log
+
+# SQLite
+*.sqlite3
+
+# Node
+node_modules/
+
+# Local env files in package directories
+plot_type_generator/.env
+
+# Sensitive files / secrets
+secrets.json
+
+# Lock files (optionally ignore if you don't commit them)
+Pipfile.lock
+poetry.lock
+
+# Misc
+*.egg
+*.manifest
+*.spec
+
+# Docker
+.env.local
+```
