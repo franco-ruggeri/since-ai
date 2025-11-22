@@ -1,7 +1,9 @@
-import os, sys
-
+import os
+import sys
+import json
 from pathlib import Path
 from dotenv import load_dotenv
+from typing import Optional, Dict, Any
 
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
@@ -10,40 +12,75 @@ from plot_type_generator.query_planning_agent import query_planning_agent
 from plot_type_generator.plot_type_chooser_agent import plot_type_chooser_agent
 from plot_type_generator.numeric_analysis_agent import numeric_analysis_agent
 from plot_type_generator.lexical_analysis_agent import lexical_analysis_agent
-from plot_type_generator.visual_appropriateness_agent import visual_appropriateness_agent
+from plot_type_generator.visual_appropriateness_agent import (
+    visual_appropriateness_agent,
+)
 from plot_type_generator.plot_gen_state import PlotGenState
 import plot_type_generator.utils as utils
-import json
 
 
-def main() -> None:
-    """Orchestrate the pipeline: query planning -> plot type choosing.
+def run_plot_generation_pipeline(
+    user_query: str,
+    data_table: Dict[str, Any],
+    max_iterations: int = 3,
+    suggestion_k: int = 3,
+    verbose: bool = True,
+) -> Optional[str | Dict[str, Any]]:
+    """
+    Run the complete plot generation pipeline.
 
-    Ensure `FEATHERLESS_API_KEY` is set in the environment (or in a `.env` file).
+    Args:
+        user_query: The user's visualization request
+        data_table: Dictionary describing the data with keys:
+            - columns: list of column names
+            - dtypes: dict mapping column names to data types
+            - sample_rows (optional): list of sample data rows
+            - total_rows (optional): total number of rows
+        max_iterations: Maximum number of refinement iterations (default: 3)
+        suggestion_k: Number of plot type suggestions to generate (default: 3)
+        verbose: Whether to print progress messages (default: True)
+
+    Returns:
+        Dictionary containing processed data ready for plotting with structure:
+        {
+            "columns": [...],
+            "data": [[row1], [row2], ...]
+        }
+        Returns None if the pipeline fails.
+
+    Example:
+        >>> data_table = {
+        ...     "columns": ["date", "product", "sales_amount", "region"],
+        ...     "dtypes": {
+        ...         "date": "datetime",
+        ...         "product": "category",
+        ...         "sales_amount": "float",
+        ...         "region": "category"
+        ...     },
+        ...     "sample_rows": [
+        ...         ["2024-01-01", "A", 123.45, "north"],
+        ...         ["2024-01-02", "B", 10.0, "south"]
+        ...     ]
+        ... }
+        >>> result = run_plot_generation_pipeline(
+        ...     "Show me monthly sales trends for product A in 2024",
+        ...     data_table
+        ... )
+        >>> if result:
+        ...     print(f"Generated {len(result['data'])} data points")
     """
     load_dotenv()
 
+    # Validate API key
     if not os.environ.get("FEATHERLESS_API_KEY"):
-        print(
-            "FEATHERLESS_API_KEY not set. Set it in the environment or plot_type_generator/.env"
+        raise ValueError(
+            "FEATHERLESS_API_KEY not set. Set it in the environment or .env file"
         )
-        return
 
+    # Initialize state
     state: PlotGenState = {
-        "user_query": "Show me monthly sales trends for product A in 2024",
-        "data_table": {
-            "columns": ["date", "product", "sales_amount", "region"],
-            "dtypes": {
-                "date": "datetime",
-                "product": "category",
-                "sales_amount": "float",
-                "region": "category",
-            },
-            "sample_rows": [
-                ["2024-01-01", "A", 123.45, "north"],
-                ["2024-01-02", "B", 10.0, "south"],
-            ],
-        },
+        "user_query": user_query,
+        "data_table": data_table,
         "execution_plan": "",
         "code": "",
         "figure_path": "",
@@ -51,116 +88,203 @@ def main() -> None:
         "lexical_feedback": "",
         "visual_feedback": "",
         "iteration_count": 0,
-        "max_iterations": 3,
+        "max_iterations": max_iterations,
         "status": "pending",
         "llm_model": None,
-        "suggestion_k": 3,
+        "suggestion_k": suggestion_k,
         "plot_recommendations": None,
         "plot_recommendations_path": "./plot_recommendations.json",
         "processed_data": None,
     }
 
+    # Step 1: Query Planning
+    if verbose:
+        print("=" * 80)
+        print("STEP 1: Query Planning")
+        print("=" * 80)
+
     try:
         state = query_planning_agent(state)
+        if verbose:
+            print(
+                f"✓ Execution plan generated ({len(state.get('execution_plan', ''))} chars)"
+            )
+            print("\n--- Execution Plan ---")
+            print(state.get("execution_plan"))
     except Exception as e:
-        print("Query planning agent failed:", e)
-        return
+        print(f"❌ Query planning agent failed: {e}")
+        return None
 
-    print("--- Execution Plan ---")
-    print(state.get("execution_plan"))
-
-    # Multi-agent refinement loop
-    max_iterations = state.get("max_iterations") or 3
-
+    # Step 2: Multi-agent refinement loop
     for iteration in range(max_iterations):
         state["iteration_count"] = iteration
-        print(f"\n=== Iteration {iteration + 1}/{max_iterations} ===")
+
+        if verbose:
+            print(f"\n{'=' * 80}")
+            print(f"ITERATION {iteration + 1}/{max_iterations}")
+            print("=" * 80)
 
         # Generate plot recommendations
         try:
-            state = plot_type_chooser_agent(state, k=state.get("suggestion_k") or 3)
-        except Exception as e:
-            print(f"Plot type chooser failed: {e}")
-            return
+            state = plot_type_chooser_agent(state, k=suggestion_k)
 
-        print("\n--- Plot Recommendations ---")
-        print(state.get("plot_recommendations"))
+            if verbose:
+                print("\n--- Plot Recommendations ---")
+                recommendations_raw = state.get("plot_recommendations")
+                if recommendations_raw:
+                    try:
+                        recommendations = utils.extract_json_content(
+                            recommendations_raw
+                        )
+                        print(json.dumps(recommendations, indent=2))
+                    except Exception as e:
+                        print(f"Warning: Could not parse recommendations: {e}")
+        except Exception as e:
+            print(f"❌ Plot type chooser failed: {e}")
+            return None
 
         # Show processed data if generated
-        if state.get("processed_data"):
+        if state.get("processed_data") and verbose:
             print("\n--- Processed Data Generated ---")
-            print(json.dumps(state.get("processed_data"), indent=2))
+            processed = state.get("processed_data")
+            print(f"Columns: {processed.get('columns')}")
+            print(f"Data rows: {len(processed.get('data', []))}")
 
-        # Run feedback agents sequentially
+        # Run feedback agents
         all_feedback_passed = True
 
         # Numeric Analysis
         try:
             state = numeric_analysis_agent(state)
             numeric_feedback = state.get("numeric_feedback", "")
-            print("\n--- Numeric Feedback ---")
-            print(numeric_feedback)
 
-            # Check if issues were found
+            if verbose:
+                print("\n--- Numeric Feedback ---")
+                print(numeric_feedback)
+
             try:
                 feedback_json = json.loads(numeric_feedback)
                 if feedback_json.get("validation_status") == "ISSUES_FOUND":
                     all_feedback_passed = False
-                    print("⚠️  Numeric issues found")
+                    if verbose:
+                        print("⚠️  Numeric issues found")
             except Exception:
                 pass
         except Exception as e:
-            print(f"Numeric analysis failed: {e}")
+            if verbose:
+                print(f"Warning: Numeric analysis failed: {e}")
 
         # Lexical Analysis
         try:
             state = lexical_analysis_agent(state)
             lexical_feedback = state.get("lexical_feedback", "")
-            print("\n--- Lexical Feedback ---")
-            print(lexical_feedback)
+
+            if verbose:
+                print("\n--- Lexical Feedback ---")
+                print(lexical_feedback)
 
             try:
                 feedback_json = json.loads(lexical_feedback)
                 if feedback_json.get("validation_status") == "ISSUES_FOUND":
                     all_feedback_passed = False
-                    print("⚠️  Lexical issues found")
+                    if verbose:
+                        print("⚠️  Lexical issues found")
             except Exception:
                 pass
         except Exception as e:
-            print(f"Lexical analysis failed: {e}")
+            if verbose:
+                print(f"Warning: Lexical analysis failed: {e}")
 
         # Visual Appropriateness
         try:
             state = visual_appropriateness_agent(state)
             visual_feedback = state.get("visual_feedback", "")
-            print("\n--- Visual Feedback ---")
-            print(visual_feedback)
+
+            if verbose:
+                print("\n--- Visual Feedback ---")
+                print(visual_feedback)
 
             try:
                 feedback_json = json.loads(visual_feedback)
                 if feedback_json.get("validation_status") == "ISSUES_FOUND":
                     all_feedback_passed = False
-                    print("⚠️  Visual appropriateness issues found")
+                    if verbose:
+                        print("⚠️  Visual appropriateness issues found")
             except Exception:
                 pass
         except Exception as e:
-            print(f"Visual appropriateness analysis failed: {e}")
+            if verbose:
+                print(f"Warning: Visual appropriateness analysis failed: {e}")
 
         # Check if we should continue iterating
         if all_feedback_passed:
-            print("\n✅ All feedback agents passed! Recommendations are validated.")
+            if verbose:
+                print("\n✅ All feedback agents passed! Recommendations are validated.")
             state["status"] = "completed"
             break
         else:
-            print(f"\n🔄 Issues found. Regenerating recommendations (iteration {iteration + 1}/{max_iterations})...")
-            # The next iteration will regenerate with the feedback in context
+            if verbose:
+                print(f"\n🔄 Issues found. Regenerating recommendations...")
 
     # Save final recommendations
-    print("\n--- Final Plot Recommendations ---")
-    print(state.get("plot_recommendations"))
     if state.get("plot_recommendations"):
-        parsed_text = utils.extract_json_content(state.get("plot_recommendations"))
-        utils.save_recommendations(parsed_text)
+        try:
+            parsed_recommendations = utils.extract_json_content(
+                state.get("plot_recommendations")
+            )
+            utils.save_recommendations(parsed_recommendations)
+        except Exception as e:
+            if verbose:
+                print(f"Warning: Could not save recommendations: {e}")
+
+    processed_data = state.get("processed_data")
+
+    return processed_data
+
+
+def main():
+    """Example usage of the plot generation pipeline."""
+
+    # Load Stairways test case from data_english.json
+    data_path = project_root / "data" / "data_english.json"
+    with open(data_path, "r") as f:
+        data = json.load(f)
+
+    # Get specifically the 'Rappuset' test case
+    test_case = data["Rappuset"]
+    raw_data = test_case["Data"]
+    user_query = test_case["prompt"]
+
+    data_table = {
+        "columns": list(raw_data[0].keys()),
+        "dtypes": {
+            "Heading": "string",
+            "Observation": "string",
+            "observation_date": "datetime",
+            "observation_handled_date": "datetime",
+        },
+        "total_rows": len(raw_data),
+        "observations": [
+            f"Heading: {obs['Heading']}, Observation: {obs['Observation']}..."
+            for obs in raw_data
+        ],
+    }
+
+    # Run the pipeline
+    processed_data = run_plot_generation_pipeline(
+        user_query=user_query,
+        data_table=test_case["Data"],
+        max_iterations=2,
+        suggestion_k=1,
+        verbose=True,
+    )
+    if processed_data:
+        print("\n" + "=" * 80)
+        print("PROCESSED DATA READY FOR PLOTTING")
+        print("=" * 80)
+        print(json.dumps(processed_data, indent=2))
+    else:
+        print("\n❌ Pipeline failed to generate processed data")
 
 
 if __name__ == "__main__":

@@ -1,4 +1,5 @@
 """Test the text extraction and data processing capabilities."""
+
 import os
 import sys
 import json
@@ -22,38 +23,42 @@ output_dir.mkdir(exist_ok=True)
 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 output_file = output_dir / f"stairways_test_{timestamp}.txt"
 
+
 # Redirect output to both console and file
 class Tee:
     def __init__(self, *files):
         self.files = files
+
     def write(self, obj):
         for f in self.files:
             f.write(obj)
             f.flush()
+
     def flush(self):
         for f in self.files:
             f.flush()
 
-output_f = open(output_file, 'w')
+
+output_f = open(output_file, "w")
 original_stdout = sys.stdout
 sys.stdout = Tee(sys.stdout, output_f)
 
 # Load Stairways test case from data_english.json
 data_path = project_root / "data" / "data_english.json"
-with open(data_path, 'r') as f:
+with open(data_path, "r") as f:
     data = json.load(f)
 
 # Get specifically the 'Stairways' test case
-test_case = data['Stairways']
+test_case = data["Stairway"]
 
-print("="*80)
+print("=" * 80)
 print("STAIRWAYS TEST CASE")
-print("="*80)
-print(f"Test Case: Stairways")
+print("=" * 80)
+print(f"Test Case: Stairway")
 print(f"Prompt: {test_case['prompt']}\n")
 
 # Prepare data with sample observations
-raw_data = test_case['data']
+raw_data = test_case["data"]
 print(f"Raw data: {len(raw_data)} observations")
 print(f"Columns: {list(raw_data[0].keys())}")
 print(f"\nSample observations:")
@@ -69,18 +74,18 @@ data_table = {
         "Title": "string",
         "Observation": "string",
         "observation_date": "datetime",
-        "observation_handled_date": "datetime"
+        "observation_handled_date": "datetime",
     },
     "total_rows": len(raw_data),
     "sample_observations": [
         f"Title: {obs['Title']}, Observation: {obs['Observation'][:100]}..."
         for obs in raw_data[:5]
-    ]
+    ],
 }
 
 # Initialize state
 state: PlotGenState = {
-    "user_query": test_case['prompt'],
+    "user_query": test_case["prompt"],
     "data_table": data_table,
     "execution_plan": "",
     "code": "",
@@ -98,23 +103,25 @@ state: PlotGenState = {
     "processed_data": None,
 }
 
-print("="*80)
+print("=" * 80)
 print("STEP 1: Query Planning")
-print("="*80)
+print("=" * 80)
 state = query_planning_agent(state)
 print(f"\n✓ Execution plan generated ({len(state.get('execution_plan', ''))} chars)")
 print("\n--- Execution Plan ---")
 print(state.get("execution_plan"))
 
-print("\n" + "="*80)
+print("\n" + "=" * 80)
 print("STEP 2: Plot Type Recommendation & Data Processing")
-print("="*80)
+print("=" * 80)
 state = plot_type_chooser_agent(state, k=3)
 
 print("\n--- Plot Recommendations ---")
 plot_recommendations_raw = state.get("plot_recommendations")
 print(f"Raw value type: {type(plot_recommendations_raw)}")
-print(f"Raw value length: {len(plot_recommendations_raw) if plot_recommendations_raw else 0} chars")
+print(
+    f"Raw value length: {len(plot_recommendations_raw) if plot_recommendations_raw else 0} chars"
+)
 
 if plot_recommendations_raw:
     try:
@@ -129,9 +136,9 @@ else:
     sys.exit(1)
 
 if state.get("processed_data"):
-    print("\n" + "="*80)
+    print("\n" + "=" * 80)
     print("✅ PROCESSED DATA GENERATED")
-    print("="*80)
+    print("=" * 80)
     processed = state.get("processed_data")
     print(f"\nColumns: {processed.get('columns')}")
     print(f"Data rows: {len(processed.get('data', []))}")
@@ -140,16 +147,16 @@ if state.get("processed_data"):
 else:
     print("\n⚠️ No processed data was generated")
 
-if 'recommendations' in locals():
-    print("\n" + "="*80)
+if "recommendations" in locals():
+    print("\n" + "=" * 80)
     print("SUMMARY")
-    print("="*80)
+    print("=" * 80)
     print(f"Visualization Type: {recommendations.get('visualization_type')}")
     print(f"Aggregation: {recommendations.get('aggregation')}")
     print(f"X-Axis: {recommendations.get('x_axis')}")
     print(f"Y-Axis: {recommendations.get('y_axis')}")
     print(f"\nPreprocessing Steps:")
-    for i, step in enumerate(recommendations.get('preprocessing_steps', []), 1):
+    for i, step in enumerate(recommendations.get("preprocessing_steps", []), 1):
         print(f"{i}. {step}")
 
     if state.get("processed_data"):
@@ -157,10 +164,10 @@ if 'recommendations' in locals():
         print(f"\n✅ Ready to plot with {len(processed.get('data', []))} data points")
 
 # Cleanup and close output file
-print("\n" + "="*80)
+print("\n" + "=" * 80)
 print(f"Test completed successfully!")
 print(f"Output saved to: {output_file}")
-print("="*80)
+print("=" * 80)
 
 sys.stdout = original_stdout
 output_f.close()

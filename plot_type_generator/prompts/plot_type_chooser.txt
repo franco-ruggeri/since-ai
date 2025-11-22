@@ -24,11 +24,15 @@ Considerations and rules:
 
 Output format (REQUIRED):
 Return a single valid JSON object and nothing else. The JSON must have exactly these keys:
-- `visualization_type`: string (e.g., "bar", "line", "pie", "scatter", "heatmap")
+- `chart_type`: string - Plotly chart type (e.g., "bar", "line", "pie", "scatter", "heatmap", "sunburst", "treemap")
+- `channels`: object mapping visual channels to data fields
+  - `x`: string or array - column name(s) for x-axis (can be array for multicategory axes)
+  - `y`: string or array - column name(s) for y-axis (can be array for multicategory axes)
+  - `color`: string (optional) - column name for color encoding
+  - `size`: string (optional) - column name for size encoding
+  - `text`: string (optional) - column name for text labels
 - `preprocessing_steps`: array of strings describing how to process the raw data
 - `aggregation`: string describing the aggregation method (e.g., "count_by_category", "sum", "average")
-- `x_axis`: string - what goes on x-axis
-- `y_axis`: string - what goes on y-axis
 - `processed_data`: object with the actual processed DataFrame as {columns: [...], data: [[row1], [row2], ...]}
 - `suggestions`: object with alternatives and notes
 
@@ -36,7 +40,7 @@ Important behavior rules:
 - Use chain-of-thought reasoning internally to analyze the execution plan and the data, exploring trade-offs and edge cases. DO NOT include internal reasoning in the output — the final message must contain only the JSON object.
 - Perform up to two quick self-evaluation passes over your initial recommendations: (1) generate initial top-k suggestions, (2) re-evaluate each suggestion for feasibility and clarity, then (optionally) adjust recommendations. Only the final JSON should be returned.
 - If you detect the data has many numeric features (>6), include a clear PCA recommendation in `suggestions` with the suggested number of components and how to visualize (e.g., "scatter PC1 vs PC2 colored by category").
-- When multiple plot types are recommended, order them from most to least preferred in your internal reasoning; the JSON may list the primary `plot type` as the top recommendation and include alternatives inside `suggestions`.
+- When multiple plot types are recommended, order them from most to least preferred in your internal reasoning; the JSON may list the primary `chart_type` as the top recommendation and include alternatives inside `suggestions`.
 - If the user request is ambiguous, choose reasonable defaults and note them inside `suggestions` (e.g., default aggregation='monthly', filter='product == A').
 
 Formatting constraints:
@@ -44,14 +48,20 @@ Formatting constraints:
 - Use column names from the provided data description when possible.
 - Keep fields concise and machine-parseable.
 
-## EXAMPLE OUTPUT
+## EXAMPLE OUTPUTS
 
+### Example 1: Simple Bar Chart
 For query "How many safety observations in stairways? Classify the types."
 With raw data containing text observations:
 
 ```json
 {
-  "visualization_type": "bar",
+  "chart_type": "bar",
+  "channels": {
+    "x": "count",
+    "y": "incident_type",
+    "color": "incident_type"
+  },
   "preprocessing_steps": [
     "Filter observations where Title or Observation contains: ['stair', 'step', 'stairway', 'stairs', 'railing']",
     "Classify filtered observations into categories: structural_issues, slipping_hazards, obstruction, poor_lighting",
@@ -59,8 +69,6 @@ With raw data containing text observations:
     "Sort by count descending"
   ],
   "aggregation": "count_by_category",
-  "x_axis": "count",
-  "y_axis": "incident_type",
   "processed_data": {
     "columns": ["incident_type", "count"],
     "data": [
@@ -74,9 +82,66 @@ With raw data containing text observations:
     "filtering": "Filtered to 28 stairway-related observations out of 346 total",
     "alternatives": [
       {
-        "plot_type": "pie",
+        "chart_type": "pie",
         "rationale": "Shows proportions clearly for these 4 categories",
         "complexity": "low"
+      }
+    ]
+  }
+}
+```
+
+### Example 2: Heatmap with Multicategory
+For query "Show incident counts by department and incident type"
+With structured incident data:
+
+```json
+{
+  "chart_type": "heatmap",
+  "channels": {
+    "x": "department",
+    "y": "incident_type",
+    "color": "incident_count"
+  },
+  "preprocessing_steps": [
+    "Group observations by department and incident_type",
+    "Count incidents for each department-type combination",
+    "Pivot data to create matrix format suitable for heatmap"
+  ],
+  "aggregation": "count_by_department_and_type",
+  "processed_data": {
+    "columns": ["department", "incident_type", "incident_count"],
+    "data": [
+      ["Manufacturing", "structural_issues", 15],
+      ["Manufacturing", "slipping_hazards", 8],
+      ["Manufacturing", "obstruction", 12],
+      ["Warehouse", "structural_issues", 6],
+      ["Warehouse", "slipping_hazards", 18],
+      ["Warehouse", "obstruction", 9],
+      ["Office", "structural_issues", 2],
+      ["Office", "slipping_hazards", 4],
+      ["Office", "obstruction", 1]
+    ]
+  },
+  "suggestions": {
+    "alternatives": [
+      {
+        "chart_type": "bar",
+        "channels": {
+          "x": ["department", "incident_type"],
+          "y": "incident_count"
+        },
+        "rationale": "Grouped bar chart with multicategory x-axis allows direct comparison",
+        "complexity": "medium"
+      },
+      {
+        "chart_type": "sunburst",
+        "channels": {
+          "path": ["department", "incident_type"],
+          "values": "incident_count"
+        },
+        "rationale": "Hierarchical view showing proportions within departments",
+        "complexity": "medium"
       }
     ]
   }
