@@ -18,3 +18,5 @@ class PlotGenState(TypedDict):
     suggestion_k: int | None
     # Local path to saved JSON file containing parsed recommendations
     plot_recommendations_path: str | None
+    # Processed/extracted data ready for plotting (as dict or JSON string)
+    processed_data: str | dict | None

@@ -57,11 +57,29 @@ def extract_json_content(response_string):
         if content.endswith("```"):
             content = content[:-3].rstrip()
 
+    # Helper function to clean JSON string
+    def clean_json_string(json_str):
+        """Clean common JSON formatting issues."""
+        # Remove trailing commas before closing braces/brackets
+        json_str = re.sub(r',(\s*[}\]])', r'\1', json_str)
+        # Remove JavaScript-style comments
+        json_str = re.sub(r'//.*?\n', '\n', json_str)
+        json_str = re.sub(r'/\*.*?\*/', '', json_str, flags=re.DOTALL)
+        return json_str
+
     # Try to parse the JSON directly
     try:
         json_data = json.loads(content)
         return json_data
     except json.JSONDecodeError as e:
+        # Try cleaning the JSON first
+        try:
+            cleaned = clean_json_string(content)
+            json_data = json.loads(cleaned)
+            return json_data
+        except json.JSONDecodeError:
+            pass
+
         # Try to extract JSON by finding balanced braces
         start_idx = content.find('{')
         if start_idx != -1:
@@ -94,10 +112,17 @@ def extract_json_content(response_string):
                             # Found the matching brace
                             json_str = content[start_idx:i+1]
                             try:
-                                json_data = json.loads(json_str)
+                                # Try cleaning before parsing
+                                cleaned_json = clean_json_string(json_str)
+                                json_data = json.loads(cleaned_json)
                                 return json_data
                             except json.JSONDecodeError:
-                                break
+                                # Try without cleaning
+                                try:
+                                    json_data = json.loads(json_str)
+                                    return json_data
+                                except json.JSONDecodeError:
+                                    break
 
         # If that fails, try the old method for backward compatibility
         # Use regex to find content between content=' and the next ' that ends the field
@@ -116,10 +141,17 @@ def extract_json_content(response_string):
 
         # Parse the JSON
         try:
-            json_data = json.loads(unescaped_json)
+            # Try cleaning before parsing
+            cleaned_unescaped = clean_json_string(unescaped_json)
+            json_data = json.loads(cleaned_unescaped)
             return json_data
         except json.JSONDecodeError as e2:
-            raise ValueError(f"Failed to parse JSON content: {e2}")
+            # Try without cleaning as last resort
+            try:
+                json_data = json.loads(unescaped_json)
+                return json_data
+            except json.JSONDecodeError as e3:
+                raise ValueError(f"Failed to parse JSON content: {e3}")
 
 
 def save_recommendations(
