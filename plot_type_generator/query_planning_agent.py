@@ -85,9 +85,9 @@ def query_planning_agent(state: PlotGenState) -> PlotGenState:
 
     try:
         if model:
-            response = llm.invoke(messages, model=model)
+            response = llm.invoke(messages, model=model, temperature=0.7, seed=42)
         else:
-            response = llm.invoke(messages)
+            response = llm.invoke(messages, temperature=0.7, seed=42)
     except Exception:
         logger.exception("Failed to call Featherless provider client")
         raise

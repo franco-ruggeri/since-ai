@@ -40,4 +40,5 @@ Formatting constraints:
 - Use column names from the provided data description when possible.
 - Keep fields concise and machine-parseable.
 
-Be explicit and deterministic where possible. Now produce the final JSON after performing private reasoning and self-evaluation.
+Be explicit and deterministic where possible. Now produce the final JSON after performing private reasoning and self-evaluation. Do not suggest PCA for less than 8 features.
+Respond ONLY in English. 
