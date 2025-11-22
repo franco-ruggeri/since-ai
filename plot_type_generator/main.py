@@ -25,7 +25,7 @@ def run_plot_generation_pipeline(
     max_iterations: int = 3,
     suggestion_k: int = 3,
     verbose: bool = True,
-) -> Optional[str | Dict[str, Any]]:
+) -> PlotGenState:
     """
     Run the complete plot generation pipeline.
 
@@ -239,7 +239,7 @@ def run_plot_generation_pipeline(
 
     processed_data = state.get("processed_data")
 
-    return processed_data
+    return state
 
 
 def main():
@@ -282,7 +282,8 @@ def main():
         print("\n" + "=" * 80)
         print("PROCESSED DATA READY FOR PLOTTING")
         print("=" * 80)
-        print(json.dumps(processed_data, indent=2))
+        print(processed_data["plot_recommendations"])
+        print(processed_data["processed_data"])
     else:
         print("\n❌ Pipeline failed to generate processed data")
 
