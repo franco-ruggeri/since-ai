@@ -3,12 +3,11 @@ import numpy as np
 import streamlit as st
 import pandas as pd
 from dotenv import load_dotenv
-from backend_requests import get_visualization
+from backend_requests import get_response
 from chart_factory import make_chart
 
 
 def main():
-
     with open("styles.css") as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
@@ -39,7 +38,7 @@ def main():
                 st.error(f"Error reading file: {e}")
                 return   
             try:
-                get_visualization(user_input, df) 
+                get_response(user_input, df) 
             except Exception as e:
                 st.error(f"Error getting visualization: {e}")
         else:
@@ -65,7 +64,5 @@ def main():
 
 
 if __name__ == "__main__":
-
     load_dotenv()
-    # Set some env here
     main()
