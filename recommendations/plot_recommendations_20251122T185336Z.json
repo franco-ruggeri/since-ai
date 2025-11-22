@@ -1,0 +1,53 @@
+{
+  "chart_type": "bar",
+  "channels": {
+    "x": "incident_type",
+    "y": "count",
+    "color": "incident_type"
+  },
+  "preprocessing_steps": [
+    "Filter observations where Heading or Observation contains: ['stair', 'step', 'stairway', 'stairs', 'railing', 'clutter', 'water', 'slippery', 'obstruction']",
+    "Classify filtered observations into categories: structural_issues, slipping_hazards, obstruction, clutter, water_hazards, distraction",
+    "Count observations per category",
+    "Sort by count descending"
+  ],
+  "aggregation": "count_by_category",
+  "processed_data": {
+    "columns": [
+      "incident_type",
+      "count"
+    ],
+    "data": [
+      [
+        "slipping_hazards",
+        8
+      ],
+      [
+        "structural_issues",
+        6
+      ],
+      [
+        "clutter",
+        5
+      ],
+      [
+        "water_hazards",
+        4
+      ],
+      [
+        "distraction",
+        2
+      ]
+    ]
+  },
+  "suggestions": {
+    "filtering": "Filtered to 25 stairway-related observations out of 45 total",
+    "alternatives": [
+      {
+        "chart_type": "pie",
+        "rationale": "Shows proportions clearly for these 5 categories",
+        "complexity": "low"
+      }
+    ]
+  }
+}
