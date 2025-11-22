@@ -67,14 +67,13 @@ def plot_type_chooser_agent(state: PlotGenState, k: int = 3) -> PlotGenState:
             "PLOT_TYPE_CHOOSER_AGENT_LLM_MODEL"
         )
         if model:
-            response = client.invoke(messages, model=model)
+            response = client.invoke(messages, model=model, temperature=0.7, seed=42)
         else:
-            response = client.invoke(messages)
+            response = client.invoke(messages, temperature=0.7, seed=42)
     except Exception as e:
         logger.exception("Featherless invoke failed: %s", e)
         raise
 
-    # Normalize response into string
     if isinstance(response, str):
         text = response
     elif isinstance(response, dict):

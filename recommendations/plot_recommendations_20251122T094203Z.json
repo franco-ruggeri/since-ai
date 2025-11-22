@@ -1,0 +1,31 @@
+{
+  "plot_type": "line",
+  "features_to_be_selected": [
+    "date",
+    "sales_amount"
+  ],
+  "suggestions": {
+    "filtering": "Filter date within 2024 and product = 'A'",
+    "aggregation": "Aggregate date to monthly granularity (e.g., 'date.month')",
+    "alternatives": [
+      {
+        "plot_type": "area",
+        "features_to_be_selected": [
+          "date",
+          "sales_amount"
+        ],
+        "complexity": "medium",
+        "rationale": "An area chart can also show trends over time with the added benefit of filling the area under the line, useful for highlighting cumulative trends."
+      },
+      {
+        "plot_type": "bar",
+        "features_to_be_selected": [
+          "date",
+          "sales_amount"
+        ],
+        "complexity": "low",
+        "rationale": "A bar chart can show monthly comparisons but might obscure the continuous trend."
+      }
+    ]
+  }
+}
