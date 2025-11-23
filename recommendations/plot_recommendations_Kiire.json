@@ -1,0 +1,50 @@
+{
+  "chart_type": "bar",
+  "channels": {
+    "x": "count",
+    "y": "haste_risk_category",
+    "color": "haste_risk_category"
+  },
+  "preprocessing_steps": [
+    "Filter observations where Observation contains one of the following: ['in a hurry', 'hastily', 'quickly', 'running', 'bypassing', 'shortcut', 'hurried', 'hurrying']",
+    "Classify filtered observations into categories: obstruction_of_safety_devices, endangering_access_routes, chemical_exposure, process_safety",
+    "Count observations per category",
+    "Sort categories by count in descending order"
+  ],
+  "aggregation": "count_by_category",
+  "processed_data": {
+    "columns": [
+      "haste_risk_category",
+      "count"
+    ],
+    "data": [
+      [
+        "obstruction_of_safety_devices",
+        8
+      ],
+      [
+        "endangering_access_routes",
+        9
+      ],
+      [
+        "chemical_exposure",
+        3
+      ],
+      [
+        "process_safety",
+        8
+      ]
+    ]
+  },
+  "rationale": "The query focuses on counting observations caused by haste and identifying the most typical safety-related risk. A horizontal bar chart is suitable for showing the count of each risk category, making it easy to identify the most frequent risk.",
+  "suggestions": {
+    "filtering": "Filtered to 28 observations related to haste out of 40 total",
+    "alternatives": [
+      {
+        "chart_type": "pie",
+        "rationale": "Shows the proportion of each risk category clearly, useful for understanding the distribution of risks.",
+        "complexity": "low"
+      }
+    ]
+  }
+}

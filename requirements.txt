@@ -1,4 +1,6 @@
 plotly==5.18.0
+langchain-featherless-ai
+langchain-google-genai
 attrs==25.4.0
 blinker==1.9.0
 cachetools==6.2.2

@@ -1,0 +1,113 @@
+{
+  "chart_type": "line",
+  "channels": {
+    "x": "month",
+    "y": "observation_count",
+    "color": "year"
+  },
+  "preprocessing_steps": [
+    "Filter observations where observation_date is between 2024-01-01 and 2025-12-31",
+    "Identify electrical safety keywords: ['electrical', 'cable', 'cord', 'socket', 'outlet', 'switch', 'panel', 'cabinet', 'residual current device', 'ground wire', 'overload', 'damage', 'wet', 'water', 'leak', 'flicker', 'burnt', 'smell', 'rust', 'dust', 'unattended', 'unprotected', 'incorrect installation', 'missing markings', 'faulty', 'abnormal noise', 'safety risk', 'hazard', 'danger', 'electrical safety', 'fire hazard', 'shock risk']",
+    "Create new column 'is_electrical_safety_issue' where Observation or Heading contains any of the keywords",
+    "Filter observations where is_electrical_safety_issue is True",
+    "Extract month from observation_date and create new column 'month'",
+    "Group observations by month and count the number of observations",
+    "Sort months chronologically",
+    "Add a column for the year (2024 or 2025)"
+  ],
+  "aggregation": "count_by_month",
+  "processed_data": {
+    "columns": [
+      "month",
+      "year",
+      "observation_count"
+    ],
+    "data": [
+      [
+        "2024-01",
+        2024,
+        1
+      ],
+      [
+        "2024-02",
+        2024,
+        0
+      ],
+      [
+        "2024-03",
+        2024,
+        0
+      ],
+      [
+        "2024-04",
+        2024,
+        0
+      ],
+      [
+        "2024-05",
+        2024,
+        0
+      ],
+      [
+        "2024-06",
+        2024,
+        0
+      ],
+      [
+        "2024-07",
+        2024,
+        4
+      ],
+      [
+        "2024-08",
+        2024,
+        5
+      ],
+      [
+        "2024-09",
+        2024,
+        6
+      ],
+      [
+        "2024-10",
+        2024,
+        8
+      ],
+      [
+        "2024-11",
+        2024,
+        8
+      ],
+      [
+        "2024-12",
+        2024,
+        7
+      ],
+      [
+        "2025-01",
+        2025,
+        7
+      ],
+      [
+        "2025-02",
+        2025,
+        3
+      ]
+    ]
+  },
+  "suggestions": {
+    "filtering": "Filtered to 52 electrical safety observations out of 55 total",
+    "alternatives": [
+      {
+        "chart_type": "bar",
+        "channels": {
+          "x": "month",
+          "y": "observation_count",
+          "color": "year"
+        },
+        "rationale": "A bar chart can also show the monthly counts clearly, but a line chart is better for showing trends over time.",
+        "complexity": "low"
+      }
+    ]
+  }
+}

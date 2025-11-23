@@ -1,43 +1,28 @@
 import os
 import logging
-from typing import Any, Dict, List, Optional, cast
 from dotenv import load_dotenv
 
 
 from plot_type_generator.plot_gen_state import PlotGenState
-from plot_type_generator.utils import _load_prompt, _get_api_key
+from plot_type_generator.utils import _load_prompt
+from plot_type_generator.llm_provider import get_llm_provider
 
 logger = logging.getLogger(__name__)
-load_dotenv()  # reads .env in cwd or parent dirs
-
-
-# Provider-native Featherless client
-try:
-    from langchain_featherless_ai import ChatFeatherlessAi
-except Exception:
-    ChatFeatherlessAi = None
-try:
-    # pydantic SecretStr is commonly used for typed secrets in provider clients
-    from pydantic import SecretStr
-except Exception:
-    SecretStr = None
-
-
-# The previous LangChain wrapper was removed — we use the provider client below.
+load_dotenv()
 
 
 def query_planning_agent(state: PlotGenState) -> PlotGenState:
-    """Break down a user request into executable steps using Featherless.
+    """Break down a user request into executable steps using configured LLM provider.
 
     Behavior:
-    - Loads prompt template from `prompts/query_refiner.txt`.
+    - Loads prompt template from `prompts/query_refiner_text_extraction.txt`.
     - Constructs `system` message with the prompt file and `user` message with
       the user's query and a lightweight data description.
-    - Calls Featherless API using API key from `FEATHERLESS_API_KEY`.
+    - Calls LLM provider (Featherless or Gemini) based on configuration.
     - Places the returned text into `state['execution_plan']`.
     """
     try:
-        refiner_prompt = _load_prompt("query_refiner.txt")
+        refiner_prompt = _load_prompt("query_refiner_text_extraction.txt")
     except FileNotFoundError:
         logger.exception("Prompt file not found")
         raise
@@ -54,7 +39,7 @@ def query_planning_agent(state: PlotGenState) -> PlotGenState:
     except Exception:
         data_summary = str(data_table)
 
-    # Build messages and call the provider client directly.
+    # Build messages
     system_prompt = refiner_prompt
     user_content = (
         f"User Query: {user_query}\n\n"
@@ -67,44 +52,22 @@ def query_planning_agent(state: PlotGenState) -> PlotGenState:
         ("human", user_content),
     ]
 
-    if ChatFeatherlessAi is None:
-        raise RuntimeError(
-            "`langchain-featherless-ai` package is not installed. "
-            "Install it (pip install langchain-featherless-ai) or use the HTTP path."
-        )
-
-    api_key = _get_api_key()
-    api_url = os.environ.get("FEATHERLESS_API_URL", "https://api.featherless.ai/v1")
+    # Get model from state or environment
     model = state.get("llm_model") or os.environ.get("QUERY_PLANNING_AGENT_LLM_MODEL")
 
-    if SecretStr is not None:
-        llm = ChatFeatherlessAi(api_key=SecretStr(api_key), base_url=api_url)
-    else:
-        # cast to Any to satisfy static typing when SecretStr is not available
-        llm = ChatFeatherlessAi(api_key=cast(Any, api_key), base_url=api_url)
-
+    # Get LLM provider (defaults to environment LLM_PROVIDER or "featherless")
     try:
-        if model:
-            response = llm.invoke(messages, model=model, temperature=0.7, seed=42)
-        else:
-            response = llm.invoke(messages, temperature=0.7, seed=42)
+        provider = get_llm_provider()
     except Exception:
-        logger.exception("Failed to call Featherless provider client")
+        logger.exception("Failed to initialize LLM provider")
         raise
 
-    # Normalize response into a string for the TypedDict field
-    if isinstance(response, str):
-        text = response
-    elif isinstance(response, dict):
-        # common shapes
-        try:
-            text = response.get("choices", [])[0].get("message", {}).get("content")
-        except Exception:
-            text = str(response)
-    elif hasattr(response, "content"):
-        text = getattr(response, "content")
-    else:
-        text = str(response)
+    # Invoke the provider
+    try:
+        text = provider.invoke(messages, model=model, temperature=0.7, seed=42)
+    except Exception:
+        logger.exception("Failed to call LLM provider")
+        raise
 
     state["execution_plan"] = text
 

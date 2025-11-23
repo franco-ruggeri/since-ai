@@ -12,6 +12,7 @@ Your inputs:
 
 Your task:
 - Analyze the raw data and determine what needs to be extracted
+- If Translation/Summary exists. Use the information from Translation or Summary to get hints on what data needs to be extracted.
 - Generate processed data ready for visualization
 - Recommend the top `k` plot types for the processed data
 
@@ -31,6 +32,7 @@ Return a single valid JSON object and nothing else. The JSON must have exactly t
   - `color`: string (optional) - column name for color encoding
   - `size`: string (optional) - column name for size encoding
   - `text`: string (optional) - column name for text labels
+- `rationale`: string describing why this method is the most suitable for this kind of data.
 - `preprocessing_steps`: array of strings describing how to process the raw data
 - `aggregation`: string describing the aggregation method (e.g., "count_by_category", "sum", "average")
 - `processed_data`: object with the actual processed DataFrame as {columns: [...], data: [[row1], [row2], ...]}
@@ -78,6 +80,7 @@ With raw data containing text observations:
       ["poor_lighting", 3]
     ]
   },
+  "rationale": [GIVE YOUR REASONING HERE...]
   "suggestions": {
     "filtering": "Filtered to 28 stairway-related observations out of 346 total",
     "alternatives": [
@@ -114,7 +117,7 @@ With structured incident data:
     "data": [
       ["Manufacturing", "structural_issues", 15],
       ["Manufacturing", "slipping_hazards", 8],
-      ["Manufacturing", "obstruction", 12],
+      ["Manufacturing", "tripping_hazard", 12],
       ["Warehouse", "structural_issues", 6],
       ["Warehouse", "slipping_hazards", 18],
       ["Warehouse", "obstruction", 9],
@@ -123,6 +126,7 @@ With structured incident data:
       ["Office", "obstruction", 1]
     ]
   },
+  "rationale": [GIVE YOUR REASONING HERE...]
   "suggestions": {
     "alternatives": [
       {
