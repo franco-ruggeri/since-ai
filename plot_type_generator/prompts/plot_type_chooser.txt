@@ -12,6 +12,7 @@ Your inputs:
 
 Your task:
 - Analyze the raw data and determine what needs to be extracted
+- If Translation/Summary exists. Use the information from Translation or Summary to get hints on what data needs to be extracted.
 - Generate processed data ready for visualization
 - Recommend the top `k` plot types for the processed data
 

@@ -1,57 +1,60 @@
-
 {
   "chart_type": "bar",
   "channels": {
-    "x": "count",
-    "y": "stair_issue_category",
-    "color": "stair_issue_category"
+    "x": "incident_type",
+    "y": "count",
+    "color": "incident_type"
   },
   "preprocessing_steps": [
-    "Filter observations where Heading or Observation contains: ['stairs', 'step', 'stairway', 'stair', 'railing', 'tread', 'stairwell', 'stair railing', 'staircase step', 'slippery', 'wet', 'spill', 'tripping', 'object left', 'broken', 'chipped', 'sharp edge', 'inadequate lighting', 'railing swayed', 'tread damaged']",
-    "Classify filtered observations into categories: slippery_surfaces, objects_left_on_stairs, broken_or_damaged_steps, inadequate_lighting, improper_railing, tripping_hazards",
+    "Filter observations where Heading or Observation contains: ['stair', 'step', 'stairway', 'stairs', 'railing', 'clutter', 'wet', 'broken', 'slippery', 'obstruction']",
+    "Classify filtered observations into categories: structural_issues, slipping_hazards, clutter, poor_lighting, obstruction, railing_issues, distraction",
     "Count observations per category",
     "Sort by count descending"
   ],
   "aggregation": "count_by_category",
   "processed_data": {
     "columns": [
-      "stair_issue_category",
+      "incident_type",
       "count"
     ],
     "data": [
       [
-        "slippery_surfaces",
-        7
-      ],
-      [
-        "objects_left_on_stairs",
+        "slipping_hazards",
         6
       ],
       [
-        "broken_or_damaged_steps",
+        "structural_issues",
+        4
+      ],
+      [
+        "clutter",
         3
       ],
       [
-        "inadequate_lighting",
+        "obstruction",
         2
       ],
       [
-        "improper_railing",
-        5
+        "poor_lighting",
+        1
       ],
       [
-        "tripping_hazards",
-        3
+        "railing_issues",
+        1
+      ],
+      [
+        "distraction",
+        1
       ]
     ]
   },
-  "rationale": "The horizontal bar chart is ideal for comparing categorical frequencies. It clearly shows which type of stair-related safety observation occurs most frequently, making it easy to identify the most common issues.",
+  "rationale": "A bar chart is the most suitable for this type of data because it effectively visualizes the count of different categories of safety observations related to stairs. This chart type is intuitive and allows for easy comparison of the frequency of each type of incident, aligning well with the user's request for classification and count of stair-related safety observations. The x-axis will represent the different types of incidents, while the y-axis will represent the count of each type, with color encoding to highlight each category.",
   "suggestions": {
-    "filtering": "Filtered to 26 stair-related observations out of 36 total",
+    "filtering": "Filtered to 18 stairway-related observations out of 45 total",
     "alternatives": [
       {
         "chart_type": "pie",
-        "rationale": "Shows proportions clearly for these 6 categories",
+        "rationale": "Shows proportions clearly for these 7 categories",
         "complexity": "low"
       }
     ]

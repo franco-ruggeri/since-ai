@@ -2,84 +2,48 @@
   "chart_type": "bar",
   "channels": {
     "x": "count",
-    "y": "safety_risk_category",
-    "color": "safety_risk_category"
+    "y": "haste_risk_category",
+    "color": "haste_risk_category"
   },
   "preprocessing_steps": [
-    "Filter observations where observation_date is in March 2024 (already all in March)",
-    "Identify observations containing haste indicators: in a hurry, hastily, hurriedly, quickly, rushed, in a rush, hurry, hurried, left, moved, ran, skipped, forgot, ignored, bypassed, shortcut, took shortcut",
-    "Classify haste-related observations into safety risk categories: tripping hazard, slippery surface, emergency exit obstruction, inadequate safety equipment, chemical exposure risk, electrical hazard, fire hazard, equipment hazard, procedural hazard",
-    "Count observations per safety risk category",
-    "Sort by count descending"
+    "Filter observations where Observation contains one of the following: ['in a hurry', 'hastily', 'quickly', 'running', 'bypassing', 'shortcut', 'hurried', 'hurrying']",
+    "Classify filtered observations into categories: obstruction_of_safety_devices, endangering_access_routes, chemical_exposure, process_safety",
+    "Count observations per category",
+    "Sort categories by count in descending order"
   ],
   "aggregation": "count_by_category",
   "processed_data": {
     "columns": [
-      "safety_risk_category",
+      "haste_risk_category",
       "count"
     ],
     "data": [
       [
-        "tripping hazard",
-        10
+        "obstruction_of_safety_devices",
+        8
       ],
       [
-        "procedural hazard",
-        7
+        "endangering_access_routes",
+        9
       ],
       [
-        "equipment hazard",
-        6
-      ],
-      [
-        "emergency exit obstruction",
-        5
-      ],
-      [
-        "slippery surface",
-        2
-      ],
-      [
-        "chemical exposure risk",
-        4
-      ],
-      [
-        "electrical hazard",
-        2
-      ],
-      [
-        "fire hazard",
+        "chemical_exposure",
         3
       ],
       [
-        "inadequate safety equipment",
-        2
+        "process_safety",
+        8
       ]
     ]
   },
-  "rationale": "A horizontal bar chart is ideal for comparing categorical frequencies, especially when the categories have long names. It clearly shows the most common safety risks associated with haste in the observations for March 2024, making it easy to identify the most prevalent risk type.",
+  "rationale": "The query focuses on counting observations caused by haste and identifying the most typical safety-related risk. A horizontal bar chart is suitable for showing the count of each risk category, making it easy to identify the most frequent risk.",
   "suggestions": {
-    "filtering": "Filtered to 38 observations all dated in March 2024",
+    "filtering": "Filtered to 28 observations related to haste out of 40 total",
     "alternatives": [
       {
         "chart_type": "pie",
-        "channels": {
-          "values": "count",
-          "names": "safety_risk_category"
-        },
-        "rationale": "A pie chart shows proportions clearly, but may not be ideal if there are many categories.",
+        "rationale": "Shows the proportion of each risk category clearly, useful for understanding the distribution of risks.",
         "complexity": "low"
-      },
-      {
-        "chart_type": "treemap",
-        "channels": {
-          "path": [
-            "safety_risk_category"
-          ],
-          "values": "count"
-        },
-        "rationale": "A treemap can show hierarchical data, but for flat categories, it might be overkill.",
-        "complexity": "medium"
       }
     ]
   }

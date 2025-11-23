@@ -1,120 +1,155 @@
 {
   "chart_type": "line",
   "channels": {
-    "x": "month",
+    "x": "time_period",
     "y": "observation_count",
-    "color": "year"
+    "color": "issue_type"
   },
   "preprocessing_steps": [
-    "Filter observations to include only those with observation_date between 2024-01-01 and 2025-12-31",
-    "For each observation, check if it contains electrical safety keywords (e.g., 'electrical', 'cable', 'socket', 'water', 'damage', 'leak', 'residual current device')",
-    "Extract the month from the observation_date in the format 'January 2024', 'February 2024', etc.",
-    "Count observations per month",
-    "Sort months chronologically",
-    "Aggregate the data to create a time-series of electrical safety observations"
+    "Convert 'observation_date' to datetime format",
+    "Extract month and year from 'observation_date' to create 'time_period'",
+    "Classify 'Heading' into broader categories: electrical_cabinet, damaged_cables, overloading, water_issues, unsupervised, other",
+    "Count observations per 'time_period' and 'issue_type'",
+    "Sort by 'time_period' ascending"
   ],
-  "aggregation": "count_by_month",
+  "aggregation": "count_by_time_period_and_issue_type",
   "processed_data": {
     "columns": [
-      "month",
-      "year",
+      "time_period",
+      "issue_type",
       "observation_count"
     ],
     "data": [
       [
-        "January 2024",
-        2024,
-        1
+        "2024-07",
+        "other",
+        3
       ],
       [
-        "February 2024",
-        2024,
+        "2024-08",
+        "electrical_cabinet",
         2
       ],
       [
-        "March 2024",
-        2024,
+        "2024-08",
+        "overloading",
         1
       ],
       [
-        "April 2024",
-        2024,
-        0
+        "2024-08",
+        "other",
+        2
       ],
       [
-        "May 2024",
-        2024,
-        0
+        "2024-09",
+        "damaged_cables",
+        2
       ],
       [
-        "June 2024",
-        2024,
-        0
+        "2024-09",
+        "electrical_cabinet",
+        1
       ],
       [
-        "July 2024",
-        2024,
-        5
+        "2024-09",
+        "overloading",
+        1
       ],
       [
-        "August 2024",
-        2024,
-        5
+        "2024-09",
+        "other",
+        4
       ],
       [
-        "September 2024",
-        2024,
-        8
-      ],
-      [
-        "October 2024",
-        2024,
-        10
-      ],
-      [
-        "November 2024",
-        2024,
-        8
-      ],
-      [
-        "December 2024",
-        2024,
-        7
-      ],
-      [
-        "January 2025",
-        2025,
-        7
-      ],
-      [
-        "February 2025",
-        2025,
+        "2024-10",
+        "damaged_cables",
         3
+      ],
+      [
+        "2024-10",
+        "electrical_cabinet",
+        2
+      ],
+      [
+        "2024-10",
+        "other",
+        5
+      ],
+      [
+        "2024-11",
+        "electrical_cabinet",
+        1
+      ],
+      [
+        "2024-11",
+        "overloading",
+        1
+      ],
+      [
+        "2024-11",
+        "other",
+        6
+      ],
+      [
+        "2024-12",
+        "damaged_cables",
+        2
+      ],
+      [
+        "2024-12",
+        "electrical_cabinet",
+        1
+      ],
+      [
+        "2024-12",
+        "other",
+        4
+      ],
+      [
+        "2025-01",
+        "damaged_cables",
+        1
+      ],
+      [
+        "2025-01",
+        "electrical_cabinet",
+        3
+      ],
+      [
+        "2025-01",
+        "water_issues",
+        1
+      ],
+      [
+        "2025-01",
+        "other",
+        3
+      ],
+      [
+        "2025-02",
+        "electrical_cabinet",
+        2
+      ],
+      [
+        "2025-02",
+        "other",
+        2
       ]
     ]
   },
-  "rationale": "A line chart is ideal for showing trends over time. It visually represents the number of electrical safety observations per month from 2024 to 2025, allowing for clear identification of upward or downward trends.",
+  "rationale": "The line plot is suitable for showing trends over time, which is the primary objective of this analysis. By aggregating observations by month and issue type, we can clearly see the frequency of different types of electrical safety issues over time. This visualization will help identify any upward or downward trends in the number of observations.",
   "suggestions": {
+    "filtering": "Aggregated data to 26 time-periods by month",
     "alternatives": [
-      {
-        "chart_type": "area",
-        "channels": {
-          "x": "month",
-          "y": "observation_count",
-          "color": "year"
-        },
-        "rationale": "An area chart can also be used to show the trend over time, with the added benefit of showing the cumulative count of observations.",
-        "complexity": "medium"
-      },
       {
         "chart_type": "bar",
         "channels": {
-          "x": "month",
+          "x": "time_period",
           "y": "observation_count",
-          "color": "year"
+          "color": "issue_type"
         },
-        "rationale": "A bar chart is straightforward and easy to interpret, showing the exact count of observations per month.",
-        "complexity": "low"
+        "rationale": "Grouped bar chart with multicategory x-axis allows direct comparison of different issue types over time. However, it might be less effective for continuous time trends compared to a line plot.",
+        "complexity": "medium"
       }
     ]
   }

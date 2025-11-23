@@ -1,47 +1,44 @@
 {
-  "chart_type": "pie",
+  "chart_type": "bar",
   "channels": {
-    "labels": "observation_type",
-    "values": "count",
-    "text": "percentage"
+    "x": "count",
+    "y": "observation_category",
+    "color": "observation_category"
   },
   "preprocessing_steps": [
-    "Filter observations from the year 2024",
-    "Classify each observation into 'True Safety Hazard' or 'Ordinary Repair Request' based on predefined keywords",
-    "Count the number of observations in each category",
-    "Calculate the percentage of total observations each category represents"
+    "Filter observations where observation_date is in 2024",
+    "Check each observation's `Observation` text if it contains genuine safety risk phrases (e.g., 'risk of', 'hazard', 'injury', 'entrapment', 'crushing', 'exposure', 'ergonomics', 'fire', 'machine breakdown', 'immediate risk')",
+    "For observations that don't contain genuine safety risk phrases, check if they contain maintenance request phrases (e.g., 'aesthetic nuisance', 'cosmetic damage', 'functional nuisance', 'wastes water', 'hinders ventilation', 'nuisance', 'does not cause', 'not a safety risk')",
+    "Classify each observation into one of three categories: 'genuine_safety', 'maintenance_request', 'other'",
+    "Count the number of observations in each category"
   ],
   "aggregation": "count_by_category",
   "processed_data": {
     "columns": [
-      "observation_type",
-      "count",
-      "percentage"
+      "observation_category",
+      "count"
     ],
     "data": [
       [
-        "True Safety Hazard",
-        22,
-        55.0
+        "genuine_safety",
+        25
       ],
       [
-        "Ordinary Repair Request",
-        18,
-        45.0
+        "maintenance_request",
+        18
+      ],
+      [
+        "other",
+        3
       ]
     ]
   },
-  "rationale": "A pie chart effectively shows the proportion of true safety hazards versus ordinary repair requests, providing a clear visual representation of the data.",
+  "rationale": "A bar chart is suitable for comparing the count of genuine safety observations versus maintenance requests misclassified as safety observations. It clearly shows the proportion of each category, making it easy to understand the distribution and highlight any discrepancies.",
   "suggestions": {
     "alternatives": [
       {
-        "chart_type": "bar",
-        "channels": {
-          "x": "observation_type",
-          "y": "count",
-          "text": "percentage"
-        },
-        "rationale": "A bar chart can also effectively show the count of each category and can be more precise for comparing exact numbers.",
+        "chart_type": "pie",
+        "rationale": "Shows the proportions of each category in a single view, which can be easier to interpret for simple comparisons.",
         "complexity": "low"
       }
     ]
