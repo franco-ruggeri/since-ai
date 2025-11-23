@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-from dotenv import load_dotenv
 from components import agent_query, generate_viz
 
 
@@ -46,5 +45,4 @@ def main():
 
 
 if __name__ == "__main__":
-    load_dotenv()
     main()
