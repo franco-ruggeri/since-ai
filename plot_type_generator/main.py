@@ -1,9 +1,7 @@
-import os
 import streamlit as st
 import sys
 import json
 from pathlib import Path
-from dotenv import load_dotenv
 from typing import Optional, Dict, Any
 
 project_root = Path(__file__).parent.parent
@@ -50,7 +48,6 @@ def run_plot_generation_pipeline(
         }
         Returns None if the pipeline fails.
     """
-    load_dotenv()
 
     # Validate API key based on provider
     provider = st.secrets["LLM_PROVIDER"].lower()

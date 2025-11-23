@@ -1,6 +1,5 @@
 import os, sys
 import logging
-from dotenv import load_dotenv
 import streamlit as st
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -14,7 +13,6 @@ from model_orchestrator.integration import get_model_for_specific_agent
 
 
 logger = logging.getLogger(__name__)
-load_dotenv()
 
 
 def query_planning_agent(state: PlotGenState) -> PlotGenState:

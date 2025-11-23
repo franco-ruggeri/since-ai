@@ -1,7 +1,5 @@
-import os
 import streamlit as st
 import logging
-from dotenv import load_dotenv
 
 
 from plot_type_generator.plot_gen_state import PlotGenState
@@ -9,7 +7,6 @@ from plot_type_generator.utils import _load_prompt, extract_json_content
 from plot_type_generator.llm_provider import get_llm_provider
 
 logger = logging.getLogger(__name__)
-load_dotenv()
 
 
 def plot_type_chooser_agent(state: PlotGenState, k: int = 3) -> PlotGenState:

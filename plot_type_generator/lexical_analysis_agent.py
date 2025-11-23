@@ -1,8 +1,6 @@
-import os
 import streamlit as st
 import logging
 import json
-from dotenv import load_dotenv
 
 
 from plot_type_generator.plot_gen_state import PlotGenState
@@ -12,7 +10,6 @@ from plot_type_generator.llm_provider import get_llm_provider
 from model_orchestrator.integration import get_model_for_specific_agent
 
 logger = logging.getLogger(__name__)
-load_dotenv()
 
 
 def lexical_analysis_agent(state: PlotGenState) -> PlotGenState:

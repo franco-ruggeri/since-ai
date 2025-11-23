@@ -1,7 +1,5 @@
-import os
 import logging
 import json
-from dotenv import load_dotenv
 import streamlit as st
 
 
@@ -12,7 +10,6 @@ from plot_type_generator.llm_provider import get_llm_provider
 from model_orchestrator.integration import get_model_for_specific_agent
 
 logger = logging.getLogger(__name__)
-load_dotenv()
 
 
 def visual_appropriateness_agent(state: PlotGenState) -> PlotGenState:
