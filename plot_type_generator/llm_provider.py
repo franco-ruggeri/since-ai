@@ -4,6 +4,7 @@ import os
 from abc import ABC, abstractmethod
 from typing import Any, Dict, List, Optional, Tuple, Union
 from dotenv import load_dotenv
+import streamlit as st
 
 load_dotenv()
 
@@ -61,7 +62,7 @@ class FeatherlessProvider(LLMProvider):
                 "Install it with: pip install langchain-featherless-ai"
             )
 
-        self.api_key = api_key or os.environ.get("FEATHERLESS_API_KEY")
+        self.api_key = api_key or st.secrets["FEATHERLESS_API_KEYY"]
         if not self.api_key:
             raise ValueError(
                 "FEATHERLESS_API_KEY not set. Pass it to the constructor or set it in the environment."
@@ -136,7 +137,7 @@ class GeminiProvider(LLMProvider):
                 "Install it with: pip install langchain-google-genai"
             )
 
-        self.api_key = api_key or os.environ.get("GOOGLE_API_KEY")
+        self.api_key = api_key or st.secrets["GOOGLE_API_KEY"]
         if not self.api_key:
             raise ValueError(
                 "GOOGLE_API_KEY not set. Pass it to the constructor or set it in the environment."
