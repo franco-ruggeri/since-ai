@@ -16,7 +16,7 @@ def get_response(user_prompt: str, dataframe: pd.DataFrame, output_callback: Opt
     try:
         # Replace with your actual backend URL
         state = run_plot_generation_pipeline(
-            user_query=user_prompt, data_table=df_json, max_iterations=2, output_callback=output_callback, verbose=False
+            user_query=user_prompt, data_table=df_json, max_iterations=5, output_callback=output_callback, verbose=False
         )
 
         print(json.dumps(state, indent=2))
