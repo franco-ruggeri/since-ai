@@ -243,7 +243,7 @@ def main():
     with open(data_path, "r") as f:
         data = json.load(f)
 
-    # Get specifically the 'Rappuset' test case
+    # Get Specifically for a particular data test case
     test_case = data["Rappuset"]
     raw_data = test_case["Data"]
     user_query = test_case["prompt"]

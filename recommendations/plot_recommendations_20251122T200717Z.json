@@ -1,0 +1,303 @@
+{
+  "chart_type": "line",
+  "channels": {
+    "x": "processed_date",
+    "y": "avg_processing_time",
+    "color": "Heading"
+  },
+  "preprocessing_steps": [
+    "Convert 'observation_date' and 'observation_processed_date' to datetime format",
+    "Calculate 'processing_time' as the difference in days between 'observation_processed_date' and 'observation_date'",
+    "Group by 'Heading' and 'processed_date' (monthly aggregation of 'observation_date')",
+    "Calculate the average 'processing_time' for each group",
+    "Filter out rows where 'processed_date' is after 2024 (to consider only 2024 data)"
+  ],
+  "aggregation": "average_processing_time_by_heading_and_month",
+  "processed_data": {
+    "columns": [
+      "processed_date",
+      "avg_processing_time",
+      "Heading"
+    ],
+    "data": [
+      [
+        "2024-01",
+        1.0,
+        "Water pond in the hallway"
+      ],
+      [
+        "2024-01",
+        7.0,
+        "Swinging railing on the stairs"
+      ],
+      [
+        "2024-01",
+        1.0,
+        "Inadequate protective clothing"
+      ],
+      [
+        "2024-02",
+        1.0,
+        "Stuff left on the stairs"
+      ],
+      [
+        "2024-02",
+        1.0,
+        "Chemical splash on the floor"
+      ],
+      [
+        "2024-02",
+        1.0,
+        "Emergency stop button covered"
+      ],
+      [
+        "2024-02",
+        11.0,
+        "Slippery step"
+      ],
+      [
+        "2024-03",
+        3.0,
+        "Heavy lifting without aids"
+      ],
+      [
+        "2024-03",
+        1.0,
+        "Fire corridor blocked"
+      ],
+      [
+        "2024-03",
+        4.0,
+        "Broken socket"
+      ],
+      [
+        "2024-03",
+        3.0,
+        "Inadequate lighting on the stairs"
+      ],
+      [
+        "2024-04",
+        3.0,
+        "Sharp edge at the workstation"
+      ],
+      [
+        "2024-04",
+        1.0,
+        "Tools on the floor"
+      ],
+      [
+        "2024-04",
+        1.0,
+        "Liquid splash on the stairs"
+      ],
+      [
+        "2024-04",
+        3.0,
+        "Dust accumulated in the electrical cabinet"
+      ],
+      [
+        "2024-04",
+        3.0,
+        "Incorrect waste sorting"
+      ],
+      [
+        "2024-05",
+        3.0,
+        "An employee ran up the stairs"
+      ],
+      [
+        "2024-05",
+        3.0,
+        "Gas cylinders without support"
+      ],
+      [
+        "2024-05",
+        3.0,
+        "Shelf overloaded"
+      ],
+      [
+        "2024-05",
+        21.0,
+        "Worn floor covering"
+      ],
+      [
+        "2024-06",
+        3.0,
+        "The anti-slip stair has come loose"
+      ],
+      [
+        "2024-06",
+        3.0,
+        "Damaged extension cord"
+      ],
+      [
+        "2024-06",
+        3.0,
+        "The liquid in the eyewash bottle has expired"
+      ],
+      [
+        "2024-06",
+        3.0,
+        "A forklift was speeding"
+      ],
+      [
+        "2024-07",
+        3.0,
+        "Carrying a big box up the stairs"
+      ],
+      [
+        "2024-07",
+        4.0,
+        "Incomplete safety data sheets"
+      ],
+      [
+        "2024-07",
+        7.0,
+        "Air conditioning duct leaks condensate"
+      ],
+      [
+        "2024-07",
+        3.0,
+        "Muffler disconnected from the machine"
+      ],
+      [
+        "2024-07",
+        3.0,
+        "Pharmaceutical dust on surfaces"
+      ],
+      [
+        "2024-08",
+        4.0,
+        "Dim lighting in the warehouse"
+      ],
+      [
+        "2024-08",
+        3.0,
+        "Garbage left on the stairs"
+      ],
+      [
+        "2024-08",
+        3.0,
+        "A heavy object on the edge of the shelf"
+      ],
+      [
+        "2024-08",
+        5.0,
+        "The door slams shut"
+      ],
+      [
+        "2024-09",
+        2.0,
+        "Floor hatch poorly marked"
+      ],
+      [
+        "2024-09",
+        3.0,
+        "Cable in the walkway"
+      ],
+      [
+        "2024-09",
+        3.0,
+        "Protective gloves broken"
+      ],
+      [
+        "2024-09",
+        7.0,
+        "Swinging stair railing"
+      ],
+      [
+        "2024-10",
+        10.0,
+        "The crane safety limit does not work"
+      ],
+      [
+        "2024-10",
+        3.0,
+        "Broken glass on the floor"
+      ],
+      [
+        "2024-10",
+        3.0,
+        "Hand washing station soap out of stock"
+      ],
+      [
+        "2024-10",
+        3.0,
+        "Slippery outdoor staircase in the rain"
+      ],
+      [
+        "2024-10",
+        3.0,
+        "Emergency exit locked"
+      ],
+      [
+        "2024-11",
+        3.0,
+        "Falling objects from the shelf"
+      ],
+      [
+        "2024-11",
+        3.0,
+        "Wet rag on the stairs"
+      ],
+      [
+        "2024-11",
+        32.0,
+        "Inadequate ergonomics in the packing room"
+      ],
+      [
+        "2024-11",
+        3.0,
+        "Missing warning sign"
+      ],
+      [
+        "2024-12",
+        12.0,
+        "Staircase step broken"
+      ],
+      [
+        "2024-12",
+        12.0,
+        "Noisy device"
+      ],
+      [
+        "2024-12",
+        3.0,
+        "Icicles on the edge of the roof"
+      ],
+      [
+        "2024-12",
+        3.0,
+        "An employee was talking on a mobile phone on the stairs"
+      ],
+      [
+        "2024-12",
+        23.0,
+        "Faulty ventilation in the cleanroom"
+      ]
+    ]
+  },
+  "suggestions": {
+    "alternatives": [
+      {
+        "chart_type": "bar",
+        "channels": {
+          "x": "Heading",
+          "y": "average_processing_time",
+          "color": "Heading"
+        },
+        "rationale": "Shows average processing time by Heading, providing a clear comparison across different types of observations",
+        "complexity": "medium"
+      },
+      {
+        "chart_type": "box",
+        "channels": {
+          "x": "Heading",
+          "y": "processing_time"
+        },
+        "rationale": "Shows the distribution of processing times for each Heading, highlighting outliers and variability",
+        "complexity": "high"
+      }
+    ]
+  }
+}
