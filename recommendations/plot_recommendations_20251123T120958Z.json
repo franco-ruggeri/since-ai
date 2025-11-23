@@ -1,0 +1,106 @@
+{
+  "chart_type": "bar",
+  "channels": {
+    "x": "finding_category",
+    "y": "average_processing_time_days",
+    "color": "finding_category"
+  },
+  "rationale": "A bar chart is suitable for comparing the average processing time across different categories of safety findings. It allows for easy identification of which types of observations take the longest to process. The x-axis will represent the categories, and the y-axis will represent the average processing time in days.",
+  "preprocessing_steps": [
+    "Filter observations to include only those from the year 2024.",
+    "Convert 'observation_date' and 'observation_processed_date' to datetime objects.",
+    "Calculate 'processing_time_days' by subtracting 'observation_date' from 'observation_processed_date'.",
+    "Categorize each safety finding based on keywords in 'Heading' and 'Observation' into predefined categories such as: Slipping Hazard, Tripping Hazard, Structural Issue, Electrical Hazard, Chemical Hazard, Obstruction/Blocked Exit, Inadequate PPE, Ergonomics, Lighting Issue, Noise Hazard, Behavioral Hazard, Maintenance/Equipment Failure, Environmental Hazard, Other.",
+    "Group the data by 'finding_category' and calculate the average of 'processing_time_days' for each category.",
+    "Calculate the overall average 'processing_time_days' across all 2024 observations.",
+    "Filter to show only categories where the average processing time is significantly higher than the overall average (e.g., > 1.5 times the overall average).",
+    "Sort the categories by their average processing time in descending order."
+  ],
+  "aggregation": "average_processing_time_by_category",
+  "processed_data": {
+    "columns": [
+      "finding_category",
+      "average_processing_time_days"
+    ],
+    "data": [
+      [
+        "Ergonomics",
+        31.0
+      ],
+      [
+        "Maintenance/Equipment Failure",
+        13.666666666666666
+      ],
+      [
+        "Structural Issue",
+        6.428571428571429
+      ],
+      [
+        "Noise Hazard",
+        12.0
+      ],
+      [
+        "Lighting Issue",
+        3.0
+      ],
+      [
+        "Chemical Hazard",
+        3.0
+      ],
+      [
+        "Obstruction/Blocked Exit",
+        1.0
+      ],
+      [
+        "Tripping Hazard",
+        1.0
+      ],
+      [
+        "Slipping Hazard",
+        0.8571428571428572
+      ],
+      [
+        "Electrical Hazard",
+        2.6666666666666665
+      ]
+    ]
+  },
+  "suggestions": {
+    "filtering": "Analysis is limited to observations recorded in the year 2024.",
+    "alternatives": [
+      {
+        "chart_type": "line",
+        "channels": {
+          "x": "observation_month",
+          "y": "average_processing_time_days",
+          "color": "finding_category"
+        },
+        "rationale": "A line chart can show trends in processing time over months for each category, helping to identify if certain categories have increasing or decreasing processing times throughout the year.",
+        "aggregation": "monthly_average_processing_time_by_category",
+        "preprocessing_steps": [
+          "Filter observations to include only those from the year 2024.",
+          "Convert 'observation_date' and 'observation_processed_date' to datetime objects.",
+          "Calculate 'processing_time_days'.",
+          "Categorize each safety finding.",
+          "Extract the month from 'observation_date'.",
+          "Group by month and 'finding_category', then calculate the average 'processing_time_days'."
+        ]
+      },
+      {
+        "chart_type": "bar",
+        "channels": {
+          "x": "finding_category",
+          "y": "count",
+          "color": "finding_category"
+        },
+        "rationale": "A bar chart showing the count of observations per category can complement the processing time analysis by indicating if categories with longer processing times are also more frequent.",
+        "aggregation": "count_by_category",
+        "preprocessing_steps": [
+          "Filter observations to include only those from the year 2024.",
+          "Categorize each safety finding.",
+          "Group by 'finding_category' and count the number of observations."
+        ]
+      }
+    ]
+  }
+}

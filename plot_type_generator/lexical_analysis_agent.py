@@ -9,6 +9,8 @@ from plot_type_generator.plot_gen_state import PlotGenState
 from plot_type_generator.utils import _load_prompt, extract_json_content
 from plot_type_generator.llm_provider import get_llm_provider
 
+from model_orchestrator.integration import get_model_for_specific_agent
+
 logger = logging.getLogger(__name__)
 load_dotenv()
 
@@ -63,8 +65,9 @@ def lexical_analysis_agent(state: PlotGenState) -> PlotGenState:
     # Get model from state or environment
     model = (
         state.get("llm_model")
-        or st.secrets["LEXICAL_ANALYSIS_AGENT_LLM_MODEL"]
-        or st.secrets["PLOT_TYPE_CHOOSER_AGENT_LLM_MODEL"]
+        or os.environ.get("LEXICAL_ANALYSIS_AGENT_LLM_MODEL")
+        or os.environ.get("PLOT_TYPE_CHOOSER_AGENT_LLM_MODEL")
+        or get_model_for_specific_agent("lexical_analysis")
     )
 
     # Invoke the provider
