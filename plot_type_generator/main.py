@@ -25,6 +25,7 @@ def run_plot_generation_pipeline(
     max_iterations: int = 3,
     suggestion_k: int = 3,
     verbose: bool = True,
+    output_callback=None,
 ) -> PlotGenState:
     """
     Run the complete plot generation pipeline.
@@ -68,8 +69,16 @@ def run_plot_generation_pipeline(
         ... )
         >>> if result:
         ...     print(f"Generated {len(result['data'])} data points")
+        output_callback: Optional callback function to send output to (e.g., st.write)
     """
     load_dotenv()
+
+    # Helper function to write output
+    def write_output(message: str):
+        if verbose:
+            print(message)
+        if output_callback:
+            output_callback(message)
 
     # Validate API key
     if not os.environ.get("FEATHERLESS_API_KEY"):
@@ -98,57 +107,53 @@ def run_plot_generation_pipeline(
     }
 
     # Step 1: Query Planning
-    if verbose:
-        print("=" * 80)
-        print("STEP 1: Query Planning")
-        print("=" * 80)
+    write_output("=" * 80)
+    write_output("STEP 1: Query Planning")
+    write_output("=" * 80)
 
     try:
         state = query_planning_agent(state)
-        if verbose:
-            print(
-                f"✓ Execution plan generated ({len(state.get('execution_plan', ''))} chars)"
-            )
-            print("\n--- Execution Plan ---")
-            print(state.get("execution_plan"))
+        write_output(
+            f"✓ Execution plan generated ({len(state.get('execution_plan', ''))} chars)"
+        )
+        write_output("\n--- Execution Plan ---")
+        write_output(state.get("execution_plan"))
     except Exception as e:
-        print(f"❌ Query planning agent failed: {e}")
+        write_output(f"❌ Query planning agent failed: {e}")
         return None
 
     # Step 2: Multi-agent refinement loop
     for iteration in range(max_iterations):
         state["iteration_count"] = iteration
 
-        if verbose:
-            print(f"\n{'=' * 80}")
-            print(f"ITERATION {iteration + 1}/{max_iterations}")
-            print("=" * 80)
+        write_output(f"\n{'=' * 80}")
+        write_output(f"ITERATION {iteration + 1}/{max_iterations}")
+        write_output("=" * 80)
 
         # Generate plot recommendations
         try:
             state = plot_type_chooser_agent(state, k=suggestion_k)
 
-            if verbose:
-                print("\n--- Plot Recommendations ---")
-                recommendations_raw = state.get("plot_recommendations")
-                if recommendations_raw:
-                    try:
-                        recommendations = utils.extract_json_content(
-                            recommendations_raw
-                        )
-                        print(json.dumps(recommendations, indent=2))
-                    except Exception as e:
-                        print(f"Warning: Could not parse recommendations: {e}")
+            write_output("\n--- Plot Recommendations ---")
+            recommendations_raw = state.get("plot_recommendations")
+            if recommendations_raw:
+                try:
+                    recommendations = utils.extract_json_content(
+                        recommendations_raw
+                    )
+                    write_output(json.dumps(recommendations, indent=2))
+                except Exception as e:
+                    write_output(f"Warning: Could not parse recommendations: {e}")
         except Exception as e:
-            print(f"❌ Plot type chooser failed: {e}")
+            write_output(f"❌ Plot type chooser failed: {e}")
             return None
 
         # Show processed data if generated
-        if state.get("processed_data") and verbose:
-            print("\n--- Processed Data Generated ---")
+        if state.get("processed_data"):
+            write_output("\n--- Processed Data Generated ---")
             processed = state.get("processed_data")
-            print(f"Columns: {processed.get('columns')}")
-            print(f"Data rows: {len(processed.get('data', []))}")
+            write_output(f"Columns: {processed.get('columns')}")
+            write_output(f"Data rows: {len(processed.get('data', []))}")
 
         # Run feedback agents
         all_feedback_passed = True
@@ -158,73 +163,62 @@ def run_plot_generation_pipeline(
             state = numeric_analysis_agent(state)
             numeric_feedback = state.get("numeric_feedback", "")
 
-            if verbose:
-                print("\n--- Numeric Feedback ---")
-                print(numeric_feedback)
+            write_output("\n--- Numeric Feedback ---")
+            write_output(numeric_feedback)
 
             try:
                 feedback_json = json.loads(numeric_feedback)
                 if feedback_json.get("validation_status") == "ISSUES_FOUND":
                     all_feedback_passed = False
-                    if verbose:
-                        print("⚠️  Numeric issues found")
+                    write_output("⚠️  Numeric issues found")
             except Exception:
                 pass
         except Exception as e:
-            if verbose:
-                print(f"Warning: Numeric analysis failed: {e}")
+            write_output(f"Warning: Numeric analysis failed: {e}")
 
         # Lexical Analysis
         try:
             state = lexical_analysis_agent(state)
             lexical_feedback = state.get("lexical_feedback", "")
 
-            if verbose:
-                print("\n--- Lexical Feedback ---")
-                print(lexical_feedback)
+            write_output("\n--- Lexical Feedback ---")
+            write_output(lexical_feedback)
 
             try:
                 feedback_json = json.loads(lexical_feedback)
                 if feedback_json.get("validation_status") == "ISSUES_FOUND":
                     all_feedback_passed = False
-                    if verbose:
-                        print("⚠️  Lexical issues found")
+                    write_output("⚠️  Lexical issues found")
             except Exception:
                 pass
         except Exception as e:
-            if verbose:
-                print(f"Warning: Lexical analysis failed: {e}")
+            write_output(f"Warning: Lexical analysis failed: {e}")
 
         # Visual Appropriateness
         try:
             state = visual_appropriateness_agent(state)
             visual_feedback = state.get("visual_feedback", "")
 
-            if verbose:
-                print("\n--- Visual Feedback ---")
-                print(visual_feedback)
+            write_output("\n--- Visual Feedback ---")
+            write_output(visual_feedback)
 
             try:
                 feedback_json = json.loads(visual_feedback)
                 if feedback_json.get("validation_status") == "ISSUES_FOUND":
                     all_feedback_passed = False
-                    if verbose:
-                        print("⚠️  Visual appropriateness issues found")
+                    write_output("⚠️  Visual appropriateness issues found")
             except Exception:
                 pass
         except Exception as e:
-            if verbose:
-                print(f"Warning: Visual appropriateness analysis failed: {e}")
+            write_output(f"Warning: Visual appropriateness analysis failed: {e}")
 
         # Check if we should continue iterating
         if all_feedback_passed:
-            if verbose:
-                print("\n✅ All feedback agents passed! Recommendations are validated.")
+            write_output("\n✅ All feedback agents passed! Recommendations are validated.")
             state["status"] = "completed"
             break
         else:
-            if verbose:
-                print(f"\n🔄 Issues found. Regenerating recommendations...")
+            write_output(f"\n🔄 Issues found. Regenerating recommendations...")
 
     # Save final recommendations
     if state.get("plot_recommendations"):
@@ -234,8 +228,7 @@ def run_plot_generation_pipeline(
             )
             utils.save_recommendations(parsed_recommendations)
         except Exception as e:
-            if verbose:
-                print(f"Warning: Could not save recommendations: {e}")
+            write_output(f"Warning: Could not save recommendations: {e}")
 
     processed_data = state.get("processed_data")
 
