@@ -17,6 +17,7 @@ class LLMProvider(ABC):
         messages: List[Tuple[str, str]],
         model: Optional[str] = None,
         temperature: float = 0.7,
+        seed: int = 42,
         **kwargs,
     ) -> str:
         """
@@ -79,6 +80,7 @@ class FeatherlessProvider(LLMProvider):
         messages: List[Tuple[str, str]],
         model: Optional[str] = None,
         temperature: float = 0.7,
+        seed: int = 42,
         **kwargs,
     ) -> str:
         """Invoke Featherless API."""
@@ -86,10 +88,16 @@ class FeatherlessProvider(LLMProvider):
 
         if model_to_use:
             response = self.llm.invoke(
-                messages, model=model_to_use, temperature=temperature, **kwargs
+                messages,
+                model=model_to_use,
+                temperature=temperature,
+                seed=seed,
+                **kwargs,
             )
         else:
-            response = self.llm.invoke(messages, temperature=temperature, **kwargs)
+            response = self.llm.invoke(
+                messages, temperature=temperature, seed=seed, **kwargs
+            )
 
         # Extract content from response
         if isinstance(response, str):
@@ -111,7 +119,7 @@ class GeminiProvider(LLMProvider):
     def __init__(
         self,
         api_key: Optional[str] = None,
-        default_model: str = "models/gemini-2.5-flash-lite",
+        default_model: str = "gemini-2.5-flash-lite",
     ):
         """
         Initialize Gemini provider.
@@ -142,16 +150,18 @@ class GeminiProvider(LLMProvider):
         messages: List[Tuple[str, str]],
         model: Optional[str] = None,
         temperature: float = 0.7,
+        seed: int = 42,
         **kwargs,
     ) -> str:
         """Invoke Google Gemini API."""
-        model_to_use = model or self.default_model
+        model_to_use = self.default_model
 
         # Create LLM instance with model
         llm = self.ChatGoogleGenerativeAI(
             model=model_to_use,
             google_api_key=self.api_key,
             temperature=temperature,
+            model_kwargs={"seed": 42},
             **kwargs,
         )
 
@@ -203,11 +213,7 @@ def get_llm_provider(
     provider = provider_name or os.environ.get("LLM_PROVIDER", "featherless")
     provider = provider.lower().strip()
 
-    if provider == "featherless":
-        return FeatherlessProvider(api_key=api_key, **kwargs)
-    elif provider in ("gemini", "google"):
+    if provider in ("gemini", "google"):
         return GeminiProvider(api_key=api_key, **kwargs)
     else:
-        raise ValueError(
-            f"Unsupported provider: {provider}. Supported providers: featherless, gemini"
-        )
+        return FeatherlessProvider(api_key=api_key, **kwargs)
