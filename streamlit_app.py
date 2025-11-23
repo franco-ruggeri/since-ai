@@ -1,9 +1,7 @@
-from io import StringIO
 import streamlit as st
 import pandas as pd
 from dotenv import load_dotenv
-from agent_caller import get_response, get_test_response
-from chart_factory import make_chart
+from components import agent_query, generate_viz
 
 
 def main():
@@ -38,45 +36,13 @@ def main():
                 st.error(f"Error reading file: {e}")
                 return
             try:
-                with st.spinner('Agents are working...', show_time=True):
-                    buffer = StringIO()
-                    buffer.write("Sending user prompt and data to agents...\n")
-                    
-                    with st.expander("📝 Log", expanded=False):
-                        placeholder = st.empty()
-                        placeholder.code(buffer.getvalue(), language="text")
-                        
-                    def update_output(output: str):
-                        buffer.write(output + "\n")
-                        placeholder.code(buffer.getvalue(), language="text")
-                    
-                    df, chart_spec = get_response(user_input, df, output_callback=update_output)
-                
-                st.subheader("📊 Generated Visualization")
-                
-                line_chart = make_chart(df, chart_spec)
-                st.plotly_chart(line_chart)
-                
+                res = agent_query(user_input.strip(), df)
+                generate_viz(*res)
+
             except Exception as e:
                 st.error(f"Error getting visualization: {e}")
         else:
             st.warning("Please enter valid user prompt and the queried data.")
-            
-        
-    df, chart_spec = get_test_response()
-    st.subheader("📊 Generated Visualization")
-    line_chart = make_chart(df, chart_spec)
-    st.plotly_chart(line_chart)
-    with st.expander("📋 Details", expanded=False):
-        tab1, tab2 = st.tabs(["Preprocessing Steps", "Rationale"])
-        
-        with tab1:
-            st.markdown("### Data Preprocessing")
-            st.write("The data was processed to prepare it for visualization.")
-        
-        with tab2:
-            st.markdown("### Visualization Rationale")
-            st.write("The chart was generated based on the user prompt and data analysis.")
 
 
 if __name__ == "__main__":

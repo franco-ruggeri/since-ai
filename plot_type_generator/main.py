@@ -215,7 +215,7 @@ def run_plot_generation_pipeline(
             parsed_recommendations = utils.extract_json_content(
                 state.get("plot_recommendations")
             )
-            utils.save_recommendations(parsed_recommendations)
+            state["plot_recommendations_path"] = utils.save_recommendations(parsed_recommendations)
         except Exception as e:
             write_output(f"Warning: Could not save recommendations: {e}")
 
