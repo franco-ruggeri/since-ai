@@ -1,9 +1,8 @@
-import os
-import numpy as np
+from io import StringIO
 import streamlit as st
 import pandas as pd
 from dotenv import load_dotenv
-from agent_caller import get_response, get_test_response
+from agent_caller import get_response
 from chart_factory import make_chart
 
 
@@ -40,7 +39,18 @@ def main():
                 return
             try:
                 with st.spinner('Agents are working...', show_time=True):
-                    df, chart_spec = get_response(user_input, df)
+                    buffer = StringIO()
+                    buffer.write("Sending user prompt and data to agents...\n")
+                    
+                    with st.expander("📝 Pipeline Output", expanded=False):
+                        placeholder = st.empty()
+                        placeholder.code(buffer.getvalue(), language="text")
+                        
+                    def update_output(output: str):
+                        buffer.write(output + "\n")
+                        placeholder.code(buffer.getvalue(), language="text")
+                    
+                    df, chart_spec = get_response(user_input, df, output_callback=update_output)
                 
                 st.subheader("📊 Generated Visualization")
                 
