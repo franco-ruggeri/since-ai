@@ -1,11 +1,16 @@
-import os
+import os, sys
 import logging
 from dotenv import load_dotenv
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 
 from plot_type_generator.plot_gen_state import PlotGenState
 from plot_type_generator.utils import _load_prompt
 from plot_type_generator.llm_provider import get_llm_provider
+
+from model_orchestrator.integration import get_model_for_specific_agent
+
 
 logger = logging.getLogger(__name__)
 load_dotenv()
@@ -39,7 +44,6 @@ def query_planning_agent(state: PlotGenState) -> PlotGenState:
     except Exception:
         data_summary = str(data_table)
 
-    # Build messages
     system_prompt = refiner_prompt
     user_content = (
         f"User Query: {user_query}\n\n"
@@ -52,8 +56,12 @@ def query_planning_agent(state: PlotGenState) -> PlotGenState:
         ("human", user_content),
     ]
 
-    # Get model from state or environment
-    model = state.get("llm_model") or os.environ.get("QUERY_PLANNING_AGENT_LLM_MODEL")
+    # Get model from state, environment or Orchestrator
+    model = (
+        state.get("llm_model")
+        or os.environ.get("QUERY_PLANNING_AGENT_LLM_MODEL")
+        or get_model_for_specific_agent("thinking")
+    )  # Auto-select best model
 
     # Get LLM provider (defaults to environment LLM_PROVIDER or "featherless")
     try:

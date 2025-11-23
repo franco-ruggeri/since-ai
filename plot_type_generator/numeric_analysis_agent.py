@@ -8,6 +8,8 @@ from plot_type_generator.plot_gen_state import PlotGenState
 from plot_type_generator.utils import _load_prompt, extract_json_content
 from plot_type_generator.llm_provider import get_llm_provider
 
+from model_orchestrator.integration import get_model_for_specific_agent
+
 logger = logging.getLogger(__name__)
 load_dotenv()
 
@@ -57,13 +59,12 @@ def numeric_analysis_agent(state: PlotGenState) -> PlotGenState:
         logger.exception("Failed to initialize LLM provider")
         raise
 
-    # Get model from state or environment
     model = (
         state.get("llm_model")
         or os.environ.get("NUMERIC_ANALYSIS_AGENT_LLM_MODEL")
         or os.environ.get("PLOT_TYPE_CHOOSER_AGENT_LLM_MODEL")
+        or get_model_for_specific_agent("numeric_analysis")
     )
-
     # Invoke the provider
     try:
         text = provider.invoke(messages, model=model, temperature=0, seed=42)
