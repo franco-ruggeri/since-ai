@@ -68,6 +68,13 @@ def run_plot_generation_pipeline(
             f"Invalid LLM_PROVIDER: {provider}. Supported: featherless, gemini"
         )
 
+    # Helper function to write output
+    def write_output(message: str):
+        if verbose:
+            print(message)
+        if output_callback:
+            output_callback(message)
+    
     # Initialize state
     state: PlotGenState = {
         "user_query": user_query,
