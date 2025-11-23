@@ -1,28 +1,14 @@
 import os
 import logging
-from typing import Any, Dict, Optional, cast
 from dotenv import load_dotenv
 
 
 from plot_type_generator.plot_gen_state import PlotGenState
-from plot_type_generator.utils import (
-    _load_prompt,
-    _get_api_key,
-    extract_json_content,
-)
+from plot_type_generator.utils import _load_prompt, extract_json_content
+from plot_type_generator.llm_provider import get_llm_provider
 
 logger = logging.getLogger(__name__)
 load_dotenv()
-
-try:
-    from langchain_featherless_ai import ChatFeatherlessAi
-except Exception:
-    ChatFeatherlessAi = None
-
-try:
-    from pydantic import SecretStr
-except Exception:
-    SecretStr = None
 
 
 def plot_type_chooser_agent(state: PlotGenState, k: int = 3) -> PlotGenState:
@@ -52,40 +38,24 @@ def plot_type_chooser_agent(state: PlotGenState, k: int = 3) -> PlotGenState:
         ("human", human_message),
     ]
 
-    if ChatFeatherlessAi is None:
-        raise RuntimeError("langchain-featherless-ai is not installed")
-
-    api_key = _get_api_key()
-    api_url = os.environ.get("FEATHERLESS_API_URL", "https://api.featherless.ai/v1")
-
-    if SecretStr is not None:
-        client = ChatFeatherlessAi(api_key=SecretStr(api_key), base_url=api_url)
-    else:
-        client = ChatFeatherlessAi(api_key=cast(Any, api_key), base_url=api_url)
-
+    # Get LLM provider
     try:
-        model = state.get("llm_model") or os.environ.get(
-            "PLOT_TYPE_CHOOSER_AGENT_LLM_MODEL"
-        )
-        if model:
-            response = client.invoke(messages, model=model, temperature=0.7, seed=42)
-        else:
-            response = client.invoke(messages, temperature=0.7, seed=42)
-    except Exception as e:
-        logger.exception("Featherless invoke failed: %s", e)
+        provider = get_llm_provider()
+    except Exception:
+        logger.exception("Failed to initialize LLM provider")
         raise
 
-    if isinstance(response, str):
-        text = response
-    elif isinstance(response, dict):
-        try:
-            text = response.get("choices", [])[0].get("message", {}).get("content")
-        except Exception:
-            text = str(response)
-    elif hasattr(response, "content"):
-        text = response.content
-    else:
-        text = str(response)
+    # Get model from state or environment
+    model = state.get("llm_model") or os.environ.get(
+        "PLOT_TYPE_CHOOSER_AGENT_LLM_MODEL"
+    )
+
+    # Invoke the provider
+    try:
+        text = provider.invoke(messages, model=model, temperature=0.7, seed=42)
+    except Exception as e:
+        logger.exception("LLM provider invoke failed: %s", e)
+        raise
 
     plot_recommendations_str = text if isinstance(text, str) else str(text)
     state["plot_recommendations"] = plot_recommendations_str
