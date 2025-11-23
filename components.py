@@ -10,7 +10,7 @@ def agent_query(user_input: str, df: pd.DataFrame):
         buffer = StringIO()
         buffer.write("Sending user prompt and data to agents...\n")
 
-        with st.expander("Log", icon="📝", expanded=False):
+        with st.expander("📝 Log", expanded=False):
             with st.container(border=False, height=500, horizontal_alignment="center"):
                 placeholder = st.empty()
                 placeholder.code(buffer.getvalue(), language="text")
@@ -30,7 +30,7 @@ def generate_viz(df, chart_metadata, preprocessing_steps, rationale):
     with st.container(border=True, horizontal_alignment="center", vertical_alignment="center"):
         st.plotly_chart(chart)
 
-    with st.expander("Details", icon="📋", expanded=False):
+    with st.expander("📋 Details", expanded=False):
         with st.container(border=False, height=500):
             tab1, tab2 = st.tabs(["Preprocessing Steps", "Rationale"])
 
