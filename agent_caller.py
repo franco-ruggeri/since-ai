@@ -42,7 +42,7 @@ def get_response(user_prompt: str, dataframe: pd.DataFrame, output_callback: Opt
 
 
 def get_test_response():
-    with open('recommendations/recommendations/plot_recommendations_Rappuset.json', 'r') as f:
+    with open('recommendations/plot_recommendations_Rappuset.json', 'r') as f:
         x = json.load(f)
         processed_data = x["processed_data"]
         chart_metadata = {
