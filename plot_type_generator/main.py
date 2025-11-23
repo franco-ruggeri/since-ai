@@ -233,17 +233,15 @@ def main():
         data = json.load(f)
 
     # Get Specifically for a particular data test case
-    test_case = data["Lokaatio"]
+    test_case = data["Käsittelyaika"]
     raw_data = test_case["Data"]
-    user_query = (
-        test_case["prompt"] + " Translation/Summary: " + test_case["translation"]
-    )
+    user_query = test_case["prompt"]
 
     # Run the pipeline
     processed_data = run_plot_generation_pipeline(
         user_query=user_query,
         data_table=test_case["Data"],
-        max_iterations=2,
+        max_iterations=5,
         suggestion_k=1,
         verbose=True,
     )
