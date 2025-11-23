@@ -47,34 +47,24 @@ def run_plot_generation_pipeline(
             "data": [[row1], [row2], ...]
         }
         Returns None if the pipeline fails.
-
-    Example:
-        >>> data_table = {
-        ...     "columns": ["date", "product", "sales_amount", "region"],
-        ...     "dtypes": {
-        ...         "date": "datetime",
-        ...         "product": "category",
-        ...         "sales_amount": "float",
-        ...         "region": "category"
-        ...     },
-        ...     "sample_rows": [
-        ...         ["2024-01-01", "A", 123.45, "north"],
-        ...         ["2024-01-02", "B", 10.0, "south"]
-        ...     ]
-        ... }
-        >>> result = run_plot_generation_pipeline(
-        ...     "Show me monthly sales trends for product A in 2024",
-        ...     data_table
-        ... )
-        >>> if result:
-        ...     print(f"Generated {len(result['data'])} data points")
     """
     load_dotenv()
 
-    # Validate API key
-    if not os.environ.get("FEATHERLESS_API_KEY"):
+    # Validate API key based on provider
+    provider = os.environ.get("LLM_PROVIDER", "featherless").lower()
+    if provider == "featherless":
+        if not os.environ.get("FEATHERLESS_API_KEY"):
+            raise ValueError(
+                "FEATHERLESS_API_KEY not set. Set it in the environment or .env file"
+            )
+    elif provider in ("gemini", "google"):
+        if not os.environ.get("GOOGLE_API_KEY"):
+            raise ValueError(
+                "GOOGLE_API_KEY not set. Set it in the environment or .env file"
+            )
+    else:
         raise ValueError(
-            "FEATHERLESS_API_KEY not set. Set it in the environment or .env file"
+            f"Invalid LLM_PROVIDER: {provider}. Supported: featherless, gemini"
         )
 
     # Initialize state
@@ -251,24 +241,11 @@ def main():
         data = json.load(f)
 
     # Get Specifically for a particular data test case
-    test_case = data["Rappuset"]
+    test_case = data["Lokaatio"]
     raw_data = test_case["Data"]
-    user_query = test_case["prompt"]
-
-    data_table = {
-        "columns": list(raw_data[0].keys()),
-        "dtypes": {
-            "Heading": "string",
-            "Observation": "string",
-            "observation_date": "datetime",
-            "observation_handled_date": "datetime",
-        },
-        "total_rows": len(raw_data),
-        "observations": [
-            f"Heading: {obs['Heading']}, Observation: {obs['Observation']}..."
-            for obs in raw_data
-        ],
-    }
+    user_query = (
+        test_case["prompt"] + " Translation/Summary: " + test_case["translation"]
+    )
 
     # Run the pipeline
     processed_data = run_plot_generation_pipeline(
