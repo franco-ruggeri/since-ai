@@ -1,0 +1,51 @@
+Heading,Observation,observation_date,observation_processed_date
+Leaking faucet,"The tap in the washbasin in the break room is dripping slowly. Does not cause water damage or slipping hazard, but consumes water.",09-01-24,11-01-24
+Cable in the walkway,"A temporary network cable installed by IT support ran across the office corridor, causing a tripping hazard.",16-01-24,17-01-24
+Shelf overloaded,"Too many boxes were visually stacked on the shelf in the dispatch room, which poses a risk of the shelf collapsing.",23-01-24,25-01-24
+Replacing a burnt-out bulb,"One of the many lamps in the storage corridor had burned out. The lighting in the area was still adequate, but weakened.",30-01-24,01-02-24
+Chemical splash on the floor,There was a small amount of unknown liquid on the floor of the laboratory without warning markings.,06-02-24,07-02-24
+Emergency exit partially blocked,"A pallet full of raw materials had been left in front of the emergency exit, narrowing the passage significantly.",13-02-24,14-02-24
+Worn chair upholstery,The upholstery of the seat of the office office chair is frayed. Only an aesthetic nuisance.,20-02-24,22-02-24
+Inadequate use of protective clothing,An employee was moving an asthma-causing substance in a cleanroom without an appropriate respirator.,27-02-24,28-02-24
+Scratch on the wall,The forklift has hit the wall and caused a deep scratch on the wall surface of the corridor. Only cosmetic damage.,05-03-24,07-03-24
+Open switchboard,"The door of the electrical center in the service room had been left open, leaving the live parts touchable.",12-03-24,13-03-24
+The locker door does not lock,The door of one of the wardrobes in the dressing room does not lock properly. Does not pose a safety risk.,19-03-24,21-03-24
+Heavy lifting without aids,"An employee lifted a 25 kg sack from the floor alone without a lifting aid, a clear ergonomic risk.",26-03-24,27-03-24
+Trash bin full,"The paper collection container in the break room is full. It does not cause danger, but it is untidy.",02-04-24,04-04-24
+Sharp edge on the machine guard,"The protective cover of the tableting machine had a sharp edge, which causes a risk of cuts during maintenance work.",09-04-24,10-04-24
+Eyewash bottle inspection outdated,The inspection date of the laboratory's emergency shower eyewash bottle had expired.,16-04-24,17-04-24
+Dust on top of the shelf,Dust has accumulated on top of the high storage shelf. Does not pose a risk of product contamination or any other risk.,23-04-24,25-04-24
+Gas cylinders stored incorrectly,"The compressed air bottles stood on the wall of the warehouse without chain fastening, risk of tipping over.",30-04-24,02-05-24
+Damaged forklift fork,"The tip of the fork of one of the warehouse trucks was bent, which can cause unstable pallets and a risk of falling.",07-05-24,08-05-24
+Warning sign faded,The warning sign indicating a wet floor was so faded that the text could no longer be clearly distinguished.,14-05-24,15-05-24
+The window won't open,"The mechanism of the ventilation window in the conference room is stuck. Not a safety risk, but hinders ventilation.",21-05-24,23-05-24
+Missing machine guard,"The mixer shaft lacked a guard, which creates a risk of getting caught when the machine is running.",28-05-24,29-05-24
+Incorrectly sorted waste,Sharp laboratory material (needles) had been placed in the ordinary mixed waste.,04-06-24,05-06-24
+Hand paper at the end,The hand paper dispenser in the toilet facilities was empty.,11-06-24,13-06-24
+Slippery floor at the entrance,"Due to the rainy weather, the floor of the main entrance was dangerously slippery, and there were not enough drying mats.",18-06-24,19-06-24
+Noisy air conditioner,"The office air conditioner made a loud, disturbing noise. It does not indicate a breakage, but it is a nuisance.",25-06-24,27-06-24
+Crack in the floor tile,"There was a crack in the concrete floor of the warehouse aisle, which, however, did not pose a tripping hazard.",02-07-24,04-07-24
+The smoke alarm flashes red,"A smoke alarm on the ceiling of the hallway flashed a red light, indicating a low battery or malfunction.",09-07-24,10-07-24
+Computer screen too low,"At the workstation, the employee's screen was too low, which caused a poor ergonomic posture.",16-07-24,18-07-24
+The sewer of the water supply smells,"The drain in the break room smelled bad. Most likely, it only requires cleaning.",23-07-24,25-07-24
+Crane inspection late,The statutory periodic inspection of the production overhead crane was two weeks late.,30-07-24,31-07-24
+Frozen emergency exit,"In the winter, one of the emergency exits on the yard side had frozen shut and would not open.",06-08-24,07-08-24
+Dusty ventilation valve,"The ventilation valve in the office was very dusty. Affects air quality, but is not an immediate danger.",13-08-24,15-08-24
+Damaged fire extinguisher,The pressure gauge of the powder extinguisher was red and the hose was broken.,20-08-24,21-08-24
+Tool dropped on the floor,"The maintenance man had dropped the hammer on a high service platform, from where it could have fallen down.",27-08-24,28-08-24
+There is no guide sign,"The route of the new premises had not yet been signposted, causing people to get lost.",03-09-24,05-09-24
+Automatic door closes too quickly,The automatic door in the entrance hall closed so quickly that it caused a risk of crushing.,10-09-24,11-09-24
+Hand sanitizer at the end,The hand sanitizer dispenser at the entrance to the cleanrooms was empty.,17-09-24,19-09-24
+Broken pallet trolley,"The pump mechanism of one of the pallet trucks did not work properly, which made lifting the load difficult and unstable.",24-09-24,25-09-24
+Wall clock stopped,"The wall clock in the break room had stopped. Only a nuisance, not a danger.",01-10-24,03-10-24
+Icicle at risk of falling,"A large icicle hung above the main door, threatening to fall into the passage.",08-10-24,09-10-24
+Faulty Production Machine Sensor,"The machine's safety sensor constantly gave error alarms, which led to it being overtaken by workers.",15-10-24,16-10-24
+Leaking compressed air hose,"The compressed air hose leaked from its connector, causing hissing and energy loss. No immediate danger.",22-10-24,24-10-24
+Dim lighting between shelves,It was so dim in one of the shelves in the warehouse that it was difficult to read the product labels.,29-10-24,30-10-24
+Clogged floor drain,"The floor drain in the cleaning area was clogged, which caused water to accumulate on the floor and a risk of slipping.",05-11-24,06-11-24
+Door pump broken,The heavy fire door was slammed shut with force because the door retarder was broken. Risk of crushing.,12-11-24,13-11-24
+Expired batteries in the device,"The rarely used measuring device had expired batteries. No danger, but prevents the use of the device.",19-11-24,21-11-24
+Unclear markings on the chemical bottle,The label on the laboratory reagent bottle was so worn that the contents could not be ascertained.,26-11-24,27-11-24
+Parking space too narrow,"One of the parking spaces was painted too narrow, which made it difficult to get out of the car.",03-12-24,05-12-24
+Broken keyboard,The shared office keyboard did not register all keystrokes. Ergonomic disadvantage and retardation.,10-12-24,12-12-24
+Emergency shower testing neglected,The weekly emergency shower testing had not been carried out as scheduled.,17-12-24,18-12-24

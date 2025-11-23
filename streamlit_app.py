@@ -1,10 +1,7 @@
-import os
-import numpy as np
 import streamlit as st
 import pandas as pd
 from dotenv import load_dotenv
-from backend_requests import get_response
-from chart_factory import make_chart
+from components import agent_query, generate_viz
 
 
 def main():
@@ -15,7 +12,8 @@ def main():
     # st.session_state.hard_limit = 300
 
     st.title("🤖 HSE Bot - Visualization Agent")
-    st.markdown("I am the Visualization Agent for the HSE Bot. Give me the user prompt and the data, and I will visualize it for you.")
+    st.markdown(
+        "I am the Visualization Agent for the HSE Bot. Give me the user prompt and the data, and I will visualize it for you.")
     st.markdown(
         """
         Voit kysyä myös suomeksi!
@@ -36,31 +34,15 @@ def main():
                     df = pd.read_excel(user_input_file)
             except Exception as e:
                 st.error(f"Error reading file: {e}")
-                return   
+                return
             try:
-                get_response(user_input, df) 
+                res = agent_query(user_input.strip(), df)
+                generate_viz(*res)
+
             except Exception as e:
                 st.error(f"Error getting visualization: {e}")
         else:
             st.warning("Please enter valid user prompt and the queried data.")
-            
-        
-     
-    chart_data = pd.DataFrame(
-        np.random.randn(20, 3),
-        columns=['Series A', 'Series B', 'Series C']
-    )
-    
-    st.subheader("📊 Generated Visualization")
-    line_chart = make_chart(chart_data, {
-        "chart_type": "histogram",
-        "channels": {
-            "x": "Series B",
-            "y": "Series A",
-        }
-    })
-    
-    st.plotly_chart(line_chart)
 
 
 if __name__ == "__main__":

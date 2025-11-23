@@ -1,0 +1,47 @@
+Heading,Observation,observation_date,observation_processed_date
+The robotic arm moved unexpectedly,"The robotic arm of the assembly department B was activated in the middle of maintenance work without warning. Fortunately, the maintenance man had just left the safety zone.",05-01-24,05-01-24
+Strong smell of hydraulic oil,There was a strong smell of oil near the hydraulic unit of assembly B. A small leak in the system is suspected.,14-01-24,16-01-24
+Compressed air condensate on the floor,"Condensate had leaked from the discharge valve of the compressed air line in assembly department B onto the floor, creating a slipping hazard.",22-01-24,22-01-24
+Pallets stacked dangerously high,"In the intermediate warehouse of Ward B, the pallets were stacked to a height of more than three metres without a support structure.",29-01-24,31-01-24
+The temperature sensor displays incorrectly,"The temperature sensor in configuration B showed -5°C, even though the room was clearly at normal room temperature.",06-02-24,08-02-24
+Reduced airflow in the fume cupboard,The airflow in the fume cupboard of compartment B had deteriorated significantly. The smoke test showed insufficient suction power.,13-02-24,15-02-24
+The roller track gets stuck randomly,"The conveyor roller conveyor of assembly B stops randomly for no apparent reason, causing production interruptions.",20-02-24,23-02-24
+Refrigeration unit door frozen shut,The door of the refrigeration unit of ward B had frozen shut and required a violent opening.,28-02-24,01-03-24
+Pressure Relief Valve Leak,The pressure relief valve in Assembly Compartment B is leaking and making a hissing noise.,07-03-24,10-03-24
+Laser cutter safety glasses lost,The safety glasses of the laser workstation in ward B had disappeared and spare glasses were not available.,15-03-24,16-03-24
+Cart's wheel stuck,One wheel of the transport trolley used in configuration B is jammed and the trolley is running at an angle.,23-03-24,26-03-24
+Vacuum cleaner overheated,The industrial vacuum cleaner in Ward B shut down due to overheating in the middle of use.,30-03-24,02-04-24
+Sensor system gives false alarms,"The safety sensor system in Configuration B gives repeated false alarms, stopping production.",08-04-24,11-04-24
+Chemical leakage from a small container,"In ward B, a small container of solvent had fallen over and the contents had spilled under the worktop.",16-04-24,16-04-24
+Lifting rope frayed,The lifting rope of Assembly Detachment B was frayed in several places and required immediate replacement.,24-04-24,27-04-24
+Condensation dripping from the air conditioning duct,Water drips directly from the ventilation duct of ward B to the workstation.,02-05-24,05-05-24
+Welding gas cylinder valve leaks,"At the welding point of assembly B, the valve of the gas cylinder is leaking noticeably.",10-05-24,11-05-24
+The roller conveyor causes vibrations,The roller conveyor in ward B causes strong vibrations that can be felt throughout the hall.,18-05-24,22-05-24
+The warning light does not work,The rotating warning light in Assembly Compartment B no longer works at all.,26-05-24,28-05-24
+The epoxy on the floor is peeling off,"The epoxy coating on the floor of ward B flakes off over large areas, exposing the concrete.",03-06-24,07-06-24
+Air Force Gun Trigger Stuck,"The trigger of the air blow gun used in Assembly B got stuck, causing a continuous jet of air.",11-06-24,12-06-24
+The electric motor smells like burnt smell,The engine of the conveyor system in ward B smelled of burnt smell during operation.,19-06-24,22-06-24
+Workwear storage cabinet full,The workwear storage cabinet in assembly department B is full and some of the clothes are on the floor.,27-06-24,29-06-24
+The water in the emergency shower does not flow,"During the testing of the emergency shower in ward B, it was found that the water does not flow at sufficient pressure.",05-07-24,09-07-24
+Robot cell does not recognize components,The robot cell in configuration B does not recognize the components due to a malfunction in the vision system.,13-07-24,15-07-24
+Tear in the floor,"A tear of about 30 cm has formed in the floor of ward B, which can be tripped over.",21-07-24,24-07-24
+Leakage of the quick coupling of the compressed air hose,The quick coupling of the compressed air hose in assembly department B is constantly leaking air.,29-07-24,30-07-24
+Conveyor belt slides,"The conveyor belt in compartment B slides over the rollers, causing uneven transport.",06-08-24,09-08-24
+The workstation lamp flickers,The LED light at the workstation in Configuration B flickers disturbingly.,14-08-24,16-08-24
+The angle grinder vibrates strongly,The angle grinder in Compartment B vibrates abnormally strongly in use.,22-08-24,25-08-24
+Air purifier filter clogged,The air purifier filter in Assembly Compartment B is completely clogged with dust.,30-08-24,02-09-24
+Operating instructions for the lifting device have been lost,"The operating instructions for the lifting device of Ward B have disappeared, and it was not possible to familiarize the new person.",07-09-24,09-09-24
+Underfloor heating does not work,The underfloor heating in Configuration B does not work and the floor is cold.,15-09-24,19-09-24
+Tool trolley overturned,"In ward B, a tool trolley fell over when it was moved on an uneven floor.",23-09-24,24-09-24
+The pressure gauge shows zero,The pressure gauge on the hydraulic pump in assembly department B shows zero even though the system is running.,01-10-24,04-10-24
+Torn protective curtain,The protective curtain of the welding point of ward B has torn in several places.,09-10-24,11-10-24
+Warning tape detached,The warning tape for the hazardous area of Assembly B had come off the floor.,17-10-24,19-10-24
+Compressed air hose whips,"In ward B, the compressed air hose came loose and began to whip dangerously around.",25-10-24,25-10-24
+Hook safety lock broken,The safety lock on the lifting hook in Assembly Section B no longer works.,02-11-24,05-11-24
+Workstation suction system blocked,The suction system of the workstation in ward B is clogged and no longer suction at all.,10-11-24,13-11-24
+The floor drain smells,An unpleasant smell comes from the floor drain in assembly B.,18-11-24,20-11-24
+The roller track goes too fast,The speed of the roller conveyor in section B has increased and the components fall off easily.,26-11-24,29-11-24
+Emergency stop circuit does not work,The emergency stop circuit of Assembly Detachment B did not stop the plane during the test.,04-12-24,04-12-24
+The desk at the workstation wobbles,The desk at the workstation in Ward B wobbles dangerously and threatens to fall over.,12-12-24,15-12-24
+The compressed air dryer does not work,Assembly B's compressed air dryer is out of order and there is moisture in the air.,20-12-24,23-12-24
+The conveyor scale shows the wrong,The conveyor scale in section B constantly shows a weight that is 5 kg too light.,28-12-24,31-12-24

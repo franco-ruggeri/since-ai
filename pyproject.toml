@@ -11,6 +11,7 @@ dependencies = [
   "langchain-google-genai>=2.1.12",
   "langgraph>=1.0.1",
   "matplotlib>=3.10.7",
+  "openpyxl>=3.1.5",
   "pandas>=2.3.3",
   "pillow>=12.0.0",
   "plotly>=6.5.0",
