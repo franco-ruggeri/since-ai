@@ -2,7 +2,7 @@ from io import StringIO
 import streamlit as st
 import pandas as pd
 from dotenv import load_dotenv
-from agent_caller import get_response
+from agent_caller import get_response, get_test_response
 from chart_factory import make_chart
 
 
@@ -42,7 +42,7 @@ def main():
                     buffer = StringIO()
                     buffer.write("Sending user prompt and data to agents...\n")
                     
-                    with st.expander("📝 Pipeline Output", expanded=False):
+                    with st.expander("📝 Log", expanded=False):
                         placeholder = st.empty()
                         placeholder.code(buffer.getvalue(), language="text")
                         
@@ -63,27 +63,20 @@ def main():
             st.warning("Please enter valid user prompt and the queried data.")
             
         
-    # df, chart_spec = get_test_response()
-    # st.subheader("📊 Generated Visualization")
-    # line_chart = make_chart(df, chart_spec)
-
-    # st.plotly_chart(line_chart)
-     
-    # chart_data = pd.DataFrame(
-    #     np.random.randn(20, 3),
-    #     columns=['Series A', 'Series B', 'Series C']
-    # )
-    
-    # st.subheader("📊 Generated Visualization")
-    # line_chart = make_chart(chart_data, {
-    #     "chart_type": "histogram",
-    #     "channels": {
-    #         "x": "Series B",
-    #         "y": "Series A",
-    #     }
-    # })
-    
-    # st.plotly_chart(line_chart)
+    df, chart_spec = get_test_response()
+    st.subheader("📊 Generated Visualization")
+    line_chart = make_chart(df, chart_spec)
+    st.plotly_chart(line_chart)
+    with st.expander("📋 Details", expanded=False):
+        tab1, tab2 = st.tabs(["Preprocessing Steps", "Rationale"])
+        
+        with tab1:
+            st.markdown("### Data Preprocessing")
+            st.write("The data was processed to prepare it for visualization.")
+        
+        with tab2:
+            st.markdown("### Visualization Rationale")
+            st.write("The chart was generated based on the user prompt and data analysis.")
 
 
 if __name__ == "__main__":
