@@ -1,6 +1,4 @@
-import os
 import logging
-from dotenv import load_dotenv
 import streamlit as st
 
 
@@ -9,7 +7,6 @@ from plot_type_generator.utils import _load_prompt
 from plot_type_generator.llm_provider import get_llm_provider
 
 logger = logging.getLogger(__name__)
-load_dotenv()
 
 
 def query_planning_agent(state: PlotGenState) -> PlotGenState:
