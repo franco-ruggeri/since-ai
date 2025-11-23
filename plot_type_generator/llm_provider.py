@@ -68,9 +68,7 @@ class FeatherlessProvider(LLMProvider):
                 "FEATHERLESS_API_KEY not set. Pass it to the constructor or set it in the environment."
             )
 
-        self.base_url = base_url or os.environ.get(
-            "FEATHERLESS_API_URL", "https://api.featherless.ai/v1"
-        )
+        self.base_url = base_url or st.secrets("FEATHERLESS_API_URL")
         self.default_model = default_model
         self.llm = ChatFeatherlessAi(
             api_key=SecretStr(self.api_key), base_url=self.base_url
@@ -211,7 +209,7 @@ def get_llm_provider(
         >>> os.environ["LLM_PROVIDER"] = "gemini"
         >>> provider = get_llm_provider()
     """
-    provider = provider_name or os.environ.get("LLM_PROVIDER", "featherless")
+    provider = provider_name or st.secrets["LLM_PROVIDER"]
     provider = provider.lower().strip()
 
     if provider in ("gemini", "google"):

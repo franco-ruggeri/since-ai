@@ -1,6 +1,7 @@
 import os
 import logging
 from dotenv import load_dotenv
+import streamlit as st
 
 
 from plot_type_generator.plot_gen_state import PlotGenState
@@ -53,7 +54,7 @@ def query_planning_agent(state: PlotGenState) -> PlotGenState:
     ]
 
     # Get model from state or environment
-    model = state.get("llm_model") or os.environ.get("QUERY_PLANNING_AGENT_LLM_MODEL")
+    model = state.get("llm_model") or st.secrets("QUERY_PLANNING_AGENT_LLM_MODEL")
 
     # Get LLM provider (defaults to environment LLM_PROVIDER or "featherless")
     try:

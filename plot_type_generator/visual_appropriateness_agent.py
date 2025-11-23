@@ -2,6 +2,7 @@ import os
 import logging
 import json
 from dotenv import load_dotenv
+import streamlit as st
 
 
 from plot_type_generator.plot_gen_state import PlotGenState
@@ -62,8 +63,8 @@ def visual_appropriateness_agent(state: PlotGenState) -> PlotGenState:
     # Get model from state or environment
     model = (
         state.get("llm_model")
-        or os.environ.get("VISUAL_APPROPRIATENESS_AGENT_LLM_MODEL")
-        or os.environ.get("PLOT_TYPE_CHOOSER_AGENT_LLM_MODEL")
+        or st.secrets["VISUAL_APPROPRIATENESS_AGENT_LLM_MODEL"]
+        or st.secrets["PLOT_TYPE_CHOOSER_AGENT_LLM_MODEL"]
     )
 
     # Invoke the provider

@@ -1,4 +1,5 @@
 import pandas as pd
+import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 from sentence_transformers import SentenceTransformer
@@ -59,7 +60,7 @@ class SemanticClusterer:
     def _label_cluster(self, sample_texts):
         load_dotenv()
 
-        api_key = os.environ.get("FEATHERLESS_API_KEY")
+        api_key = st.secrets["FEATHERLESS_API_KEY"]
         api_url = "https://api.featherless.ai/v1"
         model = "Qwen/Qwen2.5-Coder-32B-Instruct"
 

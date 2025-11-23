@@ -1,4 +1,5 @@
 import os
+import streamlit as st
 import logging
 import json
 from dotenv import load_dotenv
@@ -60,8 +61,8 @@ def numeric_analysis_agent(state: PlotGenState) -> PlotGenState:
     # Get model from state or environment
     model = (
         state.get("llm_model")
-        or os.environ.get("NUMERIC_ANALYSIS_AGENT_LLM_MODEL")
-        or os.environ.get("PLOT_TYPE_CHOOSER_AGENT_LLM_MODEL")
+        or st.secrets["NUMERIC_ANALYSIS_AGENT_LLM_MODEL"]
+        or st.secrets["PLOT_TYPE_CHOOSER_AGENT_LLM_MODEL"]
     )
 
     # Invoke the provider
