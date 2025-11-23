@@ -2,6 +2,7 @@ import os
 import logging
 import json
 from dotenv import load_dotenv
+import streamlit as st
 
 
 from plot_type_generator.plot_gen_state import PlotGenState

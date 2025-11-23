@@ -1,4 +1,5 @@
 import os
+import streamlit as st
 import logging
 from dotenv import load_dotenv
 
@@ -46,9 +47,7 @@ def plot_type_chooser_agent(state: PlotGenState, k: int = 3) -> PlotGenState:
         raise
 
     # Get model from state or environment
-    model = state.get("llm_model") or os.environ.get(
-        "PLOT_TYPE_CHOOSER_AGENT_LLM_MODEL"
-    )
+    model = state.get("llm_model") or st.secrets["PLOT_TYPE_CHOOSER_AGENT_LLM_MODEL"]
 
     # Invoke the provider
     try:

@@ -1,6 +1,7 @@
 import os
 import json
 import re
+import streamlit as st
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, Optional
@@ -22,7 +23,7 @@ def _get_api_key() -> str:
 
     Raises RuntimeError if not set to avoid leaking keys in source.
     """
-    key = os.environ.get("FEATHERLESS_API_KEY")
+    key = st.secrets("FEATHERLESS_API_KEY")
     if not key:
         raise RuntimeError(
             "FEATHERLESS_API_KEY environment variable is not set."
@@ -52,7 +53,7 @@ def extract_json_content(response_string):
         # Find the first newline after opening ```
         first_newline = content.find("\n")
         if first_newline != -1:
-            content = content[first_newline + 1:]
+            content = content[first_newline + 1 :]
         # Remove trailing ```
         if content.endswith("```"):
             content = content[:-3].rstrip()
@@ -61,10 +62,10 @@ def extract_json_content(response_string):
     def clean_json_string(json_str):
         """Clean common JSON formatting issues."""
         # Remove trailing commas before closing braces/brackets
-        json_str = re.sub(r',(\s*[}\]])', r'\1', json_str)
+        json_str = re.sub(r",(\s*[}\]])", r"\1", json_str)
         # Remove JavaScript-style comments
-        json_str = re.sub(r'//.*?\n', '\n', json_str)
-        json_str = re.sub(r'/\*.*?\*/', '', json_str, flags=re.DOTALL)
+        json_str = re.sub(r"//.*?\n", "\n", json_str)
+        json_str = re.sub(r"/\*.*?\*/", "", json_str, flags=re.DOTALL)
         return json_str
 
     # Try to parse the JSON directly
@@ -81,7 +82,7 @@ def extract_json_content(response_string):
             pass
 
         # Try to extract JSON by finding balanced braces
-        start_idx = content.find('{')
+        start_idx = content.find("{")
         if start_idx != -1:
             # Find the matching closing brace
             brace_count = 0
@@ -95,7 +96,7 @@ def extract_json_content(response_string):
                     escape_next = False
                     continue
 
-                if char == '\\':
+                if char == "\\":
                     escape_next = True
                     continue
 
@@ -104,13 +105,13 @@ def extract_json_content(response_string):
                     continue
 
                 if not in_string:
-                    if char == '{':
+                    if char == "{":
                         brace_count += 1
-                    elif char == '}':
+                    elif char == "}":
                         brace_count -= 1
                         if brace_count == 0:
                             # Found the matching brace
-                            json_str = content[start_idx:i+1]
+                            json_str = content[start_idx : i + 1]
                             try:
                                 # Try cleaning before parsing
                                 cleaned_json = clean_json_string(json_str)

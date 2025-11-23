@@ -1,6 +1,7 @@
 import os, sys
 import logging
 from dotenv import load_dotenv
+import streamlit as st
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 

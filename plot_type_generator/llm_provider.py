@@ -4,6 +4,7 @@ import os
 from abc import ABC, abstractmethod
 from typing import Any, Dict, List, Optional, Tuple, Union
 from dotenv import load_dotenv
+import streamlit as st
 
 load_dotenv()
 
@@ -61,15 +62,13 @@ class FeatherlessProvider(LLMProvider):
                 "Install it with: pip install langchain-featherless-ai"
             )
 
-        self.api_key = api_key or os.environ.get("FEATHERLESS_API_KEY")
+        self.api_key = api_key or st.secrets["FEATHERLESS_API_KEYY"]
         if not self.api_key:
             raise ValueError(
                 "FEATHERLESS_API_KEY not set. Pass it to the constructor or set it in the environment."
             )
 
-        self.base_url = base_url or os.environ.get(
-            "FEATHERLESS_API_URL", "https://api.featherless.ai/v1"
-        )
+        self.base_url = base_url or st.secrets("FEATHERLESS_API_URL")
         self.default_model = default_model
         self.llm = ChatFeatherlessAi(
             api_key=SecretStr(self.api_key), base_url=self.base_url
@@ -136,7 +135,7 @@ class GeminiProvider(LLMProvider):
                 "Install it with: pip install langchain-google-genai"
             )
 
-        self.api_key = api_key or os.environ.get("GOOGLE_API_KEY")
+        self.api_key = api_key or st.secrets["GOOGLE_API_KEY"]
         if not self.api_key:
             raise ValueError(
                 "GOOGLE_API_KEY not set. Pass it to the constructor or set it in the environment."
@@ -210,7 +209,7 @@ def get_llm_provider(
         >>> os.environ["LLM_PROVIDER"] = "gemini"
         >>> provider = get_llm_provider()
     """
-    provider = provider_name or os.environ.get("LLM_PROVIDER", "featherless")
+    provider = provider_name or st.secrets["LLM_PROVIDER"]
     provider = provider.lower().strip()
 
     if provider in ("gemini", "google"):

@@ -1,4 +1,5 @@
 import os
+import streamlit as st
 import sys
 import json
 from pathlib import Path
@@ -52,14 +53,14 @@ def run_plot_generation_pipeline(
     load_dotenv()
 
     # Validate API key based on provider
-    provider = os.environ.get("LLM_PROVIDER", "featherless").lower()
+    provider = st.secrets["LLM_PROVIDER"].lower()
     if provider == "featherless":
-        if not os.environ.get("FEATHERLESS_API_KEY"):
+        if not st.secrets("FEATHERLESS_API_KEY"):
             raise ValueError(
                 "FEATHERLESS_API_KEY not set. Set it in the environment or .env file"
             )
     elif provider in ("gemini", "google"):
-        if not os.environ.get("GOOGLE_API_KEY"):
+        if not st.secrets["GOOGLE_API_KEY"]:
             raise ValueError(
                 "GOOGLE_API_KEY not set. Set it in the environment or .env file"
             )
@@ -74,7 +75,7 @@ def run_plot_generation_pipeline(
             print(message)
         if output_callback:
             output_callback(message)
-    
+
     # Initialize state
     state: PlotGenState = {
         "user_query": user_query,
@@ -127,9 +128,7 @@ def run_plot_generation_pipeline(
             recommendations_raw = state.get("plot_recommendations")
             if recommendations_raw:
                 try:
-                    recommendations = utils.extract_json_content(
-                        recommendations_raw
-                    )
+                    recommendations = utils.extract_json_content(recommendations_raw)
                     write_output(json.dumps(recommendations, indent=2))
                 except Exception as e:
                     write_output(f"Warning: Could not parse recommendations: {e}")
@@ -203,7 +202,9 @@ def run_plot_generation_pipeline(
 
         # Check if we should continue iterating
         if all_feedback_passed:
-            write_output("\n✅ All feedback agents passed! Recommendations are validated.")
+            write_output(
+                "\n✅ All feedback agents passed! Recommendations are validated."
+            )
             state["status"] = "completed"
             break
         else:
@@ -215,7 +216,9 @@ def run_plot_generation_pipeline(
             parsed_recommendations = utils.extract_json_content(
                 state.get("plot_recommendations")
             )
-            state["plot_recommendations_path"] = utils.save_recommendations(parsed_recommendations)
+            state["plot_recommendations_path"] = utils.save_recommendations(
+                parsed_recommendations
+            )
         except Exception as e:
             write_output(f"Warning: Could not save recommendations: {e}")
 
