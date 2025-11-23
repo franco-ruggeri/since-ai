@@ -1,0 +1,51 @@
+Heading,Observation,observation_date,observation_date2
+The warning sign is missing from the electrical cabinet,The door of the electrical cabinet is completely missing a warning marking. The locker is located in a public passage area.,15-01-25,16-01-25
+Water leaked from the coffee machine,"Water had leaked directly onto the floor on the lower level of the coffee machine in the office space. I also noticed that liquid had been splashed near the electrical outlet, which posed a potential safety risk.",28-11-24,29-11-24
+Socket at the front door in a dangerous space,"The socket at the front door was hanging right on the floor and was partially broken. Potential risk of electric shock, especially during rain.",12-10-24,14-10-24
+An extension cord runs across the hallway,"In the office corridor, an extension cord had been pulled across the floor between two workstations. Tripping hazard and risk of damage to the cord.",23-09-24,24-09-24
+Electrical cabinet open in the production area,The electrical distribution cabinet in the production facility had been left open unattended. There were no warning labels or protection in the cabinet.,03-02-25,03-02-25
+Damaged electrical cord,"A damaged electrical cable was found in the warehouse, the insulation of which had worn out in several places, with the exposed wires visible.",17-12-24,18-12-24
+Overloading the socket,One socket had six devices connected through a branch plug. Overload risk and fire hazard.,09-08-24,11-08-24
+Wet floor near electrical appliances,"After the cleaning work, the floor was wet in the immediate vicinity of electrical outlets and appliances.",05-11-24,05-11-24
+Broken light switch,The light switch hung off the wall and the insides were visible. Risk of electric shock.,22-01-25,23-01-25
+Damaged power cord,"The insulation of the power cable of the production equipment had cracked in several places, exposing the metal conductor.",30-10-24,31-10-24
+Power tools on wet floors,Battery-powered power tools had been left on the floor next to a wet area at the loading dock door.,18-07-24,19-07-24
+Residual current device is missing,"The socket for outdoor use lacked a residual current device, even though it is mandatory for outdoor use.",14-09-24,16-09-24
+Inadequate fastening of the electrical cable,The electric cable hanging from the ceiling was attached at only one point and swayed dangerously.,11-02-25,11-02-25
+Unattended charging area,There were several devices in the battery charging area charging overnight without supervision or fire safety equipment.,03-12-24,04-12-24
+Goods in front of the main switchboard,"Goods had been stored in front of the main switchboard, which prevented access in an emergency.",27-08-24,28-08-24
+Damaged extension cord in use,"An extension cord was used, the insulation of which was clearly damaged and the cord had been repaired with tape.",19-11-24,20-11-24
+Humidity in the electrical cabinet,Moisture and rust marks were detected in the electrical cabinet in the basement.,08-01-25,09-01-25
+Using electrical appliances outdoors in the rain,A person operated a power tool outdoors in heavy rain without proper protection.,05-10-24,06-10-24
+Socket cover broken,The protective cover of the workstation socket was cracked and the internal parts were partially visible.,02-09-24,03-09-24
+UPS Device Warns of Fault,"The UPS device in the server room gave a continuous warning sound, but the device had not been serviced.",29-12-24,30-12-24
+Electrical cabinet unlocked,"The electrical distribution cabinet in the production facility was unlocked, even though it should be locked to prevent unauthorized access.",18-02-25,18-02-25
+Wrong plug in use,The appliance had the wrong type of plug that did not fit properly into the socket.,25-07-24,26-07-24
+Electrical work without a permit,It was noticed that the person was doing electrical installation work without the appropriate permit or qualifications.,16-08-24,17-08-24
+Indoor generator,The backup power generator was placed indoors without adequate ventilation.,11-11-24,12-11-24
+Electrical equipment cord pinched,"Under the heavy shelf, the power cord of electrical appliances was pinched.",22-10-24,23-10-24
+Removing the lamp cover,The protective cover of the ceiling lamp was detached and hanging from wires.,29-01-25,30-01-25
+Engine overheated,The electric motor of the production unit was overheated and smelled of burnt smell.,28-09-24,29-09-24
+Electrical panel markings are missing,"The electrical panel lacked all markings, so it was impossible to identify the fuses and switches.",22-12-24,23-12-24
+Plug contact surfaces visible,The plastic casing of the plug was cracked and the metal contact surfaces were partially visible.,05-02-25,06-02-25
+Temporary electrical installation remains permanent,"The electrical installation, which was intended to be temporary, had been in use for more than a year without an official inspection.",03-08-24,05-08-24
+Electrical appliances in dusty environments,The electrical equipment was in a very dusty environment without proper protection.,02-11-24,03-11-24
+Unplug the ground wire,The ground wire of the device was disconnected from the connection point.,18-10-24,19-10-24
+Electrical cabinet rusted,The outdoor electrical distribution cabinet was badly rusted and its seals were broken.,12-01-25,13-01-25
+Lamps flicker,"The lights in the office space are constantly flickering, which indicates an electrical problem.",07-09-24,08-09-24
+Charging batteries in an unsafe space,Lithium batteries were charged in a storage facility without fire safety equipment or supervision.,10-12-24,11-12-24
+Neglected maintenance of electrical equipment,The scheduled maintenance of the production equipment was delayed by three months.,30-07-24,31-07-24
+Insufficient number of sockets,"There were too few sockets at the workstation, which led to the chaining of the splitters.",24-11-24,25-11-24
+The route of the electric cable is dangerous,The electric cable ran across the forklift aisle without protection.,14-02-25,14-02-25
+Water dripping from the lamp,"Water was dripping from the ceiling lamp, which indicates a water leak and an electrical safety risk.",09-10-24,10-10-24
+Emergency stop button covered,The plane's emergency stop button was partially covered with items.,21-08-24,22-08-24
+The electric motor makes abnormal noises,"The electric motor of the production unit made an abnormal noise, which may indicate a fault.",15-12-24,16-12-24
+Socket installation incorrect,The new socket had been installed incorrectly and it was loose in the wall.,25-01-25,26-01-25
+Electrical appliances too close to a water source,The electrical appliances had been placed too close to the water point without observing safety distances.,19-09-24,20-09-24
+Cable channel full,"The cable duct was full of wires, which could cause overheating.",08-11-24,09-11-24
+Using a power tool without training,The person used a power tool for which he was not trained.,26-10-24,27-10-24
+Lamp attachment is weak,The attachment of the work lamp was weak and the lamp wobbled dangerously.,08-02-25,09-02-25
+Instructions for using electrical appliances are missing,The new electrical appliances lacked instructions for use and safety markings in Finnish.,01-12-24,02-12-24
+The residual current device trips repeatedly,"The residual current device in a certain area trips repeatedly, indicating a problem with the power grid.",12-08-24,13-08-24
+Electrical panel ventilation blocked,The ventilation holes of the electrical panel were blocked with dust and dirt.,16-11-24,17-11-24
+Portable charger cord damaged,The laptop charger cord was badly damaged and the internal wires were visible.,19-01-25,20-01-25

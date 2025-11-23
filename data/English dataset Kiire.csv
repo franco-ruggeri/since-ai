@@ -1,0 +1,55 @@
+Heading,Observation,observation_date,observation_processed_date
+Heavy lifting without aids,"A warehouse worker lifted a 25 kg sack from the floor alone without a lifting aid, a clear ergonomic risk.",01-03-24,04-03-24
+Emergency stop button covered,"In a hurry, the worker moved the wagon in front of the production line's emergency stop button, preventing it from being used.",02-03-24,04-03-24
+Scratch on the wall,The forklift has hit the wall and caused a deep scratch on the wall surface of the corridor. Only cosmetic damage.,02-03-24,05-03-24
+Smoke alarm battery out,"The smoke alarm in the break room beeped sparsely, indicating that the battery was running out.",03-03-24,04-03-24
+Chemical splash on the floor,"In the laboratory, a small amount of solvent had been spilled on the floor in a hurry, which had not been cleaned or marked.",04-03-24,05-03-24
+Fire corridor partially blocked,"The pallet truck had been left in a hurry in a narrow fire corridor, which made it difficult to move around and prevented a quick exit.",04-03-24,05-03-24
+Leaking compressed air hose,"The compressed air hose leaked from its connector, causing hissing and energy loss. No immediate danger.",05-03-24,06-03-24
+Open switchboard,"The door of the electrical center in the service room had been left open, leaving the live parts touchable.",05-03-24,06-03-24
+Inadequate use of protective equipment,The employee went 'just quickly' to get a sample from the powder handling room without the required respirator.,06-03-24,07-03-24
+The locker door does not lock,The door of one of the wardrobes in the dressing room does not lock properly. Does not pose a safety risk.,06-03-24,07-03-24
+Tools left on top of the machine,"At the end of a busy working day, the caretaker had left a wrench on the mixer unit, from where it could have fallen off when the machine started.",07-03-24,08-03-24
+Inadequate lighting on the stairs,"The lighting in the stairwell leading to the basement was inadequate, one lamp was burnt out.",07-03-24,08-03-24
+Adjustment in production mode,The employee took a shortcut across the forklift route from outside the marked routes to save time.,08-03-24,11-03-24
+An employee ran in the corridor,"An employee ran in the production corridor to get to the next work phase, which caused a collision hazard.",08-03-24,11-03-24
+Sharp edge at the workstation,The metal worktop of the packaging line had a sharp edge that you could hurt yourself on.,09-03-24,11-03-24
+Incomplete documentation,The batch's manufacturing documentation was hastily filled out and lacked critical signatures and values.,10-03-24,11-03-24
+Trash bin full,"The paper collection container in the break room is full. It does not cause danger, but it is untidy.",11-03-24,12-03-24
+Gas cylinders without support,The gas cylinders in the laboratory stood freely against the wall without a chain or rack.,11-03-24,12-03-24
+Sample container left open,"In a hurry, the employee left a sample container containing the active substance open on the table, causing a risk of exposure and contamination.",12-03-24,13-03-24
+Faulty pallet trolley,"The pump mechanism of one of the pallet trucks did not work properly, which made it difficult to lift the load.",12-03-24,13-03-24
+Stuff left in front of the emergency shower,The employee had momentarily left a trolley full of stuff directly in front of the emergency shower.,13-03-24,14-03-24
+Worn floor covering,"The floor covering in the cleanroom was worn out, making cleaning difficult and causing a tripping hazard.",13-03-24,14-03-24
+Cleaning neglected in a hurry,"The cleaning of the weighing room had been done hastily at the end of the shift, and there were clearly powder residues on the surfaces.",14-03-24,15-03-24
+Damaged extension cord,"The insulation of the office extension cord had cracked, exposing internal wires.",14-03-24,15-03-24
+The liquid in the eyewash bottle has expired,The eyewash bottle at the emergency shower station had expired.,15-03-24,18-03-24
+A forklift was speeding,"In the warehouse area, the forklift driver drove clearly over the permitted speed limit in order to catch up on schedule.",15-03-24,18-03-24
+Hand washing station soap out of stock,"When entering the cleanroom, the soap dispenser at the hand washing station was empty.",16-03-24,18-03-24
+False alarm acknowledged,The reactor pressure alarm was dismissed without checking the reason because 'it always does it'. Hurry to continue the process.,17-03-24,18-03-24
+Broken glass on the floor,"In the laboratory, a beaker glass had fallen and shards had spread over a wide area.",18-03-24,19-03-24
+Working without gloves,The employee handled 'only one' sample without protective gloves because she was in a hurry.,18-03-24,19-03-24
+Swinging railing on the stairs,"On the metal stairs between the production facilities, the railing swayed dangerously.",19-03-24,20-03-24
+Stuff left on the stairs,Empty boxes had been left on the upper level of the stairs leading to the warehouse in a hurry.,19-03-24,20-03-24
+Noisy device,"One of the machines on the production line made an exceptionally loud, hissing noise.",20-03-24,21-03-24
+Crane safety limit passed,The worker passed the crane's safety limit to get the load into place faster.,20-03-24,21-03-24
+The door slams shut,"The door of the production facility slammed slammed shut, risk of crushing.",21-03-24,22-03-24
+Floor hatch poorly marked,"The floor hatch was open due to maintenance work, but there were no proper warning markings around it.",21-03-24,22-03-24
+Cable in the walkway,"A charging cable had been pulled across the office corridor, a tripping hazard.",22-03-24,25-03-24
+Safety glasses fogged up,The employee had put the fogged goggles on his forehead in the middle of the work because he could not see properly and was in a hurry to finish the work.,22-03-24,25-03-24
+Shelf overloaded,The storage shelf had more stuff stacked than its weight limit allowed.,23-03-24,25-03-24
+Emergency exit locked,One of the emergency exits was locked with a key from the inside.,24-03-24,25-03-24
+Falling objects from the shelf,The vibration caused small items to fall off the shelf near the production line.,25-03-24,26-03-24
+Incorrect batch number posted,"In a hurry, the employee had entered the batch number of the wrong starting material in the production documentation.",25-03-24,26-03-24
+Inadequate ergonomics in the packing room,"The work surface on the packaging line was too low, causing the workers to stooped over their working position.",26-03-24,27-03-24
+Missing warning sign,There was no sign warning about the wet floor after cleaning.,26-03-24,27-03-24
+Staircase step broken,"One of the steps on the concrete stairs was chipped, with a sharp edge and a pit.",27-03-24,28-03-24
+Machine cleaning skipped,"During the shift change, the intermediate cleaning of the machine was not done due to haste, causing a risk of cross-contamination.",27-03-24,28-03-24
+Icicles on the edge of the roof,"Large icicles hung above the main entrance, danger of falling.",28-03-24,29-03-24
+An employee was talking on a mobile phone on the stairs,"The employee walked down the stairs while looking at the phone screen, distracted.",28-03-24,29-03-24
+Slippery outdoor staircase in the rain,"The factory's exterior stairs were very slippery in the rain, no roughening.",29-03-24,01-04-24
+Security fence door left open,The door of the security fence leading to the robot cell had been left open because 'you just had to go there quickly'.,29-03-24,01-04-24
+A heavy object on the edge of the shelf,"On a high storage shelf, there was a heavy box dangerously close to the edge.",30-03-24,01-04-24
+Faulty fire extinguisher,The pressure gauge of the powder extinguisher was red.,30-03-24,01-04-24
+Chemical container without label,The chemical container brought in for weighing was without the appropriate label.,31-03-24,01-04-24
+Connection made in a hurry,The electrician made the temporary connection in a hurry and left it undocumented and unmarked.,31-03-24,01-04-24
