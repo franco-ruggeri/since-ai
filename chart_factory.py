@@ -1,5 +1,3 @@
-import altair as alt
-import pandas as pd
 from charts.chart_registry import ChartRegistry
 
 def make_chart(df, spec):
