@@ -1,7 +1,7 @@
 [project]
-name = "since-ai"
+name = "hse-visualization-agent"
 version = "0.1.0"
-description = "Add your description here"
+description = "AI-powered visualization agent for automated chart recommendations using multi-agent LLM analysis. Created for the Bayer challenge at the Since AI Hackathon 2025."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [

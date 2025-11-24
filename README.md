@@ -1,92 +1,221 @@
-# Since AI
+# 📊 HSE Visualization Agent
+#### 🏆 Bayer Challenge - Since AI Hackathon 2025
 
-Concise toolkit for automated plot recommendations and lightweight model orchestration, given user prompt and a dataframe (single excel, csv, json file)
+> **Intelligent visualization recommendations powered by multi-agent LLM analysis**
 
-This repository contains several cooperating components:
+AI-powered visualization agent that automatically generates data charts and plots based on user prompts and dataframes. This toolkit combines LLM-driven agentic analysis with intelligent and extensible plot type selection to create appropriate visualizations for your data.
 
-- Streamlit web app: `streamlit_app.py` — interactive front-end for uploading data and getting visual recommendations.
-- Plot type generator: `plot_type_generator/` — modular agents and LLM provider adapters that analyze queries/data and propose chart types and generation plans. Key files: `main.py`, `llm_provider.py`, `plot_type_chooser_agent.py`, `query_planning_agent.py`, `plot_gen_state.py`.
-- Recommendations: `recommendations/` — JSON outputs of generated plot recommendations and examples used for testing and evaluation.
-- Model orchestrator & demos: `model_orchestrator/` — utilities and demo scripts for selecting and orchestrating LLMs and agents across providers. Key files: `orchestrator.py`, `model_registry.py`, `agent_types.py`, `example_usage.py`.
+---
 
-Quick start
------------
+## 🎯 Components
 
-1. Install dependencies:
+- **🎨 Streamlit Web App** (`streamlit_app.py`)  
+  Interactive front-end labeled "HSE Bot - Visualization Agent" for uploading data files (CSV/XLSX) and receiving chart recommendations with explanations.
+
+- **🤖 Plot Type Generator** (`plot_type_generator/`)  
+  Multi-agent system that analyzes queries and data to recommend optimal chart types:
+  - `query_planning_agent.py` — Breaks down user requests into analysis steps
+  - `numeric_analysis_agent.py` — Analyzes numerical data properties
+  - `lexical_analysis_agent.py` — Processes textual queries and metadata
+  - `plot_type_chooser_agent.py` — Recommends specific chart types
+  - `visual_appropriateness_agent.py` — Validates visualization fitness
+  - `llm_provider.py` — Abstract layer supporting Featherless and Google Gemini
+
+- **📈 Chart Factory** (`chart_factory.py`, `charts/`)  
+  Renders recommended visualizations using Plotly with support for:
+  - 📊 Bar charts • 📉 Line charts • 📶 Histograms • 🥧 Pie charts • 📦 Box plots • 🔥 Heatmaps
+  - Pluggable chart registry system
+
+- **⚙️ Model Orchestrator** (`model_orchestrator/`)  
+  Utilities for LLM selection and agent coordination across providers
+
+- **🔗 Clustering Module** (`clustering/`)  
+  Semantic clustering via sentence transformers for data grouping and analysis
+
+- **💾 Recommendations** (`recommendations/`)  
+  Generated JSON outputs from plot recommendations for evaluation
+
+---
+
+## 🚀 Quick Start
+
+### 0️⃣ Setup Dev Container (Recommended)
+
+This project is containerized with a **dev container** for consistent development environments. 
+
+**Option A: VS Code** (Recommended)
+- Install the [Remote - Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+- Open the project folder in VS Code
+- Click "Reopen in Container" when prompted
+
+**Option B: Manual Setup**
+- Install Docker and Docker Compose
+- Continue with steps below
+
+### 1️⃣ Install dependencies
 
 ```bash
-pip install uv
 uv sync
 ```
 
-2. Run Streamlit app (local):
+### 2️⃣ Configure environment
+
+Create `.streamlit/streamlit.toml` and add:
+
+```toml
+LLM_PROVIDER = "featherless"  # or "gemini"
+FEATHERLESS_API_KEY = "your_key"  # if using featherless (default)
+GOOGLE_API_KEY = "your_key"  # if using gemini
+```
+
+### 3️⃣ Run the app
 
 ```bash
 streamlit run streamlit_app.py
 ```
 
-3. Run plot-type generator demo:
+The app accepts user prompts in **English or Finnish** 🇬🇧 🇫🇮 and generates visualizations with preprocessing steps and rationale.
+
+### 🔬 Alternative: Test the pipeline directly
 
 ```bash
 python plot_type_generator/main.py
 ```
 
-Configuration & environment
----------------------------
-- Set `LLM_PROVIDER` to `featherless` or `gemini` (default: `featherless`).
-- Provide matching API key via env var: `FEATHERLESS_API_KEY` or `GOOGLE_API_KEY`.
-- The provider factory is implemented in `plot_type_generator/llm_provider.py` — add new providers there.
+---
 
-Code pointers
--------------
-- `streamlit_app.py`: Streamlit UI and wiring to recommendation functions.
-- `plot_type_generator/main.py`: Example runner that wires agents and prints recommendations.
-- `plot_type_generator/llm_provider.py`: Abstraction over LLM backends (Featherless, Gemini).
-- `plot_type_generator/plot_type_chooser_agent.py`: Main agent that decides which plot(s) to recommend.
-- `plot_type_generator/query_planning_agent.py`: Transforms requests into stepwise LLM prompts/queries.
-- `recommendations/`: Store and inspect generated recommendation JSON files.
+## ⚙️ Configuration
 
+| Setting | Details |
+|---------|---------|
+| **LLM Provider** | Configure via `streamlit.toml` (default: `featherless`, or use `gemini`) |
+| **API Keys** | `GOOGLE_API_KEY` for Gemini, `FEATHERLESS_API_KEY` for Featherless |
+| **Implementation** | `plot_type_generator/llm_provider.py` handles provider abstraction |
 
-Repository structure
---------------------
+---
+
+## 🏗️ Architecture
+
+```
+User Query + Dataset
+        ↓
+   Query Planning
+        ↓
+Multi-Agent Analysis (Numeric, Lexical, Appropriateness)
+        ↓
+  Plot Type Selection
+        ↓
+  Chart Rendering
+```
+
+### 📊 Supported Chart Types
+
+| Chart Type | Use Case |
+|-----------|----------|
+| 📊 **Bar Charts** | Categorical data comparison |
+| 📉 **Line Charts** | Time series & trends |
+| 📶 **Histograms** | Distribution analysis |
+| 🥧 **Pie Charts** | Proportion visualization |
+| 📦 **Box Plots** | Statistical summaries |
+| 🔥 **Heatmaps** | 2D pattern detection |
+
+---
+
+## 📁 Key Files
+
+| File | Purpose |
+|------|---------|
+| `streamlit_app.py` | Main UI and pipeline orchestration |
+| `agent_caller.py` | Entry point connecting agents to UI |
+| `components.py` | UI components (visualization, logging) |
+| `chart_factory.py` | Chart creation and routing |
+| `plot_type_generator/llm_provider.py` | LLM backend abstraction |
+| `plot_type_generator/plot_gen_state.py` | Pipeline state management |
+| `model_orchestrator/orchestrator.py` | Agent coordination |
+
+---
+
+## 📦 Dependencies
+
+Key packages (see `pyproject.toml` for complete list):
+
+| Package | Purpose |
+|---------|---------|
+| `langchain` / `langchain-core` | LLM integration framework |
+| `langchain-featherless-ai` | Featherless AI provider integration |
+| `langchain-google-genai` | Google Gemini provider integration |
+| `streamlit` | Web UI framework |
+| `plotly` | Interactive chart rendering |
+| `pandas` | Data processing |
+| `sentence-transformers` | Semantic clustering |
+
+---
+
+## 📂 Project Structure
 
 ```
 since-ai/
-├─ streamlit_app.py
-├─ README.md
-├─ requirements.txt
-├─ pyproject.toml
-├─ styles.css
-├─ charts/
-│  ├─ bar_chart.py
-│  ├─ line_chart.py
-│  └─ ...
-├─ plot_type_generator/
-│  ├─ main.py
-│  ├─ llm_provider.py
-│  ├─ plot_type_chooser_agent.py
-│  ├─ query_planning_agent.py
-│  ├─ plot_gen_state.py
-│  └─ ...
-├─ recommendations/
-│  └─ *.json
-├─ model_orchestrator/
-│  ├─ ARCHITECTURE.md
-│  ├─ README.md
-│  ├─ orchestrator.py
-│  ├─ model_registry.py
-│  ├─ agent_types.py
-│  ├─ prompt_analyzer.py
-│  ├─ example_usage.py
-│  ├─ integration.py
-│  └─ config.py
-├─ tests/
-│  └─ *.py
-├─ data/
-│  └─ data.json
-└─ clustering/
-	└─ semantic_clustering.py
+├── streamlit_app.py              # Main Streamlit UI entry point
+├── agent_caller.py               # Agent orchestration and API
+├── components.py                 # Streamlit UI components
+├── chart_factory.py              # Chart creation factory
+├── styles.css                    # UI styling
+├── requirements.txt              # Pip dependencies (legacy)
+├── pyproject.toml                # Project metadata and uv dependencies
+│
+├── plot_type_generator/          # Multi-agent plot recommendation system
+│   ├── main.py                   # Pipeline orchestration and demo
+│   ├── llm_provider.py           # LLM provider abstraction
+│   ├── plot_type_chooser_agent.py # Main recommendation agent
+│   ├── query_planning_agent.py   # Query analysis and planning
+│   ├── numeric_analysis_agent.py # Numerical data analysis
+│   ├── lexical_analysis_agent.py # Text query processing
+│   ├── visual_appropriateness_agent.py # Visualization validation
+│   ├── plot_gen_state.py         # Pipeline state management
+│   ├── utils.py                  # Utility functions
+│   └── prompts/                  # Agent prompt templates
+│
+├── charts/                       # Chart rendering implementations
+│   ├── base_chart.py
+│   ├── bar_chart.py
+│   ├── line_chart.py
+│   ├── histogram_chart.py
+│   ├── pie_chart.py
+│   ├── box_plot_chart.py
+│   ├── heatmap_chart.py
+│   ├── chart_registry.py
+│   └── __init__.py
+│
+├── model_orchestrator/           # LLM and agent orchestration utilities
+│   ├── orchestrator.py
+│   ├── model_registry.py
+│   ├── agent_types.py
+│   ├── config.py
+│   ├── prompt_analyzer.py
+│   ├── integration.py
+│   ├── example_usage.py
+│   ├── ARCHITECTURE.md
+│   └── README.md
+│
+├── clustering/                   # Semantic clustering module
+│   ├── main.py
+│   └── semantic_clustering.py
+│
+├── data/                         # Sample datasets
+│   ├── data.json
+│   ├── data_english.json
+│   └── *.csv
+│
+├── recommendations/              # Generated plot recommendations
+│   └── *.json
+│
+├── tests/                        # Test suite
+│   └── *.py
+│
+└── README.md
 ```
 
-(Use `tree -L 2` in the repo root for a live view.)
+---
+
+**Developed for the Bayer Challenge - Since AI Hackathon 2025**
 
