@@ -58,9 +58,7 @@ def main():
                 file_name="sample.csv",
                 mime="text/csv",
             ):
-                st.session_state.user_input = (
-                    "Analyze the safety observations in this dataset"
-                )
+                st.session_state.user_input = "Show me the distribution of furnished, unfurnished, semi-furnished houses with 3 or more bedrooms."
                 st.rerun()
 
     user_input = st.text_area("Enter the user prompt", key="user_input")
