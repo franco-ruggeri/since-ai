@@ -24,12 +24,15 @@ def agent_query(user_input: str, df: pd.DataFrame):
 
 
 def generate_viz(df, chart_metadata, preprocessing_steps, rationale):
+    subheader_placeholder = st.empty()
+    
     with st.spinner('Generating Visualization...', show_time=True):
-        st.subheader("📊 Generated Visualization")
-
         chart = make_chart(df, chart_metadata)
+        
         with st.container(border=True, horizontal_alignment="center", vertical_alignment="center"):
             st.plotly_chart(chart)
+            
+        subheader_placeholder.subheader("📊 Generated Visualization")
 
         with st.expander("📋 Details", expanded=False):
             with st.container(border=False, height=400):
