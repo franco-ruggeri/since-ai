@@ -1,6 +1,7 @@
 import streamlit as st
 import logging
 import json
+from env_vars import *
 
 
 from plot_type_generator.plot_gen_state import PlotGenState
@@ -59,8 +60,8 @@ def numeric_analysis_agent(state: PlotGenState) -> PlotGenState:
 
     model = (
         state.get("llm_model")
-        or os.environ.get("NUMERIC_ANALYSIS_AGENT_LLM_MODEL")
-        or os.environ.get("PLOT_TYPE_CHOOSER_AGENT_LLM_MODEL")
+        or ENV_NUMERIC_ANALYSIS_AGENT_LLM_MODEL
+        or ENV_PLOT_TYPE_CHOOSER_AGENT_LLM_MODEL
         or get_model_for_specific_agent("numeric_analysis")
     )
     # Invoke the provider

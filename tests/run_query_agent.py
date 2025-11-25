@@ -9,6 +9,7 @@ from plot_type_generator.query_planning_agent import query_planning_agent
 from plot_type_generator.plot_type_chooser_agent import plot_type_chooser_agent
 from plot_type_generator.plot_gen_state import PlotGenState
 import os
+from env_vars import *
 
 
 def _load_env_file(path: str) -> None:
@@ -73,7 +74,7 @@ def main():
         "iteration_count": 0,
         "max_iterations": 3,
         "status": "pending",
-        "llm_model": os.environ.get("QUERY_PLANNING_AGENT_LLM_MODEL"),
+        "llm_model": ENV_QUERY_PLANNING_AGENT_LLM_MODEL,
         "plot_recommendations": None,
         "suggestion_k": 3,
         "plot_recommendations_path": "./plot_recommendations.json",

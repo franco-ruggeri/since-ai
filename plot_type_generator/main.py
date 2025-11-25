@@ -7,6 +7,7 @@ from typing import Optional, Dict, Any
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
+from env_vars import *
 from plot_type_generator.query_planning_agent import query_planning_agent
 from plot_type_generator.plot_type_chooser_agent import plot_type_chooser_agent
 from plot_type_generator.numeric_analysis_agent import numeric_analysis_agent
@@ -20,7 +21,7 @@ import plot_type_generator.utils as utils
 
 def run_plot_generation_pipeline(
     user_query: str,
-    data_table: Dict[str, Any],
+    data_table: Dict[str, Any] | str,
     max_iterations: int = 3,
     suggestion_k: int = 3,
     verbose: bool = True,
@@ -50,14 +51,14 @@ def run_plot_generation_pipeline(
     """
 
     # Validate API key based on provider
-    provider = st.secrets["LLM_PROVIDER"].lower()
+    provider = ENV_LLM_PROVIDER.lower()
     if provider == "featherless":
-        if not st.secrets("FEATHERLESS_API_KEY"):
+        if not ENV_FEATHERLESS_API_KEY:
             raise ValueError(
                 "FEATHERLESS_API_KEY not set. Set it in the environment or .env file"
             )
     elif provider in ("gemini", "google"):
-        if not st.secrets["GOOGLE_API_KEY"]:
+        if not ENV_GOOGLE_API_KEY:
             raise ValueError(
                 "GOOGLE_API_KEY not set. Set it in the environment or .env file"
             )
@@ -151,13 +152,26 @@ def run_plot_generation_pipeline(
             write_output("\n--- Numeric Feedback ---")
             write_output(numeric_feedback)
 
+            # Use direct string search as fallback for robustness
+            # Check both JSON parsing and string search
+            issues_found = False
+            state["numeric_feedback"] = ""
             try:
                 feedback_json = json.loads(numeric_feedback)
                 if feedback_json.get("validation_status") == "ISSUES_FOUND":
-                    all_feedback_passed = False
-                    write_output("⚠️  Numeric issues found")
+                    issues_found = True
             except Exception:
-                pass
+                if (
+                    '"validation_status"' in numeric_feedback
+                    and "ISSUES_FOUND" in numeric_feedback
+                ):
+                    issues_found = True
+
+            if issues_found:
+                all_feedback_passed = False
+                state["numeric_feedback"] = numeric_feedback
+
+                write_output("⚠️  Numeric issues found")
         except Exception as e:
             write_output(f"Warning: Numeric analysis failed: {e}")
 
@@ -169,13 +183,24 @@ def run_plot_generation_pipeline(
             write_output("\n--- Lexical Feedback ---")
             write_output(lexical_feedback)
 
+            issues_found = False
+            state["lexical_feedback"] = ""
             try:
                 feedback_json = json.loads(lexical_feedback)
                 if feedback_json.get("validation_status") == "ISSUES_FOUND":
-                    all_feedback_passed = False
-                    write_output("⚠️  Lexical issues found")
+                    issues_found = True
             except Exception:
-                pass
+                # Fallback to string search if JSON parsing fails
+                if (
+                    '"validation_status"' in lexical_feedback
+                    and "ISSUES_FOUND" in lexical_feedback
+                ):
+                    issues_found = True
+
+            if issues_found:
+                all_feedback_passed = False
+                state["lexical_feedback"] = lexical_feedback
+                write_output("⚠️  Lexical issues found")
         except Exception as e:
             write_output(f"Warning: Lexical analysis failed: {e}")
 
@@ -187,13 +212,26 @@ def run_plot_generation_pipeline(
             write_output("\n--- Visual Feedback ---")
             write_output(visual_feedback)
 
+            # Use direct string search as fallback for robustness
+            # Check both JSON parsing and string search
+            issues_found = False
+            state["visual_feedback"] = ""
             try:
                 feedback_json = json.loads(visual_feedback)
                 if feedback_json.get("validation_status") == "ISSUES_FOUND":
-                    all_feedback_passed = False
-                    write_output("⚠️  Visual appropriateness issues found")
+                    issues_found = True
             except Exception:
-                pass
+                # Fallback to string search if JSON parsing fails
+                if (
+                    '"validation_status"' in visual_feedback
+                    and "ISSUES_FOUND" in visual_feedback
+                ):
+                    issues_found = True
+
+            if issues_found:
+                all_feedback_passed = False
+                state["visual_feedback"] = visual_feedback
+                write_output("⚠️  Visual appropriateness issues found")
         except Exception as e:
             write_output(f"Warning: Visual appropriateness analysis failed: {e}")
 
@@ -218,8 +256,6 @@ def run_plot_generation_pipeline(
             )
         except Exception as e:
             write_output(f"Warning: Could not save recommendations: {e}")
-
-    processed_data = state.get("processed_data")
 
     return state
 

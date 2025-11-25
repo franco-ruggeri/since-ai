@@ -4,6 +4,7 @@ import os
 from abc import ABC, abstractmethod
 from typing import Any, Dict, List, Optional, Tuple, Union
 import streamlit as st
+from env_vars import *
 
 
 class LLMProvider(ABC):
@@ -59,17 +60,29 @@ class FeatherlessProvider(LLMProvider):
                 "Install it with: pip install langchain-featherless-ai"
             )
 
-        self.api_key = api_key or st.secrets["FEATHERLESS_API_KEY"]
+        self.api_key = api_key or ENV_FEATHERLESS_API_KEY
         if not self.api_key:
             raise ValueError(
                 "FEATHERLESS_API_KEY not set. Pass it to the constructor or set it in the environment."
             )
 
-        self.base_url = base_url or st.secrets.get("FEATHERLESS_API_URL")
+        # Use provided base_url, or from env, or default to Featherless API
+        self.base_url = base_url or ENV_FEATHERLESS_API_URL or "https://api.featherless.ai/v1"
         self.default_model = default_model
-        self.llm = ChatFeatherlessAi(
-            api_key=SecretStr(self.api_key), base_url=self.base_url
-        )
+
+        # Initialize ChatFeatherlessAi with proper error handling
+        try:
+            self.llm = ChatFeatherlessAi(
+                api_key=SecretStr(self.api_key),
+                base_url=self.base_url,
+                timeout=60.0,  # Add timeout to prevent hanging
+                max_retries=2  # Add retries for connection issues
+            )
+        except Exception as e:
+            raise RuntimeError(
+                f"Failed to initialize Featherless provider with base_url={self.base_url}. "
+                f"Error: {e}. Check your API key and network connection."
+            )
 
     def invoke(
         self,
@@ -79,21 +92,36 @@ class FeatherlessProvider(LLMProvider):
         seed: int = 42,
         **kwargs,
     ) -> str:
-        """Invoke Featherless API."""
+        """Invoke Featherless API with error handling."""
         model_to_use = model or self.default_model
 
-        if model_to_use:
-            response = self.llm.invoke(
-                messages,
-                model=model_to_use,
-                temperature=temperature,
-                seed=seed,
-                **kwargs,
-            )
-        else:
-            response = self.llm.invoke(
-                messages, temperature=temperature, seed=seed, **kwargs
-            )
+        try:
+            if model_to_use:
+                response = self.llm.invoke(
+                    messages,
+                    model=model_to_use,
+                    temperature=temperature,
+                    seed=seed,
+                    **kwargs,
+                )
+            else:
+                response = self.llm.invoke(
+                    messages, temperature=temperature, seed=seed, **kwargs
+                )
+        except Exception as e:
+            # Provide helpful error message for common connection issues
+            error_msg = str(e)
+            if "Connection error" in error_msg or "APIConnectionError" in str(type(e)):
+                raise RuntimeError(
+                    f"Failed to connect to Featherless API at {self.base_url}. "
+                    f"Please check:\n"
+                    f"1. Your internet connection\n"
+                    f"2. The base_url is correct (current: {self.base_url})\n"
+                    f"3. The API service is available\n"
+                    f"Original error: {e}"
+                ) from e
+            else:
+                raise
 
         # Extract content from response
         if isinstance(response, str):
@@ -132,7 +160,7 @@ class GeminiProvider(LLMProvider):
                 "Install it with: pip install langchain-google-genai"
             )
 
-        self.api_key = api_key or st.secrets["GOOGLE_API_KEY"]
+        self.api_key = api_key or ENV_GOOGLE_API_KEY
         if not self.api_key:
             raise ValueError(
                 "GOOGLE_API_KEY not set. Pass it to the constructor or set it in the environment."
@@ -206,7 +234,7 @@ def get_llm_provider(
         >>> os.environ["LLM_PROVIDER"] = "gemini"
         >>> provider = get_llm_provider()
     """
-    provider = provider_name or st.secrets["LLM_PROVIDER"]
+    provider = provider_name or ENV_LLM_PROVIDER
     provider = provider.lower().strip()
 
     if provider in ("gemini", "google"):

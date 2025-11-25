@@ -1,7 +1,6 @@
 import os, sys
 import logging
-import streamlit as st
-
+from env_vars import * 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 
@@ -58,7 +57,7 @@ def query_planning_agent(state: PlotGenState) -> PlotGenState:
     # Get model from state, environment or Orchestrator
     model = (
         state.get("llm_model")
-        or os.environ.get("QUERY_PLANNING_AGENT_LLM_MODEL")
+        or ENV_QUERY_PLANNING_AGENT_LLM_MODEL
         or get_model_for_specific_agent("thinking")
     )  # Auto-select best model
 
