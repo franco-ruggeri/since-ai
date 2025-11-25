@@ -87,4 +87,5 @@ poetry.lock
 .env.local
 
 # Streamlit
-.streamlit/
+.streamlit*
+*secrets.toml
