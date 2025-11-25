@@ -22,6 +22,7 @@ from dotenv import load_dotenv
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
+from env_vars import *
 from plot_type_generator.query_planning_agent import query_planning_agent
 from plot_type_generator.plot_type_chooser_agent import plot_type_chooser_agent
 from plot_type_generator.numeric_analysis_agent import numeric_analysis_agent
@@ -335,7 +336,7 @@ def main():
     """Run tests on all data.json entries."""
     load_dotenv()
 
-    if not os.environ.get("FEATHERLESS_API_KEY"):
+    if not ENV_FEATHERLESS_API_KEY:
         print("ERROR: FEATHERLESS_API_KEY not set. Set it in .env or environment.")
         sys.exit(1)
 

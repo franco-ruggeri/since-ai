@@ -1,5 +1,6 @@
 import sys
 from pathlib import Path
+from env_vars import *
 
 # Add project root to Python path
 project_root = Path(__file__).parent.parent
@@ -80,14 +81,14 @@ def main():
         "iteration_count": 0,
         "max_iterations": 3,
         "status": "pending",
-        "llm_model": os.environ.get("PLOT_TYPE_CHOOSER_AGENT_LLM_MODEL"),
+        "llm_model": ENV_PLOT_TYPE_CHOOSER_AGENT_LLM_MODEL,
         "plot_recommendations": None,
         "suggestion_k": 3,
         "plot_recommendations_path": "./plot_recommendations.json",
     }
 
     # If no FEATHERLESS_API_KEY set, warn and exit early to avoid noisy errors
-    if not os.environ.get("FEATHERLESS_API_KEY"):
+    if not ENV_FEATHERLESS_API_KEY:
         print(
             "FEATHERLESS_API_KEY is not set. Set it in the environment or in plot_type_generator/.env to run this test."
         )

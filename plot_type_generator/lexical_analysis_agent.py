@@ -1,6 +1,7 @@
 import streamlit as st
 import logging
 import json
+from env_vars import * 
 
 
 from plot_type_generator.plot_gen_state import PlotGenState
@@ -62,8 +63,8 @@ def lexical_analysis_agent(state: PlotGenState) -> PlotGenState:
     # Get model from state or environment
     model = (
         state.get("llm_model")
-        or os.environ.get("LEXICAL_ANALYSIS_AGENT_LLM_MODEL")
-        or os.environ.get("PLOT_TYPE_CHOOSER_AGENT_LLM_MODEL")
+        or ENV_LEXICAL_ANALYSIS_AGENT_LLM_MODEL
+        or ENV_PLOT_TYPE_CHOOSER_AGENT_LLM_MODEL
         or get_model_for_specific_agent("lexical_analysis")
     )
 
