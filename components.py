@@ -24,21 +24,22 @@ def agent_query(user_input: str, df: pd.DataFrame):
 
 
 def generate_viz(df, chart_metadata, preprocessing_steps, rationale):
-    st.subheader("📊 Generated Visualization")
+    with st.spinner('Generating Visualization...', show_time=True):
+        st.subheader("📊 Generated Visualization")
 
-    chart = make_chart(df, chart_metadata)
-    with st.container(border=True, horizontal_alignment="center", vertical_alignment="center"):
-        st.plotly_chart(chart)
+        chart = make_chart(df, chart_metadata)
+        with st.container(border=True, horizontal_alignment="center", vertical_alignment="center"):
+            st.plotly_chart(chart)
 
-    with st.expander("📋 Details", expanded=False):
-        with st.container(border=False, height=500):
-            tab1, tab2 = st.tabs(["Preprocessing Steps", "Rationale"])
+        with st.expander("📋 Details", expanded=False):
+            with st.container(border=False, height=400):
+                tab1, tab2 = st.tabs(["Preprocessing Steps", "Rationale"])
 
-            with tab1:
-                st.markdown("### Data Preprocessing Steps")
-                for index, step in enumerate(preprocessing_steps, 1):
-                    st.markdown(f"{index}. {step}")
+                with tab1:
+                    st.markdown("### Data Preprocessing Steps")
+                    for index, step in enumerate(preprocessing_steps, 1):
+                        st.markdown(f"{index}. {step}")
 
-            with tab2:
-                st.markdown("### Visualization Rationale")
-                st.write(rationale)
+                with tab2:
+                    st.markdown("### Visualization Rationale")
+                    st.write(rationale)

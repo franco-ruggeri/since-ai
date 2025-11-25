@@ -11,15 +11,12 @@ def get_response(user_prompt: str, dataframe: pd.DataFrame, output_callback: Opt
     except Exception as e:
         raise ValueError(f"Failed to convert dataframe to JSON: {str(e)}")
 
-    print(json.dumps(df_json, indent=2))
     # Make API request to backend
     try:
         # Replace with your actual backend URL
         state = run_plot_generation_pipeline(
             user_query=user_prompt, data_table=df_json, max_iterations=5, output_callback=output_callback, verbose=False
         )
-
-        print(json.dumps(state, indent=2))
 
         # json_plot_state = json.loads(state["plot_recommendations"])
         # return _get_plot_values(json_plot_state)
