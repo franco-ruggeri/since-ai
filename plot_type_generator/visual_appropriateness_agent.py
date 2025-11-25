@@ -1,7 +1,6 @@
 import logging
 import json
-import streamlit as st
-
+from env_vars import *
 
 from plot_type_generator.plot_gen_state import PlotGenState
 from plot_type_generator.utils import _load_prompt, extract_json_content
@@ -61,8 +60,8 @@ def visual_appropriateness_agent(state: PlotGenState) -> PlotGenState:
 
     model = (
         state.get("llm_model")
-        or os.environ.get("VISUAL_APPROPRIATENESS_AGENT_LLM_MODEL")
-        or os.environ.get("PLOT_TYPE_CHOOSER_AGENT_LLM_MODEL")
+        or ENV_VISUAL_APPROPRIATENESS_AGENT_LLM_MODEL
+        or ENV_PLOT_TYPE_CHOOSER_AGENT_LLM_MODEL
         or get_model_for_specific_agent("visual_appropriateness")
     )
 

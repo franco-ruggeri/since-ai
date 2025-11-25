@@ -12,6 +12,7 @@ import json
 import pandas as pd
 from pathlib import Path
 from dotenv import load_dotenv
+from env_vars import *
 
 # Add project root to path
 project_root = Path(__file__).parent.parent
@@ -215,7 +216,7 @@ def run_test_case(test_name: str):
 if __name__ == "__main__":
     load_dotenv()
 
-    if not os.environ.get("FEATHERLESS_API_KEY"):
+    if not ENV_FEATHERLESS_API_KEY:
         print("ERROR: FEATHERLESS_API_KEY not set. Set it in .env or environment.")
         sys.exit(1)
 
