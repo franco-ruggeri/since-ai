@@ -29,7 +29,8 @@
         "christian-kohler.path-intellisense",
         "christian-kohler.npm-intellisense",
         "github.copilot-chat",
-        "mechatroner.rainbow-csv"
+        "mechatroner.rainbow-csv",
+        "ms-python.black-formatter"
       ],
       "settings": {
         "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
