@@ -9,6 +9,8 @@ from langchain_featherless_ai import ChatFeatherlessAi
 import os
 from dotenv import load_dotenv
 
+from env_vars import ENV_FEATHERLESS_API_KEY
+
 
 class SemanticClusterer:
     def __init__(self, model_name="all-MiniLM-L6-v2"):
@@ -60,7 +62,7 @@ class SemanticClusterer:
     def _label_cluster(self, sample_texts):
         load_dotenv()
 
-        api_key = st.secrets["FEATHERLESS_API_KEY"]
+        api_key = ENV_FEATHERLESS_API_KEY
         api_url = "https://api.featherless.ai/v1"
         model = "Qwen/Qwen2.5-Coder-32B-Instruct"
 

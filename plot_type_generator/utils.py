@@ -6,6 +6,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, Optional
 
+from env_vars import ENV_FEATHERLESS_API_KEY
+
 
 def _load_prompt(prompt_name: str) -> str:
     """Load the query refiner prompt file from the prompts directory.
@@ -23,7 +25,7 @@ def _get_api_key() -> str:
 
     Raises RuntimeError if not set to avoid leaking keys in source.
     """
-    key = st.secrets("FEATHERLESS_API_KEY")
+    key = ENV_FEATHERLESS_API_KEY
     if not key:
         raise RuntimeError(
             "FEATHERLESS_API_KEY environment variable is not set."
