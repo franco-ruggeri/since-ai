@@ -7,6 +7,7 @@ from typing import Optional, Dict, Any
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
+from env_vars import *
 from plot_type_generator.query_planning_agent import query_planning_agent
 from plot_type_generator.plot_type_chooser_agent import plot_type_chooser_agent
 from plot_type_generator.numeric_analysis_agent import numeric_analysis_agent
@@ -20,7 +21,7 @@ import plot_type_generator.utils as utils
 
 def run_plot_generation_pipeline(
     user_query: str,
-    data_table: Dict[str, Any],
+    data_table: Dict[str, Any] | str,
     max_iterations: int = 3,
     suggestion_k: int = 3,
     verbose: bool = True,
@@ -50,14 +51,14 @@ def run_plot_generation_pipeline(
     """
 
     # Validate API key based on provider
-    provider = st.secrets["LLM_PROVIDER"].lower()
+    provider = ENV_LLM_PROVIDER.lower()
     if provider == "featherless":
-        if not st.secrets("FEATHERLESS_API_KEY"):
+        if not ENV_FEATHERLESS_API_KEY:
             raise ValueError(
                 "FEATHERLESS_API_KEY not set. Set it in the environment or .env file"
             )
     elif provider in ("gemini", "google"):
-        if not st.secrets["GOOGLE_API_KEY"]:
+        if not ENV_GOOGLE_API_KEY:
             raise ValueError(
                 "GOOGLE_API_KEY not set. Set it in the environment or .env file"
             )
@@ -218,8 +219,6 @@ def run_plot_generation_pipeline(
             )
         except Exception as e:
             write_output(f"Warning: Could not save recommendations: {e}")
-
-    processed_data = state.get("processed_data")
 
     return state
 
