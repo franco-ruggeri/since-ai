@@ -1,5 +1,5 @@
 from .chart_registry import ChartRegistry
-
+from plotly.graph_objects import Figure
 class Chart:
     def __init_subclass__(cls, chart_type=None, **kwargs):
         super().__init_subclass__(**kwargs)
@@ -29,5 +29,5 @@ class Chart:
         return self.get_chart(df)
 
     # Subclasses must implement get_chart()
-    def get_chart(self, df):
+    def get_chart(self, df) -> Figure:
         raise NotImplementedError("Subclasses must implement get_chart()")

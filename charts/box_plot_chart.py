@@ -20,5 +20,3 @@ class BoxPlotChart(Chart, chart_type="box"):
         fig.update_layout(hovermode='y unified')
         
         return fig
-        
-        return fig
