@@ -152,13 +152,26 @@ def run_plot_generation_pipeline(
             write_output("\n--- Numeric Feedback ---")
             write_output(numeric_feedback)
 
+            # Use direct string search as fallback for robustness
+            # Check both JSON parsing and string search
+            issues_found = False
+            state["numeric_feedback"] = ""
             try:
                 feedback_json = json.loads(numeric_feedback)
                 if feedback_json.get("validation_status") == "ISSUES_FOUND":
-                    all_feedback_passed = False
-                    write_output("⚠️  Numeric issues found")
+                    issues_found = True
             except Exception:
-                pass
+                if (
+                    '"validation_status"' in numeric_feedback
+                    and "ISSUES_FOUND" in numeric_feedback
+                ):
+                    issues_found = True
+
+            if issues_found:
+                all_feedback_passed = False
+                state["numeric_feedback"] = numeric_feedback
+
+                write_output("⚠️  Numeric issues found")
         except Exception as e:
             write_output(f"Warning: Numeric analysis failed: {e}")
 
@@ -170,13 +183,24 @@ def run_plot_generation_pipeline(
             write_output("\n--- Lexical Feedback ---")
             write_output(lexical_feedback)
 
+            issues_found = False
+            state["lexical_feedback"] = ""
             try:
                 feedback_json = json.loads(lexical_feedback)
                 if feedback_json.get("validation_status") == "ISSUES_FOUND":
-                    all_feedback_passed = False
-                    write_output("⚠️  Lexical issues found")
+                    issues_found = True
             except Exception:
-                pass
+                # Fallback to string search if JSON parsing fails
+                if (
+                    '"validation_status"' in lexical_feedback
+                    and "ISSUES_FOUND" in lexical_feedback
+                ):
+                    issues_found = True
+
+            if issues_found:
+                all_feedback_passed = False
+                state["lexical_feedback"] = lexical_feedback
+                write_output("⚠️  Lexical issues found")
         except Exception as e:
             write_output(f"Warning: Lexical analysis failed: {e}")
 
@@ -188,13 +212,26 @@ def run_plot_generation_pipeline(
             write_output("\n--- Visual Feedback ---")
             write_output(visual_feedback)
 
+            # Use direct string search as fallback for robustness
+            # Check both JSON parsing and string search
+            issues_found = False
+            state["visual_feedback"] = ""
             try:
                 feedback_json = json.loads(visual_feedback)
                 if feedback_json.get("validation_status") == "ISSUES_FOUND":
-                    all_feedback_passed = False
-                    write_output("⚠️  Visual appropriateness issues found")
+                    issues_found = True
             except Exception:
-                pass
+                # Fallback to string search if JSON parsing fails
+                if (
+                    '"validation_status"' in visual_feedback
+                    and "ISSUES_FOUND" in visual_feedback
+                ):
+                    issues_found = True
+
+            if issues_found:
+                all_feedback_passed = False
+                state["visual_feedback"] = visual_feedback
+                write_output("⚠️  Visual appropriateness issues found")
         except Exception as e:
             write_output(f"Warning: Visual appropriateness analysis failed: {e}")
 

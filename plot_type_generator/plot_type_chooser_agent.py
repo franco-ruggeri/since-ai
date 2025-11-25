@@ -14,11 +14,37 @@ def plot_type_chooser_agent(state: PlotGenState, k: int = 3) -> PlotGenState:
     """Given a state with `execution_plan` and `data_table`, ask the LLM to
     recommend the top-k plot types and relevant features. Puts the JSON
     string under `plot_recommendations` in the returned state.
+
+    If feedback from validation agents exists in the state, it will be included
+    in the user message to help guide improvements.
     """
     chooser_template = _load_prompt("plot_type_chooser.txt")
 
     execution_plan = state.get("execution_plan") or state.get("user_query") or ""
     data_table = state.get("data_table") or {}
+
+    # Collect feedback from validation agents if available
+    numeric_feedback = state.get("numeric_feedback", "")
+    lexical_feedback = state.get("lexical_feedback", "")
+    visual_feedback = state.get("visual_feedback", "")
+
+    # Build feedback section if any feedback exists
+    feedback_section = ""
+    if numeric_feedback or lexical_feedback or visual_feedback:
+        feedback_section = "\n\n## FEEDBACK FROM VALIDATION AGENTS\n"
+        feedback_section += "Please address ALL issues identified in the feedback below:\n\n"
+
+        if numeric_feedback:
+            feedback_section += "### Numeric Analysis Feedback:\n"
+            feedback_section += f"{numeric_feedback}\n\n"
+
+        if lexical_feedback:
+            feedback_section += "### Lexical Analysis Feedback:\n"
+            feedback_section += f"{lexical_feedback}\n\n"
+
+        if visual_feedback:
+            feedback_section += "### Visual Appropriateness Feedback:\n"
+            feedback_section += f"{visual_feedback}\n\n"
 
     # Use the execution plan (produced by the query planning agent) as the
     # system prompt so the chooser is grounded in the planner's output.
@@ -26,6 +52,7 @@ def plot_type_chooser_agent(state: PlotGenState, k: int = 3) -> PlotGenState:
     # and will be sent as the human message.
     user_content = (
         f"Data Description:\n{data_table}\n\n"
+        f"{feedback_section}"
         f"Return the top {k} plot type suggestions as requested."
     )
 
