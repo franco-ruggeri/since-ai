@@ -1,9 +1,19 @@
 # 📊 HSE Visualization Agent
 #### 🏆 Bayer Challenge - Since AI Hackathon 2025
 
+# Team Members
+
+| Name | Email Address | LinkedIn | Available for Hire |
+|------|---------------|----------|----------|
+| Somoy Barua | somoytunu@gmail.com | [LinkedIn - Somoy](https://www.linkedin.com/in/somoy) | Yes
+| Abhishek Roy | theabhishekroy@gmail.com | [LinkedIn - Abhishek](https://www.linkedin.com/in/abhishekroy1709) | Yes
+| Franco Ruggeri | franco.ruggeri.pro@gmail.com | [LinkedIn - Franco](https://www.linkedin.com/in/ruggeri-franco) | No
+| Kevin Dall Torres | kevin.dalla.torre@hotmail.com | [LinkedIn - Kevin ](https://www.linkedin.com/in/kevin-dalla-torre-153764252) | No
+
+
 > **Intelligent visualization recommendations powered by multi-agent LLM analysis**
 
-AI-powered visualization agent that automatically generates data charts and plots based on user prompts and dataframes. This toolkit combines LLM-driven agentic analysis with intelligent and extensible plot type selection to create appropriate visualizations for your data.
+AI-powered visualization agent that automatically generates data charts and plots based on user prompts and dataframes. A collaborative Multi-Agent System that uses AI consensus and Model Orchestration to select the best, most cost-effective model and verify the plot idea before generating any visualization for safety reports.
 
 ---
 
