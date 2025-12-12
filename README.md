@@ -6,7 +6,7 @@
 | Name | Email Address | LinkedIn | Available for Hire |
 |------|---------------|----------|----------|
 | Somoy Barua | somoytunu@gmail.com | [LinkedIn - Somoy](https://www.linkedin.com/in/somoy) | Yes
-| Abhishek Roy | theabhishekroy@gmail.com | [LinkedIn - Abhishek](https://www.linkedin.com/in/abhishekroy1709) | Yes
+| Abhishek Roy | theabhishekroy77@gmail.com | [LinkedIn - Abhishek](https://www.linkedin.com/in/abhishekroy1709) | Yes
 | Franco Ruggeri | franco.ruggeri.pro@gmail.com | [LinkedIn - Franco](https://www.linkedin.com/in/ruggeri-franco) | No
 | Kevin Dall Torres | kevin.dalla.torre@hotmail.com | [LinkedIn - Kevin ](https://www.linkedin.com/in/kevin-dalla-torre-153764252) | No
 
